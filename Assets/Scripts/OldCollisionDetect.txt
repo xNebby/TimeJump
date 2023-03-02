@@ -1,0 +1,124 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CollisionDetection : SingletonClass<CollisionDetection>
+{
+    // Should be passed the rigidbody and object, then applies the movement to the object depending on if it can move in that direction.
+    public bool TempTouchWall = false;
+    public bool TempTouchGround = false;
+    public bool TempWallSlide = false;
+    public bool TempOnRamp = false;
+    public ContactPoint2D[] Contacts = new ContactPoint2D[16];
+    public List<ContactPoint2D> ContactsList = new List<ContactPoint2D>(16);
+    public Vector2 ContactNormal;
+    public Vector2 FinalVector;
+    public float RayLength = 0.5f;
+
+    void OnEnable()
+    {
+        ResetVars();
+    }
+    override public void Awake()
+    {
+        ResetVars();
+        base.Awake();
+    }
+    void ResetVars()
+    {
+        TempTouchGround = false;
+        TempTouchWall = false;
+        TempWallSlide = false;
+        TempOnRamp = false;
+        Contacts = new ContactPoint2D[16];
+        ContactsList = new List<ContactPoint2D>(16);
+        ContactNormal = Vector2.zero;
+        FinalVector = Vector2.zero;
+    }
+
+    public void CheckMovement(GameObject v_Go, Vector2 v_Velocity)
+    {
+        Vector2 GravityVector = GravityManager.Instance.PlayerGravity;
+        Rigidbody2D _RB = v_Go.GetComponent<Rigidbody2D>();
+        Vector2 ParallelVector = (Vector2.Perpendicular(GravityVector) * v_Velocity);
+        CheckMovement(v_Go, _RB, v_Velocity, GravityVector, ParallelVector);    
+    }
+
+    public void CheckMovement(GameObject _GO, Rigidbody2D _RB, Vector2 Velocity, Vector2 GravityVector, Vector2 ParallelVector)
+    {
+        ResetVars();
+
+        int count = _RB.GetContacts(Contacts);
+        ContactsList.Clear();
+
+        for (int i = 0; i < count; i++)
+        {
+            ContactsList.Add(Contacts[i]);
+        }
+
+        for (int i = 0; i < ContactsList.Count; i++)
+        {
+            ContactNormal = ContactsList[i].normal;
+
+            if (ContactNormal == GravityVector * -1)
+            {
+                TempTouchGround = true;
+            }
+            if (ContactNormal == -1 * ParallelVector)
+            {
+                TempTouchWall = true;
+            }
+        }
+
+        if (_RB.velocity == Vector2.zero)
+        {
+            if (TempTouchGround == false & TempTouchWall == false)
+            {
+                RaycastHit2D hit = Physics2D.Raycast(_RB.position, ParallelVector, RayLength);
+                Debug.Log("RayDrawn");
+                Debug.DrawRay(_RB.position, ParallelVector * RayLength, Color.red, 2f, false);
+                if (hit.collider != null)
+                {
+                    TempWallSlide = true;
+                }
+                else
+                {
+                    TempOnRamp = true;
+                }
+            }
+        }
+
+        if (_GO.tag == "Player")
+        {
+            if (TempTouchGround)
+            {
+                EventManager.TriggerEvent("CD_TouchGround");
+            } else
+            {
+                EventManager.TriggerEvent("CD_LeaveGround");
+            }
+            if (TempTouchWall)
+            {
+                EventManager.TriggerEvent("CD_TouchWall");
+            } else
+            {
+                EventManager.TriggerEvent("CD_LeaveWall");
+            }
+            if (TempWallSlide)
+            {
+                EventManager.TriggerEvent("CD_StartWSlide");
+            } else
+            {
+                EventManager.TriggerEvent("CD_StopWSlide");
+            }
+            if (TempOnRamp)
+            {
+                EventManager.TriggerEvent("CD_OnRamp");
+            } else
+            {
+                EventManager.TriggerEvent("CD_OffRamp");
+            }
+            //Parallel to the floor/gravity.  
+        } 
+    }
+}
