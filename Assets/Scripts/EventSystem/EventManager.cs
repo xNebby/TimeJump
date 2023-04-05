@@ -27,7 +27,6 @@ public class EventManager : MonoBehaviour
                     eventManager.Init();
                 }
             }
-
             return eventManager;
         }
     }

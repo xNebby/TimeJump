@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerStateManager : SingletonClass<PlayerStateManager>
 {
-
+    [Header("Player Game status")]
+    public bool PlayerIsAlive = true;
+    public bool PlayerCanRespawn = true;
+    [Space(10)]
+    [Header("Physics States")]
     public bool PlayerIsCrouching = false;
     public bool PlayerIsJumping = false;
     public bool PlayerIsOnGround = false;
@@ -12,7 +16,11 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
     public bool PlayerIsTouchWall = false;
     public bool PlayerIsWallSlide = false;
     public bool PlayerIsOnRamp = false;
+    [Space(10)]
+    [Header("World States")]
     public float TimeScale = 1f;
+    public Vector2 WorldGravity = Vector2.down;
+    public Vector2 PlayerGravity = Vector2.down;
 
     void OnEnable()
     {
@@ -28,8 +36,14 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
         EventManager.StartListening("CD_StartWSlide", WallSlideStart);
         EventManager.StartListening("CD_StopWSlide", WallSlideEnd);
 
-        EventManager.StartListening("CD_OnRamp", OnRamp);
-        EventManager.StartListening("CD_OffRamp", OffRamp);
+        EventManager.StartListening("CD_TouchRamp", OnRamp);
+        EventManager.StartListening("CD_LeaveRamp", OffRamp);
+
+        EventManager.StartListening("PM_KillPlayer", KillPlayer);
+        EventManager.StartListening("PM_RespawnPlayer", RespawnPlayer);
+
+        EventManager.StartListening("PM_CanRespawn", EnablePlayerRespawn);
+        EventManager.StartListening("PM_CannotRespawn", DisablePlayerRespawn);
     }
     void OnDisable()
     {
@@ -45,63 +59,132 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
         EventManager.StopListening("CD_StartWSlide", WallSlideStart);
         EventManager.StopListening("CD_StopWSlide", WallSlideEnd);
 
-        EventManager.StopListening("CD_OnRamp", OnRamp);
-        EventManager.StopListening("CD_OffRamp", OffRamp);
+        EventManager.StopListening("CD_TouchRamp", OnRamp);
+        EventManager.StopListening("CD_LeaveRamp", OffRamp);
+
+        EventManager.StopListening("PM_KillPlayer", KillPlayer);
+        EventManager.StopListening("PM_RespawnPlayer", RespawnPlayer);
+
+        EventManager.StopListening("PM_CanRespawn", EnablePlayerRespawn);
+        EventManager.StopListening("PM_CannotRespawn", DisablePlayerRespawn);
+    }
+    void KillPlayer()
+    {
+        PlayerIsAlive = false;
+        DisablePhysicalStates();
+    }
+    void RespawnPlayer()
+    {
+        if (PlayerCanRespawn == true)
+        {
+            PlayerIsAlive = true;
+        }
+    }
+
+    void EnablePlayerRespawn()
+    {
+        PlayerCanRespawn = true;
+    }
+    void DisablePlayerRespawn()
+    {
+        PlayerCanRespawn = false;
     }
 
     void OnRamp()
     {
-        PlayerIsOnRamp = true;
-        GroundStateCheck();
+        if (PlayerIsOnRamp == false)
+        {
+            PlayerIsOnRamp = true;
+            GroundStateCheck();
+        }
     }
     void OffRamp()
     {
-        PlayerIsOnRamp = false;
-        GroundStateCheck();
+        if (PlayerIsOnRamp)
+        {
+            PlayerIsOnRamp = false;
+            GroundStateCheck();
+        }
     }
 
     void WallSlideStart()
     {
-        PlayerIsWallSlide = true;
-        WallStateCheck();
+        if (PlayerIsWallSlide == false)
+        {
+            PlayerIsWallSlide = true;
+            WallStateCheck();
+        }
     }
     void WallSlideEnd()
     {
-        PlayerIsWallSlide = false;
-        WallStateCheck();
+        if (PlayerIsWallSlide)
+        {
+            PlayerIsWallSlide = false;
+            WallStateCheck();
+        }
     }
 
     void SprintTrue()
     {
-        PlayerIsSprint = true;
-        SprintStateCheck();
+        if (PlayerIsSprint == false)
+        {
+            PlayerIsSprint = true;
+            SprintStateCheck();
+        }
     }
     void SprintFalse()
     {
-        PlayerIsSprint = false;
-        SprintStateCheck();
+        if (PlayerIsSprint)
+        {
+            PlayerIsSprint = false;
+            SprintStateCheck();
+        }
     }
 
     void GroundTouched()
     {
-        PlayerIsOnGround = true;
-        GroundStateCheck();
+        if (PlayerIsOnGround == false)
+        {
+            PlayerIsOnGround = true;
+            GroundStateCheck();
+        }
     }
     void GroundLeft()
     {
-        PlayerIsOnGround = false;
-        GroundStateCheck();
+        if (PlayerIsOnGround == true)
+        {
+            PlayerIsOnGround = false;
+            GroundStateCheck();
+        }
     }
 
     void WallTouched()
     {
-        PlayerIsTouchWall = true;
-        WallStateCheck();
+        if (PlayerIsTouchWall == false)
+        {
+            PlayerIsTouchWall = true;
+            WallStateCheck();
+        }
     }
     void WallLeft()
     {
+        if (PlayerIsTouchWall)
+        {
+            PlayerIsTouchWall = false;
+            WallStateCheck();
+        }
+    }
+
+    void DisablePhysicalStates()
+    {
+        PlayerIsCrouching = false;
+        PlayerIsJumping = false;
+        PlayerIsOnGround = false;
+        PlayerIsSprint = false;
         PlayerIsTouchWall = false;
-        WallStateCheck();
+        PlayerIsWallSlide = false;
+        PlayerIsOnRamp = false;
+        StateCheckAll();
     }
 
     public void StateCheckAll()
