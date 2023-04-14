@@ -32,15 +32,7 @@ public class SingletonClass<T> : MonoBehaviour where T : Component
         }
         else
         {
-            string text = this.gameObject.ToString() + " Destroyed by " + instance.gameObject.ToString();
-            Debug.Log(text);
-            if (gameObject.tag == "Player")
-            {
-
-            } else
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
         
     }

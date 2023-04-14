@@ -33,7 +33,6 @@ public class InputManager : SingletonClass<InputManager>
 
     public void UpdateVector(Vector2 v_Velocity, string v_Name, int v_Priority)
     {
-        //Debug.Log("h");
         Vector3 tempVector = new Vector3(v_Velocity.x, v_Velocity.y, v_Priority); 
         if (v_Priority >= 0)
         {
@@ -113,7 +112,6 @@ public class InputManager : SingletonClass<InputManager>
 
     public void ChangedVector()
     {
-        //Debug.Log("uhhhhhhhh");
         PlayerMovementManager.Instance.IM_UpdateVelocity(ID_MovementVector);
     }
 }

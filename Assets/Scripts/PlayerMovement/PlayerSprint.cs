@@ -22,13 +22,13 @@ public class PlayerSprint : MonoBehaviour
 
     void SprintStart()
     {
-        //Debug.Log("added!");
+        Debug.Log("added!");
         MovementStatusManager.Instance.AddMovementEffect("Sprint", SprintMoveMult);
     }
 
     void SprintStop()
     {
-        //Debug.Log("removed!");
+        Debug.Log("removed!");
         MovementStatusManager.Instance.RemoveEffect("Sprint");
     }
 }

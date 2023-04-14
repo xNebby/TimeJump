@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementManager : SingletonClass<PlayerMovementManager>
 {
     public Vector2 IM_PlayerVector = Vector2.zero;
     public Vector2 PSM_StatusVector = Vector2.zero;
     public float PSM_PlayerVectorMultiplier = 1f;
     public Vector2 ParallelVector;
-    public Vector2 PlayerNormal;
     public Vector2 FinalVector;
+    public Rigidbody2D RB;
     public float PlayerMovementMultiplier = 4f;
-    public float SprintMultiplier = 1.5f;
 
     public override void Awake()
     {
@@ -19,14 +19,14 @@ public class PlayerMovementManager : SingletonClass<PlayerMovementManager>
         IM_PlayerVector = Vector2.zero;
         PSM_PlayerVectorMultiplier = 1f;
         ParallelVector = Vector2.zero;
-        PlayerNormal = Vector2.zero;
         FinalVector = Vector2.zero;
+        RB = gameObject.GetComponent<Rigidbody2D>();
         PlayerMovementMultiplier = 4f;
         base.Awake();
     }
+
     public void IM_UpdateVelocity(Vector2 v_Velocity)
     {
-        //Debug.Log(v_Velocity);
         IM_PlayerVector = v_Velocity;
     }
 
@@ -44,12 +44,9 @@ public class PlayerMovementManager : SingletonClass<PlayerMovementManager>
     void FixedUpdate()
     {
         FinalVector = (IM_PlayerVector * PSM_PlayerVectorMultiplier * PlayerMovementMultiplier) + PSM_StatusVector;
-        PlayerNormal = Vector2Extensions.rotateDeg(PlayerStateManager.Instance.PlayerGravity, PlayerInfo.Instance.PlayerRigidbody.rotation);
-        ParallelVector = (Vector2.Perpendicular(PlayerNormal) * FinalVector.x);
-
-        //CollisionDetection.Instance.CheckMovement(gameObject, PlayerInfo.Instance.PlayerRigidbody, FinalVector, CollisionDetection.Instance.PlayerGravity, ParallelVector);
-        CollisionDetection.Instance.CheckCollision(ParallelVector);
-        PlayerInfo.Instance.PlayerRigidbody.velocity = (ParallelVector * PlayerStateManager.Instance.TimeScale);
+        ParallelVector = (Vector2.Perpendicular(GravityManager.Instance.PlayerGravity) * FinalVector.x);
+        //CollisionDetection.Instance.CheckMovement(gameObject, RB, FinalVector, GravityManager.Instance.PlayerGravity, ParallelVector);
+        RB.velocity = (ParallelVector * PlayerStateManager.Instance.TimeScale);
     
     
     }
