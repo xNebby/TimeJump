@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerManager : SingletonClass<PlayerManager>
 {
     public Rigidbody2D PlayerRB;
-    
+    public GameObject PlayerGO;
+    public PlayerMovementManager PMM;
+
+    // Passing Vals
     public int PlayerHealth;
     public int PlayerMaxHealth = 100;
 
@@ -19,7 +22,9 @@ public class PlayerManager : SingletonClass<PlayerManager>
 
     void CheckVars()
     {
-        PlayerRB = PlayerInfo.Instance.PlayerRigidbody;
+        PlayerGO = gameObject;
+        PlayerRB = GetComponent<Rigidbody2D>();
+        PMM = GetComponent<PlayerMovementManager>();
     }
 
     public bool DamagePlayer(int v_Damage, string v_DamageType, string v_DamageSource)
@@ -63,6 +68,19 @@ public class PlayerManager : SingletonClass<PlayerManager>
         {
             return false;
         }
+    }
+
+    public void UpdatePMM_IM_Vector(Vector2 IM_PlayerVector)
+    {
+        PMM.IM_UpdateVelocity(IM_PlayerVector);
+    }
+    public void UpdatePMM_MSM_Vector(Vector2 MSM_Vector)
+    {
+        PMM.MSM_UpdateVelocity(MSM_Vector);
+    }
+    public void UpdatePMM_MSM_Multiplier(float MSM_Multiplier)
+    {
+        PMM.MSM_UpdateMultiplier(MSM_Multiplier);
     }
 
     public void KillPlayer()

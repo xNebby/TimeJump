@@ -12,6 +12,7 @@ public class InputDetector : MonoBehaviour
     private bool TappedSprint = false;
 
 
+
     void Awake()
     {
         // Create new instance of input sheet.
@@ -34,17 +35,55 @@ public class InputDetector : MonoBehaviour
     void MovementPerformed(InputAction.CallbackContext context)
     {
         MovementVector = m_PlayerInputActions.Player.Movement.ReadValue<Vector2>();
-        
         InputManager.Instance.UpdateVector(MovementVector, "Player", 0);
+
+        if (GameSettings.Instance.DownToCrouch == true)
+        {
+            if (MovementVector.y < 0)
+            {
+                if (PlayerStateManager.Instance.PlayerIsCrouching == false && PlayerStateManager.Instance.PlayerIsOnGround == true)
+                {
+                    // Crouch
+                    EventManager.TriggerEvent("PC_Crouch");
+                }
+            }
+            else
+            {
+                if (PlayerStateManager.Instance.PlayerIsCrouching == true)
+                {
+                    // Uncrouch
+                    //LogSystem.Log(gameObject, "ID Is cause of uncrouch.");
+                    EventManager.TriggerEvent("PC_Uncrouch");
+                }
+            }
+        }
         
     }
 
     void MovementCanceled(InputAction.CallbackContext context)
     {
+        if (PlayerStateManager.Instance.PlayerIsCrouching == true)
+        {
+            // Uncrouch
+            //LogSystem.Log(gameObject, "ID Is cause of uncrouch.");
+            EventManager.TriggerEvent("PC_Uncrouch");
+        }
         EventManager.TriggerEvent("IM_StopMoving");
         InputManager.Instance.RemoveVector("Player");
     }
     //
+    void CrouchStarted(InputAction.CallbackContext context)
+    {
+        // Crouch
+        EventManager.TriggerEvent("PC_Crouch");
+    }
+
+    void CrouchStopped(InputAction.CallbackContext context)
+    {
+        // Uncrouch
+        EventManager.TriggerEvent("PC_Uncrouch");
+    }
+    // 
 
     void JumpStarted(InputAction.CallbackContext context)
     {

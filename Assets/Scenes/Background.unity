@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 308194138}
   - component: {fileID: 308194137}
-  - component: {fileID: 308194139}
   m_Layer: 0
   m_Name: PlayerState
   m_TagString: Untagged
@@ -180,20 +179,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &308194139
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 308194136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 821cb0a2208031742a65545047491726, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerGameObject: {fileID: 0}
-  PlayerRigidbody: {fileID: 0}
 --- !u!1 &488473277
 GameObject:
   m_ObjectHideFlags: 0
@@ -242,6 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID_MovementVector: {x: 0, y: 0}
   CurrentPriority: 0
+  IM_PlayerVector: {x: 0, y: 0}
 --- !u!114 &488473281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,82 +449,8 @@ MonoBehaviour:
   CineLockOn: 0
   VCam: {fileID: 0}
   FollowTarget: {fileID: 0}
---- !u!1 &857932239
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 857932242}
-  - component: {fileID: 857932240}
-  - component: {fileID: 857932243}
-  m_Layer: 0
-  m_Name: PlayerMovementManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &857932240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857932239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93bfa0c5a9691da4cbbeda33c12b9a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IM_PlayerVector: {x: 0, y: 0}
-  PSM_StatusVector: {x: 0, y: 0}
-  PSM_PlayerVectorMultiplier: 1
-  ParallelVector: {x: 0, y: 0}
-  PlayerNormal: {x: 0, y: 0}
-  FinalVector: {x: 0, y: 0}
-  PlayerMovementMultiplier: 4
-  SprintMultiplier: 1.5
---- !u!4 &857932242
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857932239}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &857932243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 857932239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78bf8abd46726af4f8501af589996fad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FuzzyCheck: 0.5
-  ContactNormal: {x: 0, y: 0}
-  PlayerNormal: {x: 0, y: 0}
-  PlayerRotationNormal: 0
-  RotateSpeed: 5
-  PlayerWalkAngle: 45
-  EnableGravity: 1
-  WorldGravityScale: 10
-  PlayerGravityScale: 10
-  CurrentGravityMult: 0
-  TerminalMult: 40
+  CameraDistanceSqr: 10
+  CurrentVectorFromPlayer: {x: 0, y: 0}
 --- !u!1 &1298938849
 GameObject:
   m_ObjectHideFlags: 3
@@ -656,7 +568,7 @@ MonoBehaviour:
   FreeLocations: []
   TimerListChanged: 1
   MultiplierSum: 1
-  VelocitySum: {x: 0, y: 0}
+  MSM_StatusVector: {x: 0, y: 0}
 --- !u!1 &1603460069
 GameObject:
   m_ObjectHideFlags: 0
@@ -686,7 +598,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795579123
 GameObject:
@@ -841,6 +753,7 @@ MonoBehaviour:
   HoldJump: 0
   TapUpToJump: 0
   MovementStopEndSprint: 0
+  DownToCrouch: 1
 --- !u!4 &2030608833
 Transform:
   m_ObjectHideFlags: 0

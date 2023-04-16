@@ -16,6 +16,7 @@ public class GameSettings : SingletonClass<GameSettings>
     public bool HoldJump = false;
     public bool TapUpToJump = false;
     public bool MovementStopEndSprint = false;
+    public bool DownToCrouch = true;
 
     public override void Awake()
     {

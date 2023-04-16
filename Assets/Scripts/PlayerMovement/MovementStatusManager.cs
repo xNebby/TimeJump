@@ -14,7 +14,7 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     public bool TimerListChanged = true;
 
     public float MultiplierSum = 1f;
-    public Vector2 VelocitySum = Vector2.zero;
+    public Vector2 MSM_StatusVector = Vector2.zero;
 
     public override void Awake()
     {
@@ -34,7 +34,7 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
         MultiplierList = new List<float>();
         FreeLocations = new List<Vector3>();
 
-        VelocitySum = Vector2.zero;
+        MSM_StatusVector = Vector2.zero;
         MultiplierSum = 1f;
         TimerListChanged = true;
 
@@ -115,7 +115,7 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
         if (EffectIDs.ContainsKey(Name))
         {
             VectorList[Mathf.RoundToInt(EffectIDs[Name].x)] = Velocity;
-            VelocitySum += Velocity;
+            MSM_StatusVector += Velocity;
             updateVars();
         }
     }
@@ -132,22 +132,22 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     void SumLists()
     {
         MultiplierSum = 1f;
-        VelocitySum = Vector2.zero;
+        MSM_StatusVector = Vector2.zero;
         for (int index = 0; index < MultiplierList.Count; index++)
         {
             MultiplierSum *= MultiplierList[index];
         }
         for (int index = 0; index < VectorList.Count; index++)
         {
-            VelocitySum += VectorList[index];
+            MSM_StatusVector += VectorList[index];
         }
         updateVars();
     }
 
     void updateVars()
     {
-        PlayerMovementManager.Instance.PSM_UpdateVelocity(VelocitySum);
-        PlayerMovementManager.Instance.PSM_UpdateMultiplier(MultiplierSum);
+        PlayerManager.Instance.UpdatePMM_MSM_Vector(MSM_StatusVector);
+        PlayerManager.Instance.UpdatePMM_MSM_Multiplier(MultiplierSum);
     }
 
     void FixedUpdate()

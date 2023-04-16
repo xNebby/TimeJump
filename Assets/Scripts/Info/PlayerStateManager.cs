@@ -44,6 +44,9 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StartListening("PM_CanRespawn", EnablePlayerRespawn);
         EventManager.StartListening("PM_CannotRespawn", DisablePlayerRespawn);
+
+        EventManager.StartListening("PC_Crouch", Crouch);
+        EventManager.StartListening("PC_Uncrouch", Uncrouch);
     }
     void OnDisable()
     {
@@ -67,7 +70,26 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StopListening("PM_CanRespawn", EnablePlayerRespawn);
         EventManager.StopListening("PM_CannotRespawn", DisablePlayerRespawn);
+
+        EventManager.StopListening("PC_Crouch", Crouch);
+        EventManager.StopListening("PC_Uncrouch", Uncrouch);
     }
+
+    // Encapsulation methods
+    
+    void Crouch()
+    {
+        PlayerIsCrouching = true;
+        GroundStateCheck();
+        SprintStateCheck();
+    }
+    void Uncrouch()
+    {
+        PlayerIsCrouching = false;
+        GroundStateCheck();
+        SprintStateCheck();
+    }
+    //
     void KillPlayer()
     {
         PlayerIsAlive = false;
@@ -80,7 +102,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
             PlayerIsAlive = true;
         }
     }
-
+    //
     void EnablePlayerRespawn()
     {
         PlayerCanRespawn = true;
@@ -89,7 +111,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
     {
         PlayerCanRespawn = false;
     }
-
+    //
     void OnRamp()
     {
         if (PlayerIsOnRamp == false)
@@ -106,7 +128,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
             GroundStateCheck();
         }
     }
-
+    //
     void WallSlideStart()
     {
         if (PlayerIsWallSlide == false)
@@ -123,7 +145,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
             WallStateCheck();
         }
     }
-
+    //
     void SprintTrue()
     {
         if (PlayerIsSprint == false)
@@ -140,7 +162,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
             SprintStateCheck();
         }
     }
-
+    //
     void GroundTouched()
     {
         if (PlayerIsOnGround == false)
@@ -157,7 +179,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
             GroundStateCheck();
         }
     }
-
+    //
     void WallTouched()
     {
         if (PlayerIsTouchWall == false)
@@ -174,7 +196,9 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
             WallStateCheck();
         }
     }
-
+    //
+    // Verifications
+    //
     void DisablePhysicalStates()
     {
         PlayerIsCrouching = false;
@@ -197,7 +221,11 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
     {
         if (PlayerIsOnGround == false)
         {
-            PlayerIsCrouching = false;
+            //if (PlayerIsCrouching)
+            //{
+                //LogSystem.Log(gameObject, "PSM is cause of uncrouch.");
+                //EventManager.TriggerEvent("PC_Uncrouch");
+            //}
         } else
         {
             PlayerIsOnRamp = false;
@@ -208,7 +236,11 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
     {
         if (PlayerIsSprint)
         {
-            PlayerIsCrouching = false;
+            if (PlayerIsCrouching)
+            {
+                //LogSystem.Log(gameObject, "PSM sprintcheck is cause of uncrouch.");
+                EventManager.TriggerEvent("PC_Uncrouch");
+            }
         }
     }
     public void WallStateCheck()

@@ -6,7 +6,7 @@ public class KillBoxCollide : MonoBehaviour
 {
     void Start()
     {
-        LogSystem.Log("KillBox", "start");
+        //LogSystem.Log("KillBox", "start");
     }
 
     private void OnTriggerEnter2D(Collider2D Entity)

@@ -56,7 +56,7 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
     public void CheckCollision(Vector2 v_Velocity)
     {
         ResetVars();
-        int count = PlayerInfo.Instance.PlayerRigidbody.GetContacts(Contacts);
+        int count = PlayerManager.Instance.PlayerRB.GetContacts(Contacts);
         ContactsList.Clear();
 
         for (int i = 0; i < count; i++)
@@ -70,8 +70,8 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
             EventManager.TriggerEvent("CD_LeaveGround");
             EventManager.TriggerEvent("CD_LeaveRamp");
         }
-        PlayerNormal = Vector2Extensions.rotateDeg(PlayerStateManager.Instance.PlayerGravity, PlayerInfo.Instance.PlayerRigidbody.rotation);
-        //Debug.DrawRay(new Vector3(PlayerInfo.Instance.PlayerRigidbody.position.x, PlayerInfo.Instance.PlayerRigidbody.position.x, -10), new Vector3(PlayerNormal.x, PlayerNormal.y, -10), Color.red);
+        PlayerNormal = Vector2Extensions.rotateDeg(PlayerStateManager.Instance.PlayerGravity, PlayerManager.Instance.PlayerRB.rotation);
+        //Debug.DrawRay(new Vector3(PlayerManager.Instance.PlayerRB.position.x, PlayerManager.Instance.PlayerRB.position.x, -10), new Vector3(PlayerNormal.x, PlayerNormal.y, -10), Color.red);
         for (int i = 0; i < ContactsList.Count; i++)
         {
             ContactNormal = ContactsList[i].normal;
@@ -109,34 +109,34 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
 
     void RotateToNormal()
     {
-        if (!(PlayerInfo.Instance.PlayerRigidbody.rotation == PlayerRotationNormal))
+        if (!(PlayerManager.Instance.PlayerRB.rotation == PlayerRotationNormal))
         {
-            /*while (PlayerInfo.Instance.PlayerRigidbody.rotation >= 180)
+            /*while (PlayerManager.Instance.PlayerRB.rotation >= 180)
             {
-                PlayerInfo.Instance.PlayerRigidbody.rotation -= 360f;
+                PlayerManager.Instance.PlayerRB.rotation -= 360f;
             }
-            while (PlayerInfo.Instance.PlayerRigidbody.rotation <= -180)
+            while (PlayerManager.Instance.PlayerRB.rotation <= -180)
             {
-                PlayerInfo.Instance.PlayerRigidbody.rotation += 360f;
+                PlayerManager.Instance.PlayerRB.rotation += 360f;
             }*/
             // not touching anything. Rotate to normal. 
-            if ((PlayerInfo.Instance.PlayerRigidbody.rotation < (FuzzyCheck + PlayerRotationNormal) & PlayerInfo.Instance.PlayerRigidbody.rotation > PlayerRotationNormal) || (PlayerInfo.Instance.PlayerRigidbody.rotation < (-180f + FuzzyCheck + PlayerRotationNormal) & PlayerInfo.Instance.PlayerRigidbody.rotation < PlayerRotationNormal))
+            if ((PlayerManager.Instance.PlayerRB.rotation < (FuzzyCheck + PlayerRotationNormal) & PlayerManager.Instance.PlayerRB.rotation > PlayerRotationNormal) || (PlayerManager.Instance.PlayerRB.rotation < (-180f + FuzzyCheck + PlayerRotationNormal) & PlayerManager.Instance.PlayerRB.rotation < PlayerRotationNormal))
             {
                 //Debug.Log("Set to 0");
-                PlayerInfo.Instance.PlayerRigidbody.rotation = PlayerRotationNormal;
+                PlayerManager.Instance.PlayerRB.rotation = PlayerRotationNormal;
             }
             else
             {
-                if (PlayerInfo.Instance.PlayerRigidbody.rotation <= (180 + PlayerRotationNormal) & PlayerInfo.Instance.PlayerRigidbody.rotation > PlayerRotationNormal)
+                if (PlayerManager.Instance.PlayerRB.rotation <= (180 + PlayerRotationNormal) & PlayerManager.Instance.PlayerRB.rotation > PlayerRotationNormal)
                 {
-                    //Debug.Log(PlayerInfo.Instance.PlayerRigidbody.rotation);
+                    //Debug.Log(PlayerManager.Instance.PlayerRB.rotation);
                     //Debug.Log("C");
-                    PlayerInfo.Instance.PlayerRigidbody.MoveRotation(PlayerInfo.Instance.PlayerRigidbody.rotation - (Time.fixedDeltaTime * RotateSpeed));
+                    PlayerManager.Instance.PlayerRB.MoveRotation(PlayerManager.Instance.PlayerRB.rotation - (Time.fixedDeltaTime * RotateSpeed));
                 }
-                else if (PlayerInfo.Instance.PlayerRigidbody.rotation < PlayerRotationNormal)
+                else if (PlayerManager.Instance.PlayerRB.rotation < PlayerRotationNormal)
                 {
                     //Debug.Log("AC");
-                    PlayerInfo.Instance.PlayerRigidbody.MoveRotation(PlayerInfo.Instance.PlayerRigidbody.rotation + (Time.fixedDeltaTime * RotateSpeed));
+                    PlayerManager.Instance.PlayerRB.MoveRotation(PlayerManager.Instance.PlayerRB.rotation + (Time.fixedDeltaTime * RotateSpeed));
                 }
             }
         }
@@ -178,8 +178,8 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
         // If the rotation is within the walking angle boundary, change the players rotation to match and move downwards.
         // If the rotation is not within the walking angle boundary, then change the player's state to wall grabbing. 
 
-        //PlayerInfo.Instance.PlayerRigidbody.MovePosition()
-        PlayerInfo.Instance.PlayerRigidbody.velocity += (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
+        //PlayerManager.Instance.PlayerRB.MovePosition()
+        PlayerManager.Instance.PlayerRB.velocity += (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
     }
 
     public void ResetGravity()
@@ -192,13 +192,13 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
 
     void FixedUpdate()
     {
-        if (PlayerInfo.Instance.PlayerRigidbody.rotation > PlayerRotationNormal + PlayerWalkAngle)
+        if (PlayerManager.Instance.PlayerRB.rotation > PlayerRotationNormal + PlayerWalkAngle)
         {
-            PlayerInfo.Instance.PlayerRigidbody.rotation = PlayerRotationNormal + PlayerWalkAngle;
+            PlayerManager.Instance.PlayerRB.rotation = PlayerRotationNormal + PlayerWalkAngle;
         }
-        else if (PlayerInfo.Instance.PlayerRigidbody.rotation < PlayerRotationNormal - PlayerWalkAngle)
+        else if (PlayerManager.Instance.PlayerRB.rotation < PlayerRotationNormal - PlayerWalkAngle)
         {
-            PlayerInfo.Instance.PlayerRigidbody.rotation = PlayerRotationNormal - PlayerWalkAngle;
+            PlayerManager.Instance.PlayerRB.rotation = PlayerRotationNormal - PlayerWalkAngle;
         }
         IncreaseGravity();
     }

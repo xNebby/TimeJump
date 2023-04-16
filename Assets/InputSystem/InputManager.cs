@@ -9,6 +9,7 @@ public class InputManager : SingletonClass<InputManager>
     public Dictionary<string, Vector3> Keylist = new Dictionary<string, Vector3>();
     public Vector2 ID_MovementVector;
     public int CurrentPriority;
+    public Vector2 IM_PlayerVector;
 
     public override void Awake()
     {
@@ -114,6 +115,7 @@ public class InputManager : SingletonClass<InputManager>
     public void ChangedVector()
     {
         //Debug.Log("uhhhhhhhh");
-        PlayerMovementManager.Instance.IM_UpdateVelocity(ID_MovementVector);
+        PlayerManager.Instance.UpdatePMM_IM_Vector(ID_MovementVector);
+        IM_PlayerVector = ID_MovementVector;
     }
 }

@@ -4,19 +4,7 @@ using UnityEngine;
 
 public class CameraPlayerRotationLock : MonoBehaviour
 {
-    private GameObject PlayerGameObject;
     public bool LockPlayerRotation = true;
-    // Start is called before the first frame update
-    void Start()
-    {
-        PlayerGameObject = PlayerInfo.Instance.PlayerGameObject;
-    }
-    void Awake()
-    {
-        PlayerGameObject = PlayerInfo.Instance.PlayerGameObject;
-    }
-
-    // Update is called once per frame
     void Update()
     {
         if (LockPlayerRotation)

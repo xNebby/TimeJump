@@ -109,7 +109,21 @@ public class TimerManager : MonoBehaviour
         EventWrapper thisEvent = null;
         if (instance.TimerDictionary.TryGetValue(TimerName, out thisEvent))
         {
+            string temp = ("Removing " + TimerName + " From Listener");
+            LogSystem.Log(gameObject, temp);
             thisEvent.RemoveListener(listener);
+        }
+        if (instance.TimerDictionary.ContainsKey(TimerName))
+        {
+            instance.TimerDictionary.Remove(TimerName);
+        }
+        if (instance.TimerMethods.ContainsKey(TimerName))
+        {
+            instance.TimerMethods.Remove(TimerName);
+        }
+        if (instance.TimerRemainingTime.ContainsKey(TimerName))
+        {
+            instance.TimerRemainingTime.Remove(TimerName);
         }
     }
 
