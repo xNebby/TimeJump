@@ -110,7 +110,7 @@ public class TimerManager : MonoBehaviour
         if (instance.TimerDictionary.TryGetValue(TimerName, out thisEvent))
         {
             string temp = ("Removing " + TimerName + " From Listener");
-            LogSystem.Log(gameObject, temp);
+            LogSystem.Log(instance.gameObject, temp);
             thisEvent.RemoveListener(listener);
         }
         if (instance.TimerDictionary.ContainsKey(TimerName))
