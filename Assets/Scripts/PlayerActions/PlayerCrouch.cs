@@ -9,6 +9,7 @@ public class PlayerCrouch : MonoBehaviour
     public bool ChargedJump;
     public float CrouchHeight;
     public float PlayerScale;
+    public float PlayerWidth;
 
     void OnEnable()
     {
@@ -16,7 +17,8 @@ public class PlayerCrouch : MonoBehaviour
         EventManager.StartListening("PC_Uncrouch", PlayerUncrouching);
         PlayerRB = GetComponent<Rigidbody2D>();
         CrouchHeight = 0.5f;
-        PlayerScale = 1f;
+        PlayerScale = 2f;
+        PlayerWidth = 1f;
     }
     void OnDisable()
     {
@@ -27,8 +29,8 @@ public class PlayerCrouch : MonoBehaviour
     void PlayerCrouching()
     {
         //LogSystem.Log(gameObject, "Crouch Event received");
-        gameObject.transform.localScale = new Vector3(PlayerScale, CrouchHeight, PlayerScale);
-        PlayerRB.MovePosition(PlayerRB.position + (PlayerStateManager.Instance.PlayerGravity * CrouchHeight / 2));
+        gameObject.transform.localScale = new Vector3(PlayerWidth, CrouchHeight * PlayerScale, 1f);
+        PlayerRB.MovePosition(PlayerRB.position + (PlayerStateManager.Instance.PlayerGravity * (PlayerScale * CrouchHeight / 2)));
 
         if (InputManager.Instance.IM_PlayerVector.x == 0)
         {
@@ -41,8 +43,8 @@ public class PlayerCrouch : MonoBehaviour
     void PlayerUncrouching()
     {
         //LogSystem.Log(gameObject, "UnCrouch Event received");
-        PlayerRB.MovePosition(PlayerRB.position - (PlayerStateManager.Instance.PlayerGravity * CrouchHeight / 2));
-        gameObject.transform.localScale = new Vector3(PlayerScale, PlayerScale, PlayerScale);
+        PlayerRB.MovePosition(PlayerRB.position - (PlayerStateManager.Instance.PlayerGravity * (PlayerScale * CrouchHeight / 2)));
+        gameObject.transform.localScale = new Vector3(PlayerWidth, PlayerScale, 1f);
         if (ChargingJump)
         {
             ChargingJump = false;

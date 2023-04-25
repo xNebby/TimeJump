@@ -11,8 +11,7 @@ public class SetFollowTarget : MonoBehaviour
     [Header("Cam Properties")]
     public CinemachineVirtualCamera VCam;
     public Transform FollowTarget;
-    public float CameraDistanceSqr = 10f;
-    public Vector2 CurrentVectorFromPlayer;
+    public Vector3 FollowVector;
     // Start is called before the first frame update
     void OnEnable()
     {
@@ -38,13 +37,8 @@ public class SetFollowTarget : MonoBehaviour
         if (CineLockOn == false)
         {
             // TO ADD: a thing that makes it so the camera is set a certain distance away, which means that it doesnt instantly follow. 
-            gameObject.transform.position = new Vector3(FollowTarget.position.x, FollowTarget.position.y, -10);
+            gameObject.transform.position = new Vector3(FollowTarget.position.x, FollowTarget.position.y, -10) + FollowVector;
 
-            CurrentVectorFromPlayer = gameObject.transform.position - FollowTarget.position;
-            if (CurrentVectorFromPlayer.sqrMagnitude > CameraDistanceSqr)
-            {
-
-            }
 
         }
     }
