@@ -116,6 +116,7 @@ public class InputManager : SingletonClass<InputManager>
     {
         //Debug.Log("uhhhhhhhh");
         PlayerManager.Instance.UpdatePMM_IM_Vector(ID_MovementVector);
+
         IM_PlayerVector = ID_MovementVector;
     }
 }

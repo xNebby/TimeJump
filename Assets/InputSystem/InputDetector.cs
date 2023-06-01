@@ -8,6 +8,7 @@ public class InputDetector : MonoBehaviour
     public PlayerInputActions m_PlayerInputActions;
 
     private Vector2 MovementVector;
+    private Vector2 LightVector;
 
     private bool TappedSprint = false;
 
@@ -24,12 +25,27 @@ public class InputDetector : MonoBehaviour
         m_PlayerInputActions.Player.Movement.performed += MovementPerformed;
         m_PlayerInputActions.Player.Movement.canceled += MovementCanceled;
 
+        m_PlayerInputActions.Player.LightMove.performed += LightPerformed;
+        m_PlayerInputActions.Player.LightMove.canceled += LightCanceled;
+
         m_PlayerInputActions.Player.SprintTap.started += SprintStarted;
         m_PlayerInputActions.Player.SprintTap.performed += SprintTapPerformed;
         m_PlayerInputActions.Player.SprintHold.canceled += SprintHoldCanceled;
         m_PlayerInputActions.Player.Jump.started += JumpStarted;
         m_PlayerInputActions.Player.Jump.canceled += JumpCanceled;
     }
+
+    void LightPerformed(InputAction.CallbackContext context)
+    {
+        LightVector = m_PlayerInputActions.Player.LightMove.ReadValue<Vector2>();
+        FireflyFollow.Instance.UpdateVector(LightVector);
+    }
+    void LightCanceled(InputAction.CallbackContext context)
+    {
+
+    }
+
+
 
     //
     void MovementPerformed(InputAction.CallbackContext context)
@@ -52,7 +68,7 @@ public class InputDetector : MonoBehaviour
                 if (PlayerStateManager.Instance.PlayerIsCrouching == true)
                 {
                     // Uncrouch
-                    LogSystem.Log(gameObject, "ID 1 Is cause of uncrouch.");
+                    //LogSystem.Log(gameObject, "ID 1 Is cause of uncrouch.");
                     EventManager.TriggerEvent("PC_UncrouchCheck");
                 }
             }
@@ -65,13 +81,13 @@ public class InputDetector : MonoBehaviour
         if (PlayerStateManager.Instance.PlayerIsCrouching == true)
         {
             // Uncrouch
-            LogSystem.Log(gameObject, "ID 2 Is cause of uncrouch.");
+            //LogSystem.Log(gameObject, "ID 2 Is cause of uncrouch.");
             EventManager.TriggerEvent("PC_Uncrouch");
         }
         EventManager.TriggerEvent("IM_StopMoving");
         InputManager.Instance.RemoveVector("Player");
     }
-    //
+    /*
     void CrouchStarted(InputAction.CallbackContext context)
     {
         // Crouch
@@ -83,7 +99,7 @@ public class InputDetector : MonoBehaviour
         // Uncrouch
         EventManager.TriggerEvent("PC_Uncrouch");
     }
-    // 
+    */
 
     void JumpStarted(InputAction.CallbackContext context)
     {
