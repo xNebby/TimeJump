@@ -24,6 +24,12 @@ public class PlayerSprint : MonoBehaviour
     {
         //Debug.Log("added!");
         MovementStatusManager.Instance.AddMovementEffect("Sprint", SprintMoveMult);
+
+        if (PlayerStateManager.Instance.PlayerIsCrouching == true)
+        {
+            LogSystem.Log(gameObject, "PS 1 Is cause of uncrouch.");
+            EventManager.TriggerEvent("PC_Uncrouch");
+        }
     }
 
     void SprintStop()

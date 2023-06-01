@@ -10,27 +10,26 @@ public class TimerManager : MonoBehaviour
     private Dictionary<string, UnityAction> TimerMethods;
 
     private static TimerManager timerManager;
-    private static TimerManager instance;
-
-    void Awake()
+    private static TimerManager instance
     {
-        
-        if (!timerManager)
+        get
         {
-            timerManager = FindObjectOfType(typeof(TimerManager)) as TimerManager;
             if (!timerManager)
             {
-                Debug.LogError("There needs to be one active TimerManager object in the scene.");
+                timerManager = FindObjectOfType(typeof(TimerManager)) as TimerManager;
+                if (!timerManager)
+                {
+                    Debug.LogError("There needs to be one active TimerManager object in the scene.");
+                }
+                else
+                {
+                    //Debug.Log("Init Requested");
+                    timerManager.Init();
+                }
             }
-            else
-            {
-                //Debug.Log("Init Requested");
-                timerManager.Init();
-            }
-        }
 
-        instance = timerManager;
-        
+            return timerManager;
+        }
     }
 
     void Init()
@@ -105,7 +104,9 @@ public class TimerManager : MonoBehaviour
 
     public static void RemoveTimer(string TimerName, UnityAction listener)
     {
+        LogSystem.Log(instance.gameObject, "Got this guy");
         if (timerManager == null) return;
+        Debug.Log(timerManager);
         EventWrapper thisEvent = null;
         if (instance.TimerDictionary.TryGetValue(TimerName, out thisEvent))
         {
@@ -138,15 +139,15 @@ public class TimerManager : MonoBehaviour
 
     public void Update()
     {
-        if (TimerRemainingTime.Count > 0)
+        if (instance.TimerRemainingTime.Count > 0)
         {
-            Dictionary<string, float> TimerRemainingTimeClone = new Dictionary<string, float>(TimerRemainingTime);
+            Dictionary<string, float> TimerRemainingTimeClone = new Dictionary<string, float>(instance.TimerRemainingTime);
             foreach (string TimerKey in TimerRemainingTimeClone.Keys)
             {
                 //Debug.Log(TimerKey);
-                TimerRemainingTime[TimerKey] -= Time.deltaTime;
+                instance.TimerRemainingTime[TimerKey] -= Time.deltaTime;
                 //Debug.Log(TimerRemainingTime[TimerKey]);
-                if (TimerRemainingTime[TimerKey] <= 0)
+                if (instance.TimerRemainingTime[TimerKey] <= 0)
                 {
                     //LogSystem.Log("TimerManager", "Timer Removed");
                     TriggerTimer(TimerKey);

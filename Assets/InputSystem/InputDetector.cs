@@ -44,7 +44,7 @@ public class InputDetector : MonoBehaviour
                 if (PlayerStateManager.Instance.PlayerIsCrouching == false && PlayerStateManager.Instance.PlayerIsOnGround == true)
                 {
                     // Crouch
-                    EventManager.TriggerEvent("PC_Crouch");
+                    EventManager.TriggerEvent("PC_CrouchCheck");
                 }
             }
             else
@@ -52,8 +52,8 @@ public class InputDetector : MonoBehaviour
                 if (PlayerStateManager.Instance.PlayerIsCrouching == true)
                 {
                     // Uncrouch
-                    //LogSystem.Log(gameObject, "ID Is cause of uncrouch.");
-                    EventManager.TriggerEvent("PC_Uncrouch");
+                    LogSystem.Log(gameObject, "ID 1 Is cause of uncrouch.");
+                    EventManager.TriggerEvent("PC_UncrouchCheck");
                 }
             }
         }
@@ -65,7 +65,7 @@ public class InputDetector : MonoBehaviour
         if (PlayerStateManager.Instance.PlayerIsCrouching == true)
         {
             // Uncrouch
-            //LogSystem.Log(gameObject, "ID Is cause of uncrouch.");
+            LogSystem.Log(gameObject, "ID 2 Is cause of uncrouch.");
             EventManager.TriggerEvent("PC_Uncrouch");
         }
         EventManager.TriggerEvent("IM_StopMoving");
