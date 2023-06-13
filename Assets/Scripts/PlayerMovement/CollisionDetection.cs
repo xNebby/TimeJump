@@ -7,26 +7,27 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
 {
 
     // This is for the player Specifically.
-    public float FuzzyCheck = 0.5f;
+    private float FuzzyCheck = 0.5f;
     [Space(10)]
     [Header("Collision Values")]
-    public ContactPoint2D[] Contacts = new ContactPoint2D[16];
-    public List<ContactPoint2D> ContactsList = new List<ContactPoint2D>(16);
-    public Vector2 ContactNormal;
-    public Vector2 PlayerNormal;
+    private ContactPoint2D[] Contacts = new ContactPoint2D[16];
+    private List<ContactPoint2D> ContactsList = new List<ContactPoint2D>(16);
+    private Vector2 ContactNormal;
+    private Vector2 PlayerNormal;
     [Space(10)]
     [Header("Rotation Values")]
-    public float PlayerRotationNormal;
-    public float RotateSpeed = 5f;
-    public float PlayerWalkAngle = 45f;
+    private float PlayerRotationNormal;
+    private float RotateSpeed = 5f;
+    private float PlayerWalkAngle = 45f;
     [Space(10)]
     [Header("Gravity Values")]
-    public bool EnableGravity = true;
+    private bool EnableGravity = true;
     [Space(5)]
-    public float WorldGravityScale = 10f;
-    public float PlayerGravityScale = 10f;
-    public float CurrentGravityMult = 0f;
-    public float TerminalMult = 40f;
+    //private float WorldGravityScale = 10f;
+    private float PlayerGravityScale = 10f;
+    private float CurrentGravityMult = 0f;
+    private float TerminalMult = 40f;
+    public float GravityForceConstant = 300f;
 
 
     void OnEnable()
@@ -182,6 +183,11 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
         PlayerManager.Instance.PlayerRB.velocity += (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
     }
 
+    public void GravityForce()
+    {
+        PlayerManager.Instance.PlayerRB.AddForce(PlayerStateManager.Instance.PlayerGravity * GravityForceConstant);
+    }
+
     public void ResetGravity()
     {
         CurrentGravityMult = 0f;
@@ -200,7 +206,14 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
         {
             PlayerManager.Instance.PlayerRB.rotation = PlayerRotationNormal - PlayerWalkAngle;
         }
-        IncreaseGravity();
+        //IncreaseGravity();
+        if (PlayerStateManager.Instance.PlayerIsOnGround)
+        {
+
+        } else
+        {
+            GravityForce();
+        }
     }
 
 }

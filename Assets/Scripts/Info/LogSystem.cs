@@ -18,7 +18,7 @@ public class LogSystem : SingletonClass<LogSystem>
     void OnDisable()
     {
         // This is only ever called when the log is disabled, as it *should not happen*.
-        Debug.LogError("[LogSystem] LogSystem was Disabled!");
+        Debug.LogWarning("[LogSystem] LogSystem was Disabled!");
         if (SaveAuto == true)
         {
             SaveLogs();
@@ -49,7 +49,7 @@ public class LogSystem : SingletonClass<LogSystem>
             Instance.LogStore.Add((Instance.LogStore.Count), ConstructorLog);
         } else
         {
-            Debug.LogError("[LogSystem] Log Error from " + v_ObjName + " with the log of " + v_LogString);
+            Debug.LogWarning("[LogSystem] Log Error from " + v_ObjName + " with the log of " + v_LogString);
         }
     }
 

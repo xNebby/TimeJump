@@ -38,7 +38,7 @@ public class InputDetector : MonoBehaviour
     void LightPerformed(InputAction.CallbackContext context)
     {
         LightVector = m_PlayerInputActions.Player.LightMove.ReadValue<Vector2>();
-        FireflyFollow.Instance.UpdateVector(LightVector);
+        FireflyFollow.Instance.UpdateVector();
     }
     void LightCanceled(InputAction.CallbackContext context)
     {
@@ -103,12 +103,13 @@ public class InputDetector : MonoBehaviour
 
     void JumpStarted(InputAction.CallbackContext context)
     {
-        
+        InputManager.Instance.AddJumpTicket(1, "ID", true);
     }
 
     void JumpCanceled(InputAction.CallbackContext context)
     {
-
+        LogSystem.Log(gameObject, "Jump cancelled in ID");
+        InputManager.Instance.RemoveJumpTicket("ID");
     }
 
     //

@@ -10,12 +10,14 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
     [Space(10)]
     [Header("Physics States")]
     public bool PlayerIsCrouching = false;
+    public bool PlayerCanJump = false;
     public bool PlayerIsJumping = false;
     public bool PlayerIsOnGround = false;
     public bool PlayerIsSprint = false;
     public bool PlayerIsTouchWall = false;
     public bool PlayerIsWallSlide = false;
     public bool PlayerIsOnRamp = false;
+    public bool CrouchJumpCharged = false;
     [Space(10)]
     [Header("World States")]
     public float TimeScale = 1f;
@@ -47,6 +49,12 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StartListening("PC_Crouch", Crouch);
         EventManager.StartListening("PC_Uncrouch", Uncrouch);
+
+        EventManager.StartListening("PC_CrouchJumpCharged", m_CrouchJumpCharged);
+        EventManager.StartListening("PC_CrouchJumpCancelled", m_CrouchJumpCancelled);
+
+        EventManager.StartListening("PJ_JumpStarted", m_JumpStarted);
+        EventManager.StartListening("PJ_JumpStopped", m_JumpStopped);
     }
     void OnDisable()
     {
@@ -73,10 +81,38 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StopListening("PC_Crouch", Crouch);
         EventManager.StopListening("PC_Uncrouch", Uncrouch);
+
+        EventManager.StopListening("PC_CrouchJumpCharged", m_CrouchJumpCharged);
+        EventManager.StopListening("PC_CrouchJumpCancelled", m_CrouchJumpCancelled);
+
+        EventManager.StopListening("PJ_JumpStarted", m_JumpStarted);
+        EventManager.StopListening("PJ_JumpStopped", m_JumpStopped);
     }
 
     // Encapsulation methods
     
+    void m_CrouchJumpCharged()
+    {
+        CrouchJumpCharged = true;
+        GroundStateCheck();
+    }
+    void m_CrouchJumpCancelled()
+    {
+        CrouchJumpCharged = false;
+        GroundStateCheck();
+    }
+
+    void m_JumpStarted()
+    {
+        PlayerIsJumping = true;
+        GroundStateCheck();
+    }
+    void m_JumpStopped()
+    {
+        PlayerIsJumping = false;
+        GroundStateCheck();
+    }
+
     void Crouch()
     {
         PlayerIsCrouching = true;
@@ -168,6 +204,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
         if (PlayerIsOnGround == false)
         {
             PlayerIsOnGround = true;
+            PlayerCanJump = true;
             GroundStateCheck();
         }
     }
@@ -176,6 +213,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
         if (PlayerIsOnGround == true)
         {
             PlayerIsOnGround = false;
+            PlayerCanJump = false;
             GroundStateCheck();
         }
     }
@@ -217,6 +255,8 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
         WallStateCheck();
         SprintStateCheck();
     }
+
+
     public void GroundStateCheck()
     {
         if (PlayerIsOnGround == false)
@@ -226,6 +266,14 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
                 //LogSystem.Log(gameObject, "PSM is cause of uncrouch.");
                 //EventManager.TriggerEvent("PC_Uncrouch");
             //}
+            if (PlayerIsJumping == true)
+            {
+                PlayerCanJump = false;
+            }
+            if (CrouchJumpCharged == true)
+            {
+                EventManager.TriggerEvent("PC_CrouchJumpCancelled");
+            }
         } else
         {
             PlayerIsOnRamp = false;

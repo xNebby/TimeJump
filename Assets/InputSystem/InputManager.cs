@@ -10,14 +10,92 @@ public class InputManager : SingletonClass<InputManager>
     public Vector2 ID_MovementVector;
     public int CurrentPriority;
     public Vector2 IM_PlayerVector;
+    public Dictionary<string, JumpPriorityTicket> JumpList = new Dictionary<string, JumpPriorityTicket>();
+    public int CurrentJumpPriority;
+    public bool IM_JumpBool;
 
     public override void Awake()
     {
         Keylist = new Dictionary<string, Vector3>();
         ID_MovementVector = Vector2.zero;
         CurrentPriority = 0;
+        CurrentJumpPriority = 0;
+        IM_JumpBool = false;
+        JumpList = new Dictionary<string, JumpPriorityTicket>();
+        /*JumpPriorityTicket DefaultVar;
+        DefaultVar.constructor(-1, "Default", false);
+        JumpList.Add("Default", DefaultVar);*/
         base.Awake();
     }
+
+    public void ChangedJump()
+    {
+        string TempText = "The jumpbool is " + IM_JumpBool.ToString(); 
+        LogSystem.Log(gameObject, TempText);
+        if (IM_JumpBool == true)
+        {
+            EventManager.TriggerEvent("IM_StartJump");
+        } else
+        {
+            EventManager.TriggerEvent("IM_StopJump");
+        }
+    }
+
+    public void AddJumpTicket(int v_Priority, string v_Source, bool v_Jump)
+    {
+        JumpPriorityTicket TempTicket = new JumpPriorityTicket();
+        TempTicket.constructor(v_Priority, v_Source, v_Jump);
+        if (JumpList.ContainsKey(v_Source))
+        {
+            JumpList[v_Source] = TempTicket;
+        } else
+        {
+            JumpList.Add(v_Source, TempTicket);
+        }
+        if (v_Priority >= CurrentJumpPriority)
+        {
+            CurrentJumpPriority = v_Priority;
+            IM_JumpBool = v_Jump;
+            ChangedJump();
+        }
+    }
+    public bool RemoveJumpTicket(string v_Source)
+    {
+        if (JumpList.ContainsKey(v_Source))
+        {
+            LogSystem.Log(gameObject, v_Source + " is found in the jumplist dictionary");
+            JumpList.Remove(v_Source);
+            JumpPriorityCheck();
+            ChangedJump();
+            return true;
+        } else
+        {
+            LogSystem.Log(gameObject, v_Source + " is not found in the jumplist dictionary");
+            return false;
+        }
+    }
+    /*
+    public void AddJumpTicket(int v_Priority, bool v_Jump)
+    {
+        JumpPriorityTicket TempTicket = new JumpPriorityTicket();
+        TempTicket.constructor(v_Priority, v_Source, v_Jump);
+    }*/
+
+    public void JumpPriorityCheck()
+    {
+        IM_JumpBool = false;
+        CurrentJumpPriority = 0;
+        Dictionary<string, JumpPriorityTicket> JumpListClone = new Dictionary<string, JumpPriorityTicket>(JumpList);
+        foreach (string key in JumpListClone.Keys)
+        {
+            if (JumpList[key].Priority > CurrentJumpPriority)
+            {
+                IM_JumpBool = JumpList[key].Jump;
+                CurrentJumpPriority = JumpList[key].Priority;
+            }
+        }
+    }
+
     // The .z of the vector3 contains the priority, the .x and .y represent the vector.
     public void UpdateVector(Vector2 v_Velocity, string v_Name)
     {
@@ -118,5 +196,22 @@ public class InputManager : SingletonClass<InputManager>
         PlayerManager.Instance.UpdatePMM_IM_Vector(ID_MovementVector);
 
         IM_PlayerVector = ID_MovementVector;
+    }
+}
+
+public class JumpPriorityTicket
+{
+    public int Priority;
+    public string Source;
+    public bool Jump;
+    public void constructor(int v_Priority, string v_Source, bool v_Jump)
+    {
+        Source = v_Source;
+        constructor(v_Priority, v_Jump);
+    }
+    public void constructor(int v_Priority, bool v_Jump)
+    {
+        Priority = v_Priority;
+        Jump = v_Jump;
     }
 }
