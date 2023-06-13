@@ -39,6 +39,7 @@ public class InputDetector : MonoBehaviour
     {
         LightVector = m_PlayerInputActions.Player.LightMove.ReadValue<Vector2>();
         FireflyFollow.Instance.UpdateVector();
+        //FireflyFollow.Instance.BasicMove();
     }
     void LightCanceled(InputAction.CallbackContext context)
     {

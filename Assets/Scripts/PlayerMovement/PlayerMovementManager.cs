@@ -50,7 +50,7 @@ public class PlayerMovementManager : MonoBehaviour
 
         //CollisionDetection.Instance.CheckMovement(gameObject, PlayerManager.Instance.PlayerRB, FinalVector, CollisionDetection.Instance.PlayerGravity, ParallelVector);
         CollisionDetection.Instance.CheckCollision(ParallelVector);
-        FireflyFollow.Instance.PlayerMove(ParallelVector * PlayerStateManager.Instance.TimeScale);
+        //FireflyFollow.Instance.PlayerMove(ParallelVector * PlayerStateManager.Instance.TimeScale);
         PlayerRB.velocity = (ParallelVector * PlayerStateManager.Instance.TimeScale);
     
     
