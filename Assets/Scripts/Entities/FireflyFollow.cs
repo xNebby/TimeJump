@@ -52,21 +52,16 @@ public class FireflyFollow : SingletonClass<FireflyFollow>
         UpdateVector();
 
     }
-*/
+
     public void PlayerMove(Vector2 v_Move)
     {
         //FireflyRB.velocity = v_Move;
-    }
+    }*/
 
     // Move Towards mouse, if mouse is out of range then move to shortest distance between the mouse. 
     public void UpdateVector()
     {
-       
-    
-    }
-
-    void update()
-    {
+        //Debug.Log("follow");
         MouseCoords = Mouse.current.position.ReadValue();
         MousePoint = cam.ScreenToWorldPoint(new Vector3(MouseCoords.x, MouseCoords.y, cam.nearClipPlane));
         MousePosition = new Vector2(MousePoint.x, MousePoint.y);
@@ -81,6 +76,20 @@ public class FireflyFollow : SingletonClass<FireflyFollow>
         {
             FireflyRB.MovePosition((MousePlayerVector / MousePlayerVector.magnitude * MaxDistance) + ParentPos);
         }
+
+    }
+/*
+    public void BasicMove()
+    {
+        MouseCoords = Mouse.current.position.ReadValue();
+        MousePoint = cam.ScreenToWorldPoint(new Vector3(MouseCoords.x, MouseCoords.y, 0));
+        FireflyRB.velocity = (MousePoint - FireflyRB.transform.position);
+    }
+*/
+    void Update()
+    {
+        UpdateVector();
+        //BasicMove();
     }
 
 

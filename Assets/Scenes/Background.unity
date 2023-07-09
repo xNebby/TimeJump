@@ -315,37 +315,6 @@ MonoBehaviour:
   TimerListChanged: 1
   MultiplierSum: 1
   MSM_StatusVector: {x: 0, y: 0}
---- !u!1 &1603460069
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1603460070}
-  m_Layer: 0
-  m_Name: LogSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1603460070
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603460069}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5477393, y: -12.577196, z: -0.09173592}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1770156086
 GameObject:
   m_ObjectHideFlags: 0
@@ -390,7 +359,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1795579123
 GameObject:
@@ -423,6 +392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 7712989441278657248, guid: af828be26ef821f44ac503d018b4202d, type: 3}
   CameraPrefab: {fileID: 1830817430092794603, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+  LightPrefab: {fileID: 2455065034006696839, guid: e62047b8369799048bc33599c5a65a52, type: 3}
 --- !u!4 &1795579125
 Transform:
   m_ObjectHideFlags: 0

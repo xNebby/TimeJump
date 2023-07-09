@@ -9,6 +9,8 @@ public class LoadManager : MonoBehaviour
     private GameObject PlayerPrefab;
     [SerializeField]
     private GameObject CameraPrefab;
+    [SerializeField]
+    private GameObject LightPrefab;
     private Vector2 Spawnplace;
 
     // Start is called before the first frame update
@@ -25,7 +27,7 @@ public class LoadManager : MonoBehaviour
             //Debug.Log(Spawnplace);
             LoadPlayer();
             LoadCam();
-
+            LoadLight();
         }
     }
 
@@ -37,5 +39,9 @@ public class LoadManager : MonoBehaviour
     void LoadCam()
     {
         Instantiate(CameraPrefab, Spawnplace, Quaternion.identity);
+    }
+    void LoadLight()
+    {
+        Instantiate(LightPrefab, Spawnplace, Quaternion.identity);
     }
 }
