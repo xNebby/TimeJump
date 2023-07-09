@@ -73,7 +73,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""InteractPrimary"",
                     ""type"": ""Button"",
                     ""id"": ""b326ab35-e507-4b18-89ac-686c9dc3059d"",
                     ""expectedControlType"": ""Button"",
@@ -98,6 +98,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""InteractSecondary"",
+                    ""type"": ""Button"",
+                    ""id"": ""a82c3481-54df-4f0a-b610-804b4a760636"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -306,7 +315,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Interact"",
+                    ""action"": ""InteractPrimary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -317,7 +326,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Interact"",
+                    ""action"": ""InteractPrimary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -452,6 +461,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""LightMove"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3b93da0-f0c4-4ee3-81de-192b63031a8d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""InteractSecondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3efd5787-5a6b-490e-b611-1d223388be01"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""InteractSecondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -558,9 +589,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_InteractPrimary = m_Player.FindAction("InteractPrimary", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_LightMove = m_Player.FindAction("LightMove", throwIfNotFound: true);
+        m_Player_InteractSecondary = m_Player.FindAction("InteractSecondary", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
@@ -629,9 +661,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Pause;
     private readonly InputAction m_Player_Dodge;
-    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_InteractPrimary;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_LightMove;
+    private readonly InputAction m_Player_InteractSecondary;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -641,9 +674,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @InteractPrimary => m_Wrapper.m_Player_InteractPrimary;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @LightMove => m_Wrapper.m_Player_LightMove;
+        public InputAction @InteractSecondary => m_Wrapper.m_Player_InteractSecondary;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -668,15 +702,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dodge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
-                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @InteractPrimary.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractPrimary;
+                @InteractPrimary.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractPrimary;
+                @InteractPrimary.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractPrimary;
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @LightMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightMove;
                 @LightMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightMove;
                 @LightMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightMove;
+                @InteractSecondary.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractSecondary;
+                @InteractSecondary.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractSecondary;
+                @InteractSecondary.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractSecondary;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -696,15 +733,18 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
+                @InteractPrimary.started += instance.OnInteractPrimary;
+                @InteractPrimary.performed += instance.OnInteractPrimary;
+                @InteractPrimary.canceled += instance.OnInteractPrimary;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
                 @LightMove.started += instance.OnLightMove;
                 @LightMove.performed += instance.OnLightMove;
                 @LightMove.canceled += instance.OnLightMove;
+                @InteractSecondary.started += instance.OnInteractSecondary;
+                @InteractSecondary.performed += instance.OnInteractSecondary;
+                @InteractSecondary.canceled += instance.OnInteractSecondary;
             }
         }
     }
@@ -775,9 +815,10 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
+        void OnInteractPrimary(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnLightMove(InputAction.CallbackContext context);
+        void OnInteractSecondary(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

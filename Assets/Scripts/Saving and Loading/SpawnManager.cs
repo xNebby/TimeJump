@@ -20,7 +20,7 @@ public class SpawnManager : SingletonClass<SpawnManager>
 
     void ResetVars()
     {
-        LogSystem.Log("SpawnManager", "Reset Vars");
+        //LogSystem.Log("SpawnManager", "Reset Vars");
         Respawns = new Dictionary<int, Vector2>();
         Respawns.Add(0, Vector2.zero);
         CurrentSpawn = 0;

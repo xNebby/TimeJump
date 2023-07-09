@@ -28,23 +28,38 @@ public class LogSystem : SingletonClass<LogSystem>
     {
         // Save the Dictionary in a format which makes sense
     }
+    public static void LogError(GameObject v_Obj, string v_LogString)
+    {
+        string t_ObjName = v_Obj.name;
+        LogSystem.Instance.LocalLog(t_ObjName, ("[ERROR] " + v_LogString), true);
+    }
+    public static void LogError(string v_ObjName, string v_LogString)
+    {
+        LogSystem.Instance.LocalLog(v_ObjName, ("[ERROR] " + v_LogString), true);
+    }
     public static void Log(GameObject v_Obj, string v_LogString)
     {
         string t_ObjName = v_Obj.name;
-        LogSystem.Instance.LocalLog(t_ObjName, v_LogString);
+        LogSystem.Instance.LocalLog(t_ObjName, v_LogString, false);
     }
     public static void Log(string v_ObjName, string v_LogString)
     {
-        LogSystem.Instance.LocalLog(v_ObjName, v_LogString);
+        LogSystem.Instance.LocalLog(v_ObjName, v_LogString, false);
     }
-    void LocalLog(string v_ObjName, string v_LogString)
+    void LocalLog(string v_ObjName, string v_LogString, bool v_ErrorLog)
     {
         var ConstructorLog = new Log();
         if (ConstructorLog.Init(LogStore.Count, v_ObjName, v_LogString))
         {
             if (DebugLog == true)
             {
-                Debug.Log("[" + v_ObjName + "] " + v_LogString);
+                if (v_ErrorLog)
+                {
+                    Debug.LogError("[" + v_ObjName + "] " + v_LogString);
+                } else
+                {
+                    Debug.Log("[" + v_ObjName + "] " + v_LogString);
+                }
             }
             Instance.LogStore.Add((Instance.LogStore.Count), ConstructorLog);
         } else

@@ -28,6 +28,9 @@ public class InputDetector : MonoBehaviour
         m_PlayerInputActions.Player.LightMove.performed += LightPerformed;
         m_PlayerInputActions.Player.LightMove.canceled += LightCanceled;
 
+        m_PlayerInputActions.Player.InteractPrimary.performed += PrimaryInput;
+        m_PlayerInputActions.Player.InteractSecondary.performed += SecondaryInput;
+
         m_PlayerInputActions.Player.SprintTap.started += SprintStarted;
         m_PlayerInputActions.Player.SprintTap.performed += SprintTapPerformed;
         m_PlayerInputActions.Player.SprintHold.canceled += SprintHoldCanceled;
@@ -45,8 +48,14 @@ public class InputDetector : MonoBehaviour
 
     }
 
-
-
+    void PrimaryInput(InputAction.CallbackContext context)
+    {
+        EventManager.TriggerEvent("ID_PrimaryInput");
+    }
+    void SecondaryInput(InputAction.CallbackContext context)
+    {
+        EventManager.TriggerEvent("ID_SecondaryInput");
+    }
     //
     void MovementPerformed(InputAction.CallbackContext context)
     {

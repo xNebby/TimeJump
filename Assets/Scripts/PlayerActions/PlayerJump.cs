@@ -18,6 +18,7 @@ public class PlayerJump : MonoBehaviour
     private Rigidbody2D RB;
     public bool TimerActive = false;
     public bool Coyote = false;
+    public bool BounceBack = false;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -72,9 +73,16 @@ public class PlayerJump : MonoBehaviour
     void ReleaseJump()
     {
         CrouchJumpCancelled();
-        TimerManager.AddTimer("PJ_CoyoteTime", CoyoteTime, CoyoteRelease);
-        Coyote = true;
-        LogSystem.Log(gameObject, "Coyote timer added.");
+        if (PlayerStateManager.Instance.PlayerIsOnGround)
+        {
+
+        } else
+        {
+
+            TimerManager.AddTimer("PJ_CoyoteTime", CoyoteTime, CoyoteRelease);
+            Coyote = true;
+            LogSystem.Log(gameObject, "Coyote timer added.");
+        }
     }
 
     void CoyoteRelease()
@@ -102,16 +110,30 @@ public class PlayerJump : MonoBehaviour
             {
                 if (Coyote)
                 {
-                    LogSystem.Log(gameObject, "Touched ground");
+                    LogSystem.Log(gameObject, "coyote time ENDING pranked");
                     TimerManager.RemoveTimer("PJ_CoyoteTime", CoyoteRelease);
                     Coyote = false;
+                    EventManager.TriggerEvent("PJ_JumpStopped");
+                } else
+                {
+
+                    if (TimerActive == true)
+                    {
+                        LogSystem.Log(gameObject, "JUMP touched ground from jumping");
+
+                        TimerManager.RemoveTimer("PJ_JumpStarted", ReleaseJumpTimer);
+                        TimerActive = false;
+                        EventManager.TriggerEvent("PJ_JumpStopped");
+                    }
+
                 }
                 JumpConstant = JumpInitialConstant;
+
             } else
             {
                 if (Coyote)
                 {
-                    JumpConstant = CollisionDetection.Instance.GravityForceConstant / 2;
+                    JumpConstant = CollisionDetection.Instance.GravityForceConstant;
                 } else
                 {
                     JumpConstant = JumpAirConstant;
