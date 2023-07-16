@@ -13,11 +13,14 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
     public bool PlayerCanJump = false;
     public bool PlayerIsJumping = false;
     public bool PlayerIsOnGround = false;
+    public bool PlayerTouchRoof = false;
     public bool PlayerIsSprint = false;
     public bool PlayerIsTouchWall = false;
     public bool PlayerIsWallSlide = false;
     public bool PlayerIsOnRamp = false;
     public bool CrouchJumpCharged = false;
+    public bool PlayerDashing = false;
+    public bool PlayerCanDash = false;
     [Space(10)]
     [Header("World States")]
     public float TimeScale = 1f;
@@ -31,6 +34,9 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StartListening("CD_TouchGround", GroundTouched);
         EventManager.StartListening("CD_LeaveGround", GroundLeft);
+
+        EventManager.StartListening("CD_TouchRoof", m_RoofTouched);
+        EventManager.StartListening("CD_LeaveRoof", m_RoofLeft);
 
         EventManager.StartListening("CD_TouchWall", WallTouched);
         EventManager.StartListening("CD_LeaveWall", WallLeft);
@@ -55,6 +61,9 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StartListening("PJ_JumpStarted", m_JumpStarted);
         EventManager.StartListening("PJ_JumpStopped", m_JumpStopped);
+
+        EventManager.StartListening("PD_DashStarted", m_DashStarted);
+        EventManager.StartListening("PD_DashStopped", m_DashStopped);
     }
     void OnDisable()
     {
@@ -63,6 +72,9 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StopListening("CD_TouchGround", GroundTouched);
         EventManager.StopListening("CD_LeaveGround", GroundLeft);
+
+        EventManager.StopListening("CD_TouchRoof", m_RoofTouched);
+        EventManager.StopListening("CD_LeaveRoof", m_RoofLeft);
 
         EventManager.StopListening("CD_TouchWall", WallTouched);
         EventManager.StopListening("CD_LeaveWall", WallLeft);
@@ -87,10 +99,34 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
 
         EventManager.StopListening("PJ_JumpStarted", m_JumpStarted);
         EventManager.StopListening("PJ_JumpStopped", m_JumpStopped);
+
+        EventManager.StopListening("PD_DashStarted", m_DashStarted);
+        EventManager.StopListening("PD_DashStopped", m_DashStopped);
     }
 
     // Encapsulation methods
-    
+
+    void m_RoofTouched()
+    {
+        PlayerTouchRoof = true;
+        JumpStateCheck();
+    }
+    void m_RoofLeft()
+    {
+        PlayerTouchRoof = false;
+        JumpStateCheck();
+    }
+
+    void m_DashStarted()
+    {
+        PlayerDashing = true;
+        PlayerCanDash = false;
+    }
+    void m_DashStopped()
+    {
+        PlayerDashing = false;
+    }
+
     void m_CrouchJumpCharged()
     {
         CrouchJumpCharged = true;
@@ -205,6 +241,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
         {
             PlayerIsOnGround = true;
             PlayerCanJump = true;
+            PlayerCanDash = true;
             GroundStateCheck();
         }
     }
@@ -254,8 +291,19 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
         GroundStateCheck();
         WallStateCheck();
         SprintStateCheck();
+        JumpStateCheck();
     }
 
+    public void JumpStateCheck()
+    {
+        if (PlayerTouchRoof)
+        {
+            if (PlayerIsJumping)
+            {
+                EventManager.TriggerEvent("IM_StopJump");
+            }
+        }
+    }
 
     public void GroundStateCheck()
     {

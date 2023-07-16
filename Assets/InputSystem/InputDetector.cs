@@ -18,37 +18,51 @@ public class InputDetector : MonoBehaviour
     {
         // Create new instance of input sheet.
         m_PlayerInputActions = new PlayerInputActions();
+        PlayerActionsListeners();
+
+
+    }
+
+    void PlayerActionsListeners()
+    {
+
         // Enable inputs from the Player class of the input sheet.
         m_PlayerInputActions.Player.Enable();
-
 
         m_PlayerInputActions.Player.Movement.performed += MovementPerformed;
         m_PlayerInputActions.Player.Movement.canceled += MovementCanceled;
 
-        m_PlayerInputActions.Player.LightMove.performed += LightPerformed;
-        m_PlayerInputActions.Player.LightMove.canceled += LightCanceled;
-
         m_PlayerInputActions.Player.InteractPrimary.performed += PrimaryInput;
         m_PlayerInputActions.Player.InteractSecondary.performed += SecondaryInput;
+
+        m_PlayerInputActions.Player.Dash.performed += DashPerformed;
+
+
+        m_PlayerInputActions.Player.Pause.performed += Paused;
 
         m_PlayerInputActions.Player.SprintTap.started += SprintStarted;
         m_PlayerInputActions.Player.SprintTap.performed += SprintTapPerformed;
         m_PlayerInputActions.Player.SprintHold.canceled += SprintHoldCanceled;
+
         m_PlayerInputActions.Player.Jump.started += JumpStarted;
         m_PlayerInputActions.Player.Jump.canceled += JumpCanceled;
     }
 
-    void LightPerformed(InputAction.CallbackContext context)
+    // 
+    void Paused(InputAction.CallbackContext context)
     {
-        LightVector = m_PlayerInputActions.Player.LightMove.ReadValue<Vector2>();
-        FireflyFollow.Instance.UpdateVector();
-        //FireflyFollow.Instance.BasicMove();
-    }
-    void LightCanceled(InputAction.CallbackContext context)
-    {
+        // Disable player actions, enable ui actions, enable ui, prevent physics updates etc. 
 
     }
 
+
+    //
+    void DashPerformed(InputAction.CallbackContext context)
+    {
+        EventManager.TriggerEvent("ID_Dash");
+    }
+
+    //
     void PrimaryInput(InputAction.CallbackContext context)
     {
         EventManager.TriggerEvent("ID_PrimaryInput");

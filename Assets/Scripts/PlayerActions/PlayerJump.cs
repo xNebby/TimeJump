@@ -9,11 +9,13 @@ public class PlayerJump : MonoBehaviour
     //private float JumpSpeed = 1f;
     private float JumpHeight = 1f;
     private float NormalJumpHeight = 1f;
-    private float CrouchJumpHeight = 2f;
-    private float JumpAirConstant = 700f;
-    private float JumpInitialConstant = 1050f;
+    private float CrouchJumpHeight = 1.5f;
+    private float JumpAirConstant = 600f;
+    private float JumpInitialConstant = 800f;
     public float JumpConstant = 0f;
     private float JumpTime = 0.3f;
+    private float CrouchJumpTime = 0.5f;
+    private float NormalJumpTime = 0.2f;
     private float CoyoteTime = 0.15f;
     private Rigidbody2D RB;
     public bool TimerActive = false;
@@ -56,32 +58,40 @@ public class PlayerJump : MonoBehaviour
 
     void ReleaseJumpButton()
     {
-        if (TimerActive == true)
+        if (Coyote == false)
         {
-            TimerManager.RemoveTimer("PJ_JumpStarted", ReleaseJumpTimer);
-            TimerActive = false;
+            if (TimerActive == true)
+            {
+                TimerManager.RemoveTimer("PJ_JumpStarted", ReleaseJumpTimer);
+                TimerActive = false;
+            }
+            LogSystem.Log(gameObject, "Jump stopped via button.");//
+            ReleaseJump();
         }
-        LogSystem.Log(gameObject, "Jump stopped via button.");
-        ReleaseJump();
     }
     void ReleaseJumpTimer()
     {
-        LogSystem.Log(gameObject, "Jump stopped via time.");
-        TimerActive = false;
-        ReleaseJump();
+        if (Coyote == false)
+        {
+            LogSystem.Log(gameObject, "Jump stopped via time.");
+            TimerActive = false;
+            ReleaseJump();
+        }
     }
     void ReleaseJump()
     {
-        CrouchJumpCancelled();
-        if (PlayerStateManager.Instance.PlayerIsOnGround)
+        if (Coyote == false)
         {
-
-        } else
-        {
-
-            TimerManager.AddTimer("PJ_CoyoteTime", CoyoteTime, CoyoteRelease);
-            Coyote = true;
-            LogSystem.Log(gameObject, "Coyote timer added.");
+            CrouchJumpCancelled();
+            if (PlayerStateManager.Instance.PlayerIsOnGround)
+            {
+            }
+            else
+            {
+                TimerManager.AddTimer("PJ_CoyoteTime", CoyoteTime, CoyoteRelease);
+                Coyote = true;
+                LogSystem.Log(gameObject, "Coyote timer added.");//
+            }
         }
     }
 
@@ -95,10 +105,12 @@ public class PlayerJump : MonoBehaviour
     void CrouchJumpCharged()
     {
         JumpHeight = CrouchJumpHeight;
+        JumpTime = CrouchJumpTime;
     }
     void CrouchJumpCancelled()
     {
         JumpHeight = NormalJumpHeight;
+        JumpTime = NormalJumpTime; 
     }
 
     // Update is called once per frame
@@ -108,13 +120,15 @@ public class PlayerJump : MonoBehaviour
         {
             if (PlayerStateManager.Instance.PlayerIsOnGround)
             {
+
                 if (Coyote)
                 {
                     LogSystem.Log(gameObject, "coyote time ENDING pranked");
                     TimerManager.RemoveTimer("PJ_CoyoteTime", CoyoteRelease);
                     Coyote = false;
                     EventManager.TriggerEvent("PJ_JumpStopped");
-                } else
+                }
+                else
                 {
 
                     if (TimerActive == true)
@@ -129,22 +143,31 @@ public class PlayerJump : MonoBehaviour
                 }
                 JumpConstant = JumpInitialConstant;
 
-            } else
+            }
+            else
             {
                 if (Coyote)
                 {
                     JumpConstant = CollisionDetection.Instance.GravityForceConstant;
-                } else
+                }
+                else
                 {
                     JumpConstant = JumpAirConstant;
                 }
             }
-            //Debug.Log(JumpConstant);
-            Vector2 JumpVector = (PlayerStateManager.Instance.PlayerGravity) * -1 * JumpHeight * JumpConstant;
-            //Debug.Log(JumpVector);
-            //RB.AddForce(JumpVector, ForceMode2D.Impulse);
-            RB.AddForce(JumpVector);
+
+            if (PlayerStateManager.Instance.PlayerDashing == false)
+            {
+                //Debug.Log(JumpConstant);
+                Vector2 JumpVector = (PlayerStateManager.Instance.PlayerGravity) * -1 * JumpHeight * JumpConstant;
+                //Debug.Log(JumpVector);
+                //RB.AddForce(JumpVector, ForceMode2D.Impulse);
+                RB.AddForce(JumpVector);
+                //Debug.Log(JumpVector);
+                //RB.velocity += JumpVector;
+            }
         }
+        
     }
 }
  

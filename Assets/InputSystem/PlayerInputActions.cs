@@ -64,7 +64,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dodge"",
+                    ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""325c7a27-b478-400a-bfcc-65e34c8eb5c1"",
                     ""expectedControlType"": ""Button"",
@@ -89,15 +89,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""LightMove"",
-                    ""type"": ""Value"",
-                    ""id"": ""8509f280-308d-46ea-92d0-8cc476656bca"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""InteractSecondary"",
@@ -289,11 +280,11 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""bdb7cb44-dac9-40de-9dc6-bb77502b37d9"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Dodge"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -304,7 +295,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Dodge"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -351,116 +342,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""a2cffd28-c43f-409f-a20c-2d8ff28727fd"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""152cbf90-7a24-4e5e-a417-c2658619e258"",
-                    ""path"": ""<Mouse>/delta/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""09f49aed-c46f-45a1-9257-58bb00b66262"",
-                    ""path"": ""<Mouse>/delta/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""b2f13966-b1ee-4970-baae-654538e670ca"",
-                    ""path"": ""<Mouse>/delta/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""2ebf497c-6f20-4293-8253-4d8da9411400"",
-                    ""path"": ""<Mouse>/delta/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""ae6cb3bf-0842-49df-8a00-0983c2703b63"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""6502c245-dec2-437a-9e60-7583abd822b2"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""847d676c-e9d0-4887-b9a7-75ae2160a09b"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""4fc1d580-87e7-4401-bd54-4f0e209ede8b"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""8e1c8058-3ef4-4d57-a928-d9376d1c827d"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""LightMove"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -588,10 +469,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_SprintHold = m_Player.FindAction("SprintHold", throwIfNotFound: true);
         m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
         m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
-        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
+        m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_InteractPrimary = m_Player.FindAction("InteractPrimary", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_LightMove = m_Player.FindAction("LightMove", throwIfNotFound: true);
         m_Player_InteractSecondary = m_Player.FindAction("InteractSecondary", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -660,10 +540,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SprintHold;
     private readonly InputAction m_Player_Movement;
     private readonly InputAction m_Player_Pause;
-    private readonly InputAction m_Player_Dodge;
+    private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_InteractPrimary;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_LightMove;
     private readonly InputAction m_Player_InteractSecondary;
     public struct PlayerActions
     {
@@ -673,10 +552,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @SprintHold => m_Wrapper.m_Player_SprintHold;
         public InputAction @Movement => m_Wrapper.m_Player_Movement;
         public InputAction @Pause => m_Wrapper.m_Player_Pause;
-        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
+        public InputAction @Dash => m_Wrapper.m_Player_Dash;
         public InputAction @InteractPrimary => m_Wrapper.m_Player_InteractPrimary;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @LightMove => m_Wrapper.m_Player_LightMove;
         public InputAction @InteractSecondary => m_Wrapper.m_Player_InteractSecondary;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -699,18 +577,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Pause.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPause;
-                @Dodge.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
-                @Dodge.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
-                @Dodge.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDodge;
+                @Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                 @InteractPrimary.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractPrimary;
                 @InteractPrimary.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractPrimary;
                 @InteractPrimary.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractPrimary;
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
-                @LightMove.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightMove;
-                @LightMove.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightMove;
-                @LightMove.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightMove;
                 @InteractSecondary.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractSecondary;
                 @InteractSecondary.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractSecondary;
                 @InteractSecondary.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteractSecondary;
@@ -730,18 +605,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
-                @Dodge.started += instance.OnDodge;
-                @Dodge.performed += instance.OnDodge;
-                @Dodge.canceled += instance.OnDodge;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
                 @InteractPrimary.started += instance.OnInteractPrimary;
                 @InteractPrimary.performed += instance.OnInteractPrimary;
                 @InteractPrimary.canceled += instance.OnInteractPrimary;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @LightMove.started += instance.OnLightMove;
-                @LightMove.performed += instance.OnLightMove;
-                @LightMove.canceled += instance.OnLightMove;
                 @InteractSecondary.started += instance.OnInteractSecondary;
                 @InteractSecondary.performed += instance.OnInteractSecondary;
                 @InteractSecondary.canceled += instance.OnInteractSecondary;
@@ -814,10 +686,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnSprintHold(InputAction.CallbackContext context);
         void OnMovement(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
-        void OnDodge(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         void OnInteractPrimary(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnLightMove(InputAction.CallbackContext context);
         void OnInteractSecondary(InputAction.CallbackContext context);
     }
     public interface IUIActions

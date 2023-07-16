@@ -27,7 +27,7 @@ public class LoadManager : MonoBehaviour
             //Debug.Log(Spawnplace);
             LoadPlayer();
             LoadCam();
-            LoadLight();
+            //LoadLight();
         }
     }
 

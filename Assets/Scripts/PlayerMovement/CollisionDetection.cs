@@ -23,11 +23,11 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
     [Header("Gravity Values")]
     private bool EnableGravity = true;
     [Space(5)]
-    //private float WorldGravityScale = 10f;
+    private float WorldGravityScale = 10f;
     private float PlayerGravityScale = 10f;
     private float CurrentGravityMult = 0f;
     private float TerminalMult = 40f;
-    public float GravityForceConstant = 300f;
+    public float GravityForceConstant = 10f;
 
 
     void OnEnable()
@@ -65,11 +65,14 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
             ContactsList.Add(Contacts[i]);
         }
 
+        bool GroundContact = false;
+        bool RampContact = false;
+        bool RoofContact = false;
+        bool WallContact = false;
+
         if (ContactsList.Count == 0)
         {
             RotateToNormal();
-            EventManager.TriggerEvent("CD_LeaveGround");
-            EventManager.TriggerEvent("CD_LeaveRamp");
         }
         PlayerNormal = Vector2Extensions.rotateDeg(PlayerStateManager.Instance.PlayerGravity, PlayerManager.Instance.PlayerRB.rotation);
         //Debug.DrawRay(new Vector3(PlayerManager.Instance.PlayerRB.position.x, PlayerManager.Instance.PlayerRB.position.x, -10), new Vector3(PlayerNormal.x, PlayerNormal.y, -10), Color.red);
@@ -82,30 +85,73 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
                 // Touching some kind of floor
                 if (ContactAngle == 0)
                 {
-                    EventManager.TriggerEvent("CD_TouchGround");
+                    GroundContact = true;
                 }
                 else if (Mathf.Abs(ContactAngle) <= PlayerWalkAngle)
                 {
                     float angl = Mathf.Abs(Vector2.Angle(PlayerStateManager.Instance.PlayerGravity, ContactNormal));
-                    Debug.Log(angl);
+                    //Debug.Log(angl);
                     if (angl < 5f)
                     {
-                        EventManager.TriggerEvent("CD_TouchGround");
+                        GroundContact = true;
                         RotateToNormal();
                     } else
                     {
-                        EventManager.TriggerEvent("CD_LeaveGround");
-                        EventManager.TriggerEvent("CD_TouchRamp");
+                        RampContact = true;
                     }
-                }
-                else
-                {
-                    EventManager.TriggerEvent("CD_LeaveGround");
-                    EventManager.TriggerEvent("CD_LeaveRamp");
                 }
             }
 
+            if (ContactNormal == PlayerNormal)
+            {
+                RoofContact = true;
+            }
+
+            if (Vector2.Perpendicular(ContactNormal) == PlayerNormal)
+            {
+                WallContact = true;
+            } else if (Vector2.Perpendicular(ContactNormal) * -1 == PlayerNormal)
+            {
+                WallContact = true;
+            }
+
         }
+
+        if (GroundContact & RampContact == false)
+        {
+            EventManager.TriggerEvent("CD_TouchGround");
+        }
+        else if (GroundContact == false)
+        {
+            EventManager.TriggerEvent("CD_LeaveGround");
+        }
+
+        if (RampContact)
+        {
+            EventManager.TriggerEvent("CD_TouchRamp");
+        } else
+        {
+            EventManager.TriggerEvent("CD_LeaveRamp");
+        }
+
+        if (WallContact)
+        {
+            EventManager.TriggerEvent("CD_TouchWall");
+        }
+        else
+        {
+            EventManager.TriggerEvent("CD_LeaveWall");
+        }
+
+        if (RoofContact)
+        {
+            EventManager.TriggerEvent("CD_TouchRoof");
+        } else
+        {
+            EventManager.TriggerEvent("CD_LeaveRoof");
+        }
+
+
     }
 
     void RotateToNormal()
@@ -147,7 +193,7 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
     /// END OF ROTATION SECTION
     /// START OF GRAVITY SECTION
     /// </summary>
-
+    /*
     void IncreaseGravity()
     {
         if (EnableGravity)
@@ -182,10 +228,13 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
         //PlayerManager.Instance.PlayerRB.MovePosition()
         PlayerManager.Instance.PlayerRB.velocity += (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
     }
-
+    */
     public void GravityForce()
     {
-        PlayerManager.Instance.PlayerRB.AddForce(PlayerStateManager.Instance.PlayerGravity * GravityForceConstant);
+        if (PlayerStateManager.Instance.PlayerDashing == false)
+        {
+            PlayerManager.Instance.PlayerRB.AddForce(PlayerStateManager.Instance.PlayerGravity * GravityForceConstant);
+        }
     }
 
     public void ResetGravity()

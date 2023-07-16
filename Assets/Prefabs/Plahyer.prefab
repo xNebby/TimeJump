@@ -155,10 +155,12 @@ GameObject:
   - component: {fileID: 8267420580013944478}
   - component: {fileID: 2485421349066449822}
   - component: {fileID: 7609720372775857969}
+  - component: {fileID: 2502228692646468662}
   - component: {fileID: 2634606033794382279}
   - component: {fileID: 6096754081026744813}
   - component: {fileID: 7712989441278657252}
   - component: {fileID: 7712989441278657253}
+  - component: {fileID: 4509300840924807871}
   m_Layer: 0
   m_Name: Plahyer
   m_TagString: Player
@@ -226,7 +228,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b369b7ab7adb9745a971bfc321cf26d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpConstant: 0
   TimerActive: 0
+  Coyote: 0
+  BounceBack: 0
 --- !u!114 &7609720372775857969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +250,21 @@ MonoBehaviour:
   PlayerScale: 0
   PlayerWidth: 0
   ChargeTime: 2
+--- !u!114 &2502228692646468662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7712989441278657248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95cd2ba665f0325409b65778523b7677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerVector: {x: 0, y: 0}
+  DashVector: {x: 0, y: 0}
+  IsDashing: 0
 --- !u!114 &2634606033794382279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,17 +298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78bf8abd46726af4f8501af589996fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FuzzyCheck: 0.5
-  ContactNormal: {x: 0, y: 0}
-  PlayerNormal: {x: 0, y: 0}
-  PlayerRotationNormal: 0
-  RotateSpeed: 5
-  PlayerWalkAngle: 45
-  EnableGravity: 1
-  WorldGravityScale: 10
-  PlayerGravityScale: 10
-  CurrentGravityMult: 0
-  TerminalMult: 40
+  GravityForceConstant: 500
 --- !u!61 &7712989441278657252
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -336,6 +346,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &4509300840924807871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7712989441278657248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a15d6a10733e8dc47954da66496f0ab5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9024533897788825527
 GameObject:
   m_ObjectHideFlags: 0

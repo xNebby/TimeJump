@@ -206,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929690, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: SecondaryInput
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929690, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: InteractionEnabled

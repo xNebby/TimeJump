@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6968735838600520056}
+  - component: {fileID: 2605003108284751259}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -33,6 +34,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2605003108284751259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6968735838600520059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b50b39ae9aaa37418fbd58d02fb2bd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6968735839150016904
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,17 +190,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hitbox
       objectReference: {fileID: 0}
+    - target: {fileID: 1935973318195929690, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
+      propertyPath: InteractionEnabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929691, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: m_Size.x
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929691, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: m_Size.y
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929691, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: m_Offset.y
-      value: -1
+      value: -2.75
       objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929693, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: m_RootOrder

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FireflyFollow : SingletonClass<FireflyFollow>
+public class FireflyFollow : MonoBehaviour
 {
+
     private Rigidbody2D FireflyRB;
 
     //private float FireflySize = 0.25f;
-
+    /*
     public Vector2 MouseVector;
     public Vector2 VectorToMouse;
     public Vector2 MousePlayerVector;
@@ -19,13 +20,13 @@ public class FireflyFollow : SingletonClass<FireflyFollow>
     private float MaxDistanceSq;
 
     private Camera cam;
-
+    */
 
     void OnEnable()
     {
-        MaxDistanceSq = MaxDistance * MaxDistance;
-        FireflyRB = GetComponent<Rigidbody2D>();
-        cam = Camera.main;
+        //MaxDistanceSq = MaxDistance * MaxDistance;
+        //FireflyRB = GetComponent<Rigidbody2D>();
+        //cam = Camera.main;
         /*
         EventManager.StartListening("PC_Crouch", FireflyCrouch);
         EventManager.StartListening("PC_Uncrouch", FireflyUncrouch);*/
@@ -61,6 +62,7 @@ public class FireflyFollow : SingletonClass<FireflyFollow>
     // Move Towards mouse, if mouse is out of range then move to shortest distance between the mouse. 
     public void UpdateVector()
     {
+        /*
         //Debug.Log("follow");
         MouseCoords = Mouse.current.position.ReadValue();
         MousePoint = cam.ScreenToWorldPoint(new Vector3(MouseCoords.x, MouseCoords.y, cam.nearClipPlane));
@@ -76,6 +78,7 @@ public class FireflyFollow : SingletonClass<FireflyFollow>
         {
             FireflyRB.MovePosition((MousePlayerVector / MousePlayerVector.magnitude * MaxDistance) + ParentPos);
         }
+        */
 
     }
 /*
@@ -88,7 +91,7 @@ public class FireflyFollow : SingletonClass<FireflyFollow>
 */
     void Update()
     {
-        UpdateVector();
+        //UpdateVector();
         //BasicMove();
     }
 
