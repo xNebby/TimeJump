@@ -125,6 +125,7 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
     void m_DashStopped()
     {
         PlayerDashing = false;
+        GroundStateCheck();
     }
 
     void m_CrouchJumpCharged()
@@ -324,7 +325,9 @@ public class PlayerStateManager : SingletonClass<PlayerStateManager>
             }
         } else
         {
+            PlayerCanJump = true;
             PlayerIsOnRamp = false;
+            PlayerCanDash = true;
         }
             
     }

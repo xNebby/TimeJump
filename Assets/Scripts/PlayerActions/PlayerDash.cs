@@ -51,6 +51,7 @@ public class PlayerDash : MonoBehaviour
         // add Disable invuln
         IsDashing = false;
         EventManager.TriggerEvent("PD_DashStopped");
+        // If on floor allow for dash to occur again.
     }
 
     void FixedUpdate()
