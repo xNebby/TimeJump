@@ -16,9 +16,13 @@ public class Interactable : MonoBehaviour
     public bool PrimaryInput;
     public bool SecondaryInput;
 
+    public bool WiringInput;
+
     public bool PlayerInHitbox;
     private Rigidbody2D RB;
     private BoxCollider2D BC;
+
+    private int ObjCounter;
 
     void OnEnable()
     {
@@ -34,7 +38,7 @@ public class Interactable : MonoBehaviour
         EventManager.StartListening("ID_PrimaryInput", PrimaryInputGiven);
         EventManager.StartListening("ID_SecondaryInput", SecondaryInputGiven);
 
-
+        ObjCounter = 0;
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         gameObject.transform.GetChild(1).gameObject.SetActive(false);
     }
@@ -50,16 +54,22 @@ public class Interactable : MonoBehaviour
     {
         if (AwaitingInput)
         {
-            string EventName = "Interaction_" + InteractionEventName + "_Primary";
-            EventManager.TriggerEvent(EventName);
+            if (PrimaryInput)
+            {
+                string EventName = "Interaction_" + InteractionEventName + "_Primary";
+                EventManager.TriggerEvent(EventName);
+            }
         }
     }
     void SecondaryInputGiven()
     {
         if (AwaitingInput)
         {
-            string EventName = "Interaction_" + InteractionEventName + "_Secondary";
-            EventManager.TriggerEvent(EventName);
+            if (SecondaryInput)
+            {
+                string EventName = "Interaction_" + InteractionEventName + "_Secondary";
+                EventManager.TriggerEvent(EventName);
+            }
         }
     }
 
@@ -73,12 +83,12 @@ public class Interactable : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-
+            ObjCounter += 1;
             //LogSystem.Log(gameObject, "Trigger entered");
             // Add a check that it isnt in a cutscene.
             if (InteractionEnabled)
             {
-                if (RequireInput)
+                if (RequireInput || WiringInput)
                 {
                     AwaitingInput = true;
                     // Add stuff to display the input buttons.
@@ -103,36 +113,36 @@ public class Interactable : MonoBehaviour
                 {
                     InvokeEvent();
                 }
-                if (PrimaryInput)
-                {
-                    gameObject.transform.GetChild(0).gameObject.SetActive(true);
-                }
-                else
-                {
-                    gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                }
-                if (SecondaryInput)
-                {
-                    gameObject.transform.GetChild(1).gameObject.SetActive(true);
-                }
-                else
-                {
-                    gameObject.transform.GetChild(1).gameObject.SetActive(false);
-                }
+            }
+        }
+        if (other.gameObject.tag == "PhysicsObj")
+        {
+            ObjCounter += 1;
+            if (RequireInput == false)
+            {
+                InvokeEvent();
             }
         }
     }
 
     public void OnTriggerExit2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" || other.gameObject.tag == "PhysicsObj")
         {
-            //LogSystem.Log(gameObject, "Exited trigger");
-            AwaitingInput = false;
-            string EventName = "Interaction_" + InteractionEventName + "_Revoked";
-            EventManager.TriggerEvent(EventName);
-            gameObject.transform.GetChild(0).gameObject.SetActive(false);
-            gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            ObjCounter -= 1;
+            if (ObjCounter < 0)
+            {
+                ObjCounter = 0;
+            }
+            if (ObjCounter == 0)
+            {
+                //LogSystem.Log(gameObject, "Exited trigger");
+                AwaitingInput = false;
+                string EventName = "Interaction_" + InteractionEventName + "_Revoked";
+                EventManager.TriggerEvent(EventName);
+                gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                gameObject.transform.GetChild(1).gameObject.SetActive(false);
+            }
         }
     }
 }

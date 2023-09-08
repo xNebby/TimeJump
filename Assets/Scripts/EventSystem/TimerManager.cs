@@ -104,9 +104,9 @@ public class TimerManager : MonoBehaviour
 
     public static void RemoveTimer(string TimerName, UnityAction listener)
     {
-        LogSystem.Log(instance.gameObject, "Got this guy");
+        //LogSystem.Log(instance.gameObject, "Got this guy");
         if (timerManager == null) return;
-        Debug.Log(timerManager);
+        //Debug.Log(timerManager);
         EventWrapper thisEvent = null;
         if (instance.TimerDictionary.TryGetValue(TimerName, out thisEvent))
         {

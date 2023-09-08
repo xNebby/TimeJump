@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CameraAnchor
   - KillBox
+  - PhysicsObj
   layers:
   - Default
   - TransparentFX

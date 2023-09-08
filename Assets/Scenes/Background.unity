@@ -158,11 +158,14 @@ MonoBehaviour:
   PlayerCanJump: 0
   PlayerIsJumping: 0
   PlayerIsOnGround: 0
+  PlayerTouchRoof: 0
   PlayerIsSprint: 0
   PlayerIsTouchWall: 0
   PlayerIsWallSlide: 0
   PlayerIsOnRamp: 0
   CrouchJumpCharged: 0
+  PlayerDashing: 0
+  PlayerCanDash: 0
   TimeScale: 1
   WorldGravity: {x: 0, y: -1}
   PlayerGravity: {x: 0, y: -1}

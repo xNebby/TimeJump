@@ -7,13 +7,13 @@ public class PlayerJump : MonoBehaviour
     [Space(10)]
     [Header("Jump Values")]
     //private float JumpSpeed = 1f;
-    private float JumpHeight = 1f;
+    private float JumpHeight = 1.5f;
     private float NormalJumpHeight = 1f;
     private float CrouchJumpHeight = 1.5f;
     private float JumpAirConstant = 600f;
     private float JumpInitialConstant = 800f;
     public float JumpConstant = 0f;
-    private float JumpTime = 0.3f;
+    private float JumpTime = 0.4f;
     private float CrouchJumpTime = 0.5f;
     private float NormalJumpTime = 0.2f;
     private float CoyoteTime = 0.15f;
@@ -49,6 +49,7 @@ public class PlayerJump : MonoBehaviour
         if (PlayerStateManager.Instance.PlayerIsOnGround)
         {
             TimerManager.AddTimer("PJ_JumpStarted", JumpTime, ReleaseJumpTimer);
+            TimerActive = true;
             EventManager.TriggerEvent("PJ_JumpStarted");
         } else
         {
@@ -130,16 +131,23 @@ public class PlayerJump : MonoBehaviour
                 }
                 else
                 {
-
+                    /*
                     if (TimerActive == true)
                     {
-                        LogSystem.Log(gameObject, "JUMP touched ground from jumping");
+                        if (BounceBack == false)
+                        {
+                            BounceBack = true;
+                        } else
+                        {
+                            BounceBack = false;
+                            LogSystem.Log(gameObject, "JUMP touched ground from jumping");
 
-                        TimerManager.RemoveTimer("PJ_JumpStarted", ReleaseJumpTimer);
-                        TimerActive = false;
-                        EventManager.TriggerEvent("PJ_JumpStopped");
+                            TimerManager.RemoveTimer("PJ_JumpStarted", ReleaseJumpTimer);
+                            TimerActive = false;
+                            EventManager.TriggerEvent("PJ_JumpStopped");
+                        }
                     }
-
+                    */
                 }
                 JumpConstant = JumpInitialConstant;
 

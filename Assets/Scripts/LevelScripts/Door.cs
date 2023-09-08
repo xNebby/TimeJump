@@ -14,11 +14,18 @@ public class Door : MonoBehaviour
 
     void OnEnable()
     {
-        MaxDoorIndex += 1;
-        CurrentDoorIndex = MaxDoorIndex;
-        EventName = "Door" + CurrentDoorIndex.ToString(); 
+
         m_Interactable = gameObject.transform.GetChild(1).GetComponent<Interactable>();
-        m_Interactable.InteractionEventName = EventName;
+        if (m_Interactable.InteractionEventName == null)
+        {
+            MaxDoorIndex += 1;
+            CurrentDoorIndex = MaxDoorIndex;
+            EventName = "Door" + CurrentDoorIndex.ToString();
+            m_Interactable.InteractionEventName = EventName;
+        } else
+        {
+            EventName = m_Interactable.InteractionEventName;
+        }
         EventName = "Interaction_" + EventName;
         EventManager.StartListening(EventName + "_Invoked", Walk);
         EventManager.StartListening(EventName + "_Primary", Primary);
