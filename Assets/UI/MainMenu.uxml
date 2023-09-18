@@ -1,9 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
->
-    <engine:Label text="Hello World! From UXML" />
-</engine:UXML>
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="MainMenu" style="flex-grow: 1; align-items: flex-start; justify-content: center;">
+        <ui:VisualElement name="Orange" style="height: 100%; width: 25%; background-color: rgb(219, 103, 11); position: absolute; left: 0;">
+            <ui:VisualElement style="height: 100%; rotate: 30deg; background-color: rgb(219, 103, 11); left: 80%; top: -45%; width: 100%; min-width: 100%; min-height: 100%; position: absolute;" />
+            <ui:VisualElement style="height: 100%; rotate: -30deg; background-color: rgb(219, 103, 11); left: 80%; top: auto; width: 100%; bottom: -45%; align-items: auto; position: absolute;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Red" style="height: 100%; width: 25%; background-color: rgb(219, 11, 11); position: absolute;">
+            <ui:VisualElement style="height: 100%; rotate: 30deg; background-color: rgb(219, 11, 11); left: 60%; top: -45%; width: 100%; min-width: 100%; min-height: 100%; position: absolute;" />
+            <ui:VisualElement style="height: 100%; rotate: -30deg; background-color: rgb(219, 11, 11); left: 60%; top: auto; width: 100%; bottom: -45%; align-items: auto; position: absolute;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="TextBox" style="width: 25%; height: 100%; position: absolute;">
+            <ui:VisualElement name="TitleBox" style="top: 5%; background-color: rgb(229, 50, 63);">
+                <ui:Label text=" PLATFORMER" display-tooltip-when-elided="true" name="Title" enable-rich-text="true" style="justify-content: center; align-items: center; -unity-text-align: middle-center; -unity-font: url(&apos;project://database/Assets/Fonts/Revorioum%20PERSONAL%20use.ttf?fileID=12800000&amp;guid=53e2e2f7a29ba4849be5a73a549fdbcd&amp;type=3#Revorioum PERSONAL use&apos;); -unity-font-style: normal; font-size: 25px; top: 10%;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
