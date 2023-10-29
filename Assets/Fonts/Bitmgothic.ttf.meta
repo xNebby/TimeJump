@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: c25feda59060a204cba2534cea5ac4b4
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Bitmgothic
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: b0669823b19562a49b42d7b9abf9242d, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
