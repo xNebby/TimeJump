@@ -9,6 +9,8 @@ public class SaveScreen : MonoBehaviour
 
     public GameObject m_MainMenu, m_SavesMenu, m_ConfirmMenu;
 
+    public int value;
+
     public bool NG = false;
     // Start is called before the first frame update
     void Start()
@@ -42,7 +44,8 @@ public class SaveScreen : MonoBehaviour
         {
             // Send to confirmation screen.
             m_ConfirmMenu.SetActive(true);
-            //m_ConfirmMenu.ConfirmScreen.SaveValue = SaveNumber;
+            value = SaveNumber;
+            EventManager.TriggerEvent("m_SaveScreenSyncValue");
             m_SavesMenu.SetActive(false);
         } else
         {
