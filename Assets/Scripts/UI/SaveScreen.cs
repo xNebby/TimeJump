@@ -9,7 +9,7 @@ public class SaveScreen : MonoBehaviour
 
     public GameObject m_MainMenu, m_SavesMenu, m_ConfirmMenu;
 
-    public int value;
+    public ConfirmScreen m_ConfirmScreenScript;
 
     public bool NG = false;
     // Start is called before the first frame update
@@ -22,10 +22,14 @@ public class SaveScreen : MonoBehaviour
         m_SaveFive.onClick.AddListener(delegate { LoadSave(5); });
         m_Close.onClick.AddListener(Close);
 
+        m_ConfirmScreenScript = m_ConfirmMenu.GetComponent<ConfirmScreen>();
+
+    }
+    void OnEnable()
+    {
         EventManager.StartListening("m_SavesMenuNGTrue", delegate { NewGame(true); });
         EventManager.StartListening("m_SavesMenuNGFalse", delegate { NewGame(false); });
     }
-
     void OnDisable()
     {
         EventManager.StopListening("m_SavesMenuNGTrue", delegate { NewGame(true); });
@@ -44,12 +48,14 @@ public class SaveScreen : MonoBehaviour
         {
             // Send to confirmation screen.
             m_ConfirmMenu.SetActive(true);
-            value = SaveNumber;
-            EventManager.TriggerEvent("m_SaveScreenSyncValue");
+            Debug.Log(m_ConfirmScreenScript.SyncValue(SaveNumber));
             m_SavesMenu.SetActive(false);
+            Debug.Log("Synced save number!");
         } else
         {
-
+            // Check if the save exists.
+            // Load the save.
+            SaveLoader.Instance.Continue(SaveNumber);
         }
     }
     void Close()

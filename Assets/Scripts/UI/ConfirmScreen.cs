@@ -18,25 +18,18 @@ public class ConfirmScreen : MonoBehaviour
         m_Cancel.onClick.AddListener(Cancel);
         m_SaveScreenScript = m_SaveScreen.GetComponent<SaveScreen>();
     }
-    void OnEnable()
-    {
-        EventManager.StartListening("m_SaveScreenSyncValue", SyncValue);
-    }
-    void OnDisable()
-    {
-        EventManager.StartListening("m_SaveScreenSyncValue", SyncValue);
-    }
 
-    void SyncValue()
+    public bool SyncValue(int Value)
     {
-        SaveValue = m_SaveScreenScript.value;
-        Debug.Log(SaveValue);
+        SaveValue = Value;
+        return true;
     }
 
     void Confirm()
     {
         Debug.Log("Overwriting save " + SaveValue.ToString());
         // Load a new save and give it the id, Delete any save if it already has that id. 
+        SaveLoader.Instance.NewGame(SaveValue);
     }
     void Cancel()
     {

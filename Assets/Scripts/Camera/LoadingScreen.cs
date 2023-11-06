@@ -6,6 +6,7 @@ using Cinemachine;
 public class LoadingScreen : MonoBehaviour
 {
     public bool Loading;
+    public bool LoadWaiting;
     public bool VisibleState = false;
     public float Counter;
     public float TimePeriod = 2f;
@@ -28,7 +29,16 @@ public class LoadingScreen : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            StartShake();
+            if (Loading || VisibleState)
+            {
+                if (!LoadWaiting)
+                {
+                    EndLoad();
+                }
+            } else
+            {
+                Load();
+            }
         }
 
         if (Loading == true)
@@ -48,6 +58,15 @@ public class LoadingScreen : MonoBehaviour
                     VisibleState = true;
                     PositionVector = TransformVector;
                 }
+
+                if (LoadWaiting == true)
+                {
+                    LoadWaiting = false;
+                    Loading = true;
+                    VisibleState = true;
+                    PositionVector = TransformVector;
+                    Counter = 0;
+                }
             }
         } else
         {
@@ -64,10 +83,17 @@ public class LoadingScreen : MonoBehaviour
     }
     void EndLoad()
     {
-        Counter = 0;
-        VisibleState = true;
-        PositionVector = TransformVector;
-        Loading = true;
+        if (Loading == true)
+        {
+            LoadWaiting = true;
+        } else
+        {
+            Loading = true;
+            VisibleState = true;
+            PositionVector = TransformVector;
+            Counter = 0;
+            LoadWaiting = false;
+        }
     }
     void StartShake()
     {
