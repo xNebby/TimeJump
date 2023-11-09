@@ -13,14 +13,19 @@ public class SaveLoader : SingletonClass<SaveLoader>
     // Load game: Load into the level select. Enable the scene Async, passing along the save 
 
     public int CurrentLoadedSave = 0;
+    private bool WaitingForHide = false;
+    private bool WaitingForDeload = false;
 
     void OnEnable()
     {
+        EventManager.TriggerEvent("SaveLoader_Loaded");
         EventManager.StartListening("LevelSelectLoaded", FinaliseLoad);
+        EventManager.StartListening("LS_Hidden", HideConfirm);
     }
 
     void OnDisable()
     {
+        EventManager.StopListening("LS_Hidden", HideConfirm);
         EventManager.StopListening("LevelSelectLoaded", FinaliseLoad);
     }
 
@@ -38,18 +43,33 @@ public class SaveLoader : SingletonClass<SaveLoader>
 
     void FinaliseLoad()
     {
-        SceneManager.UnloadSceneAsync("Menu");
-        EventManager.TriggerEvent("LS_EndLoad");
+        if (WaitingForDeload)
+        {
+            WaitingForDeload = false;
+            //Debug.Log("Unload Menu");
+            SceneManager.UnloadSceneAsync("Menu");
+            EventManager.TriggerEvent("LS_EndLoad");
+        }
     }
 
     public void LoadSave(int SaveID)
     {
+        WaitingForDeload = true;
         CurrentLoadedSave = SaveID;
         // Load the level select, deload main menu
-        EventManager.TriggerEvent("LS_Load"); 
-        SceneManager.LoadScene("LevelSelect", LoadSceneMode.Additive);
+        WaitingForHide = true;
+        EventManager.TriggerEvent("LS_Load");
 
+    }
 
+    void HideConfirm()
+    {
+        //Debug.Log("HideConfirm Called");
+        if (WaitingForHide == true)
+        {
+            WaitingForHide = false;
+            SceneManager.LoadScene("LevelSelect", LoadSceneMode.Additive);
+        }
     }
 
     public void CreateSave(int SaveID)

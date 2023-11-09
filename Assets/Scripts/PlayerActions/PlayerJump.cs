@@ -6,26 +6,29 @@ public class PlayerJump : MonoBehaviour
 {
     [Space(10)]
     [Header("Jump Values")]
-    //private float JumpSpeed = 1f;
-    private float JumpHeight = 1.5f;
-    private float NormalJumpHeight = 1f;
-    private float CrouchJumpHeight = 1.5f;
-    private float JumpAirConstant = 600f;
-    private float JumpInitialConstant = 800f;
+    //public float JumpSpeed = 1f;
+    public float JumpHeight = 1.5f;
+    public float NormalJumpHeight = 1f;
+    public float CrouchJumpHeight = 1.5f;
+    public float JumpAirConstant = 600f;
+    public float JumpInitialConstant = 800f;
     public float JumpConstant = 0f;
-    private float JumpTime = 0.4f;
-    private float CrouchJumpTime = 0.5f;
-    private float NormalJumpTime = 0.2f;
-    private float CoyoteTime = 0.15f;
-    private Rigidbody2D RB;
+    public float JumpTime = 0.4f;
+    public float CrouchJumpTime = 0.5f;
+    public float NormalJumpTime = 0.2f;
+    public float CoyoteTime = 0.15f;
+    public Rigidbody2D RB;
+    public PlayerMovementManager m_PMM;
     public bool TimerActive = false;
     public bool Coyote = false;
     public bool BounceBack = false;
+    public bool Jumping = false;
 
     // Start is called before the first frame update
     void OnEnable()
     {
         RB = GetComponent<Rigidbody2D>();
+        m_PMM = GetComponent<PlayerMovementManager>();
         EventManager.StartListening("IM_StartJump", HoldingJump);
         EventManager.StartListening("IM_StopJump", ReleaseJumpButton);
 
@@ -50,6 +53,7 @@ public class PlayerJump : MonoBehaviour
         {
             TimerManager.AddTimer("PJ_JumpStarted", JumpTime, ReleaseJumpTimer);
             TimerActive = true;
+            Jumping = true;
             EventManager.TriggerEvent("PJ_JumpStarted");
         } else
         {
@@ -59,23 +63,18 @@ public class PlayerJump : MonoBehaviour
 
     void ReleaseJumpButton()
     {
-        if (Coyote == false)
+        if (Coyote == false & Jumping == true)
         {
-            if (TimerActive == true)
-            {
-                TimerManager.RemoveTimer("PJ_JumpStarted", ReleaseJumpTimer);
-                TimerActive = false;
-            }
             LogSystem.Log(gameObject, "Jump stopped via button.");//
             ReleaseJump();
         }
     }
     void ReleaseJumpTimer()
     {
-        if (Coyote == false)
+        TimerActive = false;
+        if (Coyote == false & Jumping == true)
         {
             LogSystem.Log(gameObject, "Jump stopped via time.");
-            TimerActive = false;
             ReleaseJump();
         }
     }
@@ -86,18 +85,23 @@ public class PlayerJump : MonoBehaviour
             CrouchJumpCancelled();
             if (PlayerStateManager.Instance.PlayerIsOnGround)
             {
+
             }
             else
             {
+                EventManager.TriggerEvent("PJ_CoyoteTimeStart");
                 TimerManager.AddTimer("PJ_CoyoteTime", CoyoteTime, CoyoteRelease);
                 Coyote = true;
                 LogSystem.Log(gameObject, "Coyote timer added.");//
             }
+            Jumping = false;
+            m_PMM.AddJumpVector(Vector2.zero);
         }
     }
 
     void CoyoteRelease()
     {
+        EventManager.TriggerEvent("PJ_CoyoteTimeEnd");
         LogSystem.Log(gameObject, "Coyote time is finished."); 
         Coyote = false;
         EventManager.TriggerEvent("PJ_JumpStopped");
@@ -156,7 +160,7 @@ public class PlayerJump : MonoBehaviour
             {
                 if (Coyote)
                 {
-                    JumpConstant = CollisionDetection.Instance.GravityForceConstant;
+
                 }
                 else
                 {
@@ -168,11 +172,17 @@ public class PlayerJump : MonoBehaviour
             {
                 //Debug.Log(JumpConstant);
                 Vector2 JumpVector = (PlayerStateManager.Instance.PlayerGravity) * -1 * JumpHeight * JumpConstant;
+                m_PMM.AddJumpVector(JumpVector);
                 //Debug.Log(JumpVector);
                 //RB.AddForce(JumpVector, ForceMode2D.Impulse);
-                RB.AddForce(JumpVector);
+                //RB.AddForce(JumpVector);
                 //Debug.Log(JumpVector);
                 //RB.velocity += JumpVector;
+                
+            }
+            if (Jumping == false)
+            {
+                m_PMM.AddJumpVector(Vector2.zero);
             }
         }
         

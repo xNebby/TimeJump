@@ -16,8 +16,13 @@ public class LoadingScreen : MonoBehaviour
 
     public void OnEnable()
     {
+        
         EventManager.StartListening("LS_Load", Load);
         EventManager.StartListening("LS_EndLoad", EndLoad);
+        if (VisibleState)
+        {
+            EndLoad();
+        }
     }
     public void OnDisable()
     {
@@ -52,10 +57,12 @@ public class LoadingScreen : MonoBehaviour
                 if (VisibleState)
                 {
                     VisibleState = false;
+                    EventManager.TriggerEvent("LS_Visible");
                     PositionVector = Vector3.zero;
                 } else
                 {
                     VisibleState = true;
+                    EventManager.TriggerEvent("LS_Hidden");
                     PositionVector = TransformVector;
                 }
 

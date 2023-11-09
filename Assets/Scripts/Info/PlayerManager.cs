@@ -100,7 +100,6 @@ public class PlayerManager : SingletonClass<PlayerManager>
             EventManager.TriggerEvent("PM_CanRespawn");
             LogSystem.Log("PlayerManager", "Player Respawned");
             EventManager.TriggerEvent("PM_RespawnPlayer");
-            CollisionDetection.Instance.ResetGravity();
             PlayerRB.gameObject.transform.position = SpawnManager.Instance.RespawnPlayer();
             PlayerHealth = PlayerMaxHealth;
             // Disable Movement lock, change player from death model to alive model

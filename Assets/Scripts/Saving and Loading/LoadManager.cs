@@ -13,6 +13,12 @@ public class LoadManager : MonoBehaviour
     private GameObject LightPrefab;
     private Vector2 Spawnplace;
 
+    void OnEnable()
+    {
+        EventManager.TriggerEvent("LevelBackground_Loaded");
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,14 +27,15 @@ public class LoadManager : MonoBehaviour
 
     void LoadList()
     {
-        if (SceneManager.GetActiveScene().name == "Background")
+        if (SceneManager.GetActiveScene().name != "Background")
         {
-            Spawnplace = SpawnManager.Instance.RespawnPlayer();
-            //Debug.Log(Spawnplace);
-            LoadPlayer();
-            LoadCam();
-            //LoadLight();
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Background"));
         }
+        Spawnplace = SpawnManager.Instance.RespawnPlayer();
+        //Debug.Log(Spawnplace);
+        LoadPlayer();
+        LoadCam();
+        //LoadLight();
     }
 
     void LoadPlayer()

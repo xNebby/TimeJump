@@ -228,10 +228,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b369b7ab7adb9745a971bfc321cf26d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpConstant: 0
+  JumpHeight: 1
+  NormalJumpHeight: 1
+  CrouchJumpHeight: 1.25
+  JumpAirConstant: 10
+  JumpInitialConstant: 10
+  JumpConstant: 10
+  JumpTime: 0.2
+  CrouchJumpTime: 0.25
+  NormalJumpTime: 0.2
+  CoyoteTime: 0.15
+  RB: {fileID: 0}
+  m_PMM: {fileID: 0}
   TimerActive: 0
   Coyote: 0
   BounceBack: 0
+  Jumping: 0
 --- !u!114 &7609720372775857969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +298,14 @@ MonoBehaviour:
   PlayerMovementMultiplier: 4
   SprintMultiplier: 1.5
   PlayerRB: {fileID: 0}
+  ResultantVector: {x: 0, y: 0}
+  EnableGravity: 1
+  WorldGravityScale: 10
+  PlayerGravityScale: 10
+  CurrentGravityMult: 0
+  TerminalMult: 40
+  Coyote: 0
+  JumpVector: {x: 0, y: 0}
 --- !u!114 &6096754081026744813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78bf8abd46726af4f8501af589996fad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GravityForceConstant: 500
 --- !u!61 &7712989441278657252
 BoxCollider2D:
   m_ObjectHideFlags: 0

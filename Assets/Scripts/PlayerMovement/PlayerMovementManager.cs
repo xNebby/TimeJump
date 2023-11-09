@@ -13,8 +13,21 @@ public class PlayerMovementManager : MonoBehaviour
     public float PlayerMovementMultiplier = 4f;
     public float SprintMultiplier = 1.5f;
     public Rigidbody2D PlayerRB;
+    public Vector2 ResultantVector;
 
-    public void Awake()
+    [Space(10)]
+    [Header("Gravity Values")]
+    public bool EnableGravity = true;
+    [Space(5)]
+    public float WorldGravityScale = 10f;
+    public float PlayerGravityScale = 10f;
+    public float CurrentGravityMult = 0f;
+    public float TerminalMult = 40f;
+    public bool Coyote = false;
+
+    public Vector2 JumpVector;
+
+    void OnEnable()
     {
         MSM_StatusVector = Vector2.zero;
         IM_PlayerVector = Vector2.zero;
@@ -22,9 +35,21 @@ public class PlayerMovementManager : MonoBehaviour
         ParallelVector = Vector2.zero;
         PlayerNormal = Vector2.zero;
         FinalVector = Vector2.zero;
+        JumpVector = Vector2.zero;
         PlayerMovementMultiplier = 4f;
         PlayerRB = GetComponent<Rigidbody2D>();
+
+        EventManager.StartListening("PM_RespawnPlayer", RespawnActions);
+        EventManager.StartListening("PJ_CoyoteTimeStart", delegate { CoyoteTime(true); });
+        EventManager.StartListening("PJ_CoyoteTimeEnd", delegate { CoyoteTime(false); });
     }
+    void OnDisable()
+    {
+        EventManager.StopListening("PM_RespawnPlayer", RespawnActions);
+        EventManager.StopListening("PJ_CoyoteTimeStart", delegate { CoyoteTime(true); });
+        EventManager.StopListening("PJ_CoyoteTimeEnd", delegate { CoyoteTime(false); });
+    }
+
 
     public void IM_UpdateVelocity(Vector2 v_Velocity)
     {
@@ -40,20 +65,52 @@ public class PlayerMovementManager : MonoBehaviour
         MSM_PlayerVectorMultiplier = v_Multiplier;
     }
 
-    
+    private Vector2 GravityVector()
+    {
+        CurrentGravityMult += PlayerGravityScale * Time.fixedDeltaTime;
+        return (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
+    }
+
+
+    public void AddJumpVector(Vector2 v_JumpVector)
+    {
+        JumpVector = v_JumpVector;
+    }
+
+    void CoyoteTime(bool Var)
+    {
+        Coyote = Var;
+    }
+
+    private void RespawnActions()
+    {
+        CurrentGravityMult = 0;
+    }
 
     void FixedUpdate()
     {
         FinalVector = (IM_PlayerVector * MSM_PlayerVectorMultiplier * PlayerMovementMultiplier) + MSM_StatusVector;
         PlayerNormal = Vector2Extensions.rotateDeg(PlayerStateManager.Instance.PlayerGravity, PlayerRB.rotation);
         ParallelVector = (Vector2.Perpendicular(PlayerNormal) * FinalVector.x);
-
+        
         //CollisionDetection.Instance.CheckMovement(gameObject, PlayerManager.Instance.PlayerRB, FinalVector, CollisionDetection.Instance.PlayerGravity, ParallelVector);
         CollisionDetection.Instance.CheckCollision(ParallelVector);
         //FireflyFollow.Instance.PlayerMove(ParallelVector * PlayerStateManager.Instance.TimeScale);
-        PlayerRB.velocity = (ParallelVector * PlayerStateManager.Instance.TimeScale);
-    
-    
+
+        if (Coyote == true & PlayerStateManager.Instance.PlayerIsOnGround == false)
+        {
+            CurrentGravityMult = 0;
+        }
+        if (PlayerStateManager.Instance.PlayerIsOnGround == false)
+        {
+            ResultantVector = (ParallelVector + JumpVector + GravityVector()) * PlayerStateManager.Instance.TimeScale; 
+        } else {
+            ResultantVector = (ParallelVector + JumpVector) * PlayerStateManager.Instance.TimeScale;
+            CurrentGravityMult = 0;
+        }
+
+        PlayerRB.velocity = (ResultantVector);
+
     }
 
 }

@@ -19,15 +19,6 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
     private float PlayerRotationNormal;
     private float RotateSpeed = 5f;
     private float PlayerWalkAngle = 45f;
-    [Space(10)]
-    [Header("Gravity Values")]
-    private bool EnableGravity = true;
-    [Space(5)]
-    private float WorldGravityScale = 10f;
-    private float PlayerGravityScale = 10f;
-    private float CurrentGravityMult = 0f;
-    private float TerminalMult = 40f;
-    public float GravityForceConstant = 10f;
 
 
     void OnEnable()
@@ -189,62 +180,6 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
         }
     }
 
-    /// <summary>
-    /// END OF ROTATION SECTION
-    /// START OF GRAVITY SECTION
-    /// </summary>
-    /*
-    void IncreaseGravity()
-    {
-        if (EnableGravity)
-        {
-            if (PlayerStateManager.Instance.PlayerIsOnGround == false & PlayerStateManager.Instance.PlayerIsOnRamp == false & PlayerStateManager.Instance.PlayerIsWallSlide == false)
-            {
-                if (CurrentGravityMult < TerminalMult)
-                {
-                    CurrentGravityMult += PlayerGravityScale * Time.fixedDeltaTime;
-                }
-                else
-                {
-                    CurrentGravityMult = TerminalMult;
-                }
-                ApplyGravity();
-            }
-            else
-            {
-                CurrentGravityMult = 0;
-            }
-        }
-    }
-
-    public void ApplyGravity()
-    {
-        // Check downwards in the relative gravity- if can move towards gravity, do so. 
-        // If you can move down, but the player has a collision- then it means they are either touching a wall or a ramp.
-        // In either case, the normals must be compared to find the rotation in comparison to the players current rotation. 
-        // If the rotation is within the walking angle boundary, change the players rotation to match and move downwards.
-        // If the rotation is not within the walking angle boundary, then change the player's state to wall grabbing. 
-
-        //PlayerManager.Instance.PlayerRB.MovePosition()
-        PlayerManager.Instance.PlayerRB.velocity += (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
-    }
-    */
-    public void GravityForce()
-    {
-        if (PlayerStateManager.Instance.PlayerDashing == false)
-        {
-            PlayerManager.Instance.PlayerRB.AddForce(PlayerStateManager.Instance.PlayerGravity * GravityForceConstant);
-        }
-    }
-
-    public void ResetGravity()
-    {
-        CurrentGravityMult = 0f;
-    }
-    /// <summary>
-    ///  END OF GRAVITY SECTION
-    /// </summary>
-
     void FixedUpdate()
     {
         if (PlayerManager.Instance.PlayerRB.rotation > PlayerRotationNormal + PlayerWalkAngle)
@@ -254,14 +189,6 @@ public class CollisionDetection : SingletonClass<CollisionDetection>
         else if (PlayerManager.Instance.PlayerRB.rotation < PlayerRotationNormal - PlayerWalkAngle)
         {
             PlayerManager.Instance.PlayerRB.rotation = PlayerRotationNormal - PlayerWalkAngle;
-        }
-        //IncreaseGravity();
-        if (PlayerStateManager.Instance.PlayerIsOnGround)
-        {
-
-        } else
-        {
-            GravityForce();
         }
     }
 
