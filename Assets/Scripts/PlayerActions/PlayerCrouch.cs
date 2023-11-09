@@ -20,8 +20,8 @@ public class PlayerCrouch : MonoBehaviour
         EventManager.StartListening("PC_UncrouchCheck", PlayerUnCheck);
         PlayerRB = GetComponent<Rigidbody2D>();
         CrouchHeight = 0.5f;
-        PlayerScale = 1f;
-        PlayerWidth = 1f;
+        PlayerScale = 1.5f;
+        PlayerWidth = 1.5f;
     }
     void OnDisable()
     {

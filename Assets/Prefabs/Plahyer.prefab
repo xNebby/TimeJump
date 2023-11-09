@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2761419034190485783}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalScale: {x: 0.5, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7712989441278657254}
@@ -68,6 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4642262464607287715}
   - component: {fileID: 6480986799073871140}
+  - component: {fileID: 2420436034375641721}
   m_Layer: 0
   m_Name: PlayerRenderer
   m_TagString: Untagged
@@ -84,8 +85,8 @@ Transform:
   m_GameObject: {fileID: 5128435855942516511}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7712989441278657254}
   m_RootOrder: 2
@@ -131,8 +132,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 0.25, b: 0.25, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 588245709607a0b43aade7bd7adc02a5, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -142,6 +143,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2420436034375641721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128435855942516511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 581c49d0d1e90c04f8ca463fc8160352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7712989441278657248
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,8 +190,8 @@ Transform:
   m_GameObject: {fileID: 7712989441278657248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1835909656788459398}
   - {fileID: 447603646150000765}
@@ -300,8 +313,8 @@ MonoBehaviour:
   PlayerRB: {fileID: 0}
   ResultantVector: {x: 0, y: 0}
   EnableGravity: 1
-  WorldGravityScale: 10
-  PlayerGravityScale: 10
+  WorldGravityScale: 20
+  PlayerGravityScale: 20
   CurrentGravityMult: 0
   TerminalMult: 40
   Coyote: 0

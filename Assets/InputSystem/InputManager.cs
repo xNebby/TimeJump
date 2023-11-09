@@ -196,6 +196,14 @@ public class InputManager : SingletonClass<InputManager>
         PlayerManager.Instance.UpdatePMM_IM_Vector(ID_MovementVector);
 
         IM_PlayerVector = ID_MovementVector;
+
+        if (IM_PlayerVector.x < 0)
+        {
+            EventManager.TriggerEvent("FlipScript_Flip");
+        } else if (IM_PlayerVector.x > 0)
+        {
+            EventManager.TriggerEvent("FlipScript_UnFlip");
+        }
     }
 }
 

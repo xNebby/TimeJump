@@ -34,7 +34,7 @@ public class LoadManager : MonoBehaviour
         Spawnplace = SpawnManager.Instance.RespawnPlayer();
         //Debug.Log(Spawnplace);
         LoadPlayer();
-        LoadCam();
+        //LoadCam();
         //LoadLight();
     }
 

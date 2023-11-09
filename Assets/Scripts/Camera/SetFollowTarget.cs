@@ -27,7 +27,7 @@ public class SetFollowTarget : MonoBehaviour
         if (CineLockOn)
         {
             VCam = GetComponent<CinemachineVirtualCamera>();
-            VCam.LookAt = FollowTarget;
+            //VCam.LookAt = FollowTarget;
             VCam.Follow = FollowTarget;
         } 
     }
