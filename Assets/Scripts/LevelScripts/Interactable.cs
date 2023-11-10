@@ -76,6 +76,8 @@ public class Interactable : MonoBehaviour
     private void InvokeEvent()
     {
         string EventName = "Interaction_" + InteractionEventName + "_Invoked";
+        Debug.Log("Sent event:");
+        Debug.Log(EventName);
         EventManager.TriggerEvent(EventName);
     }
 
@@ -138,10 +140,13 @@ public class Interactable : MonoBehaviour
             {
                 //LogSystem.Log(gameObject, "Exited trigger");
                 AwaitingInput = false;
-                string EventName = "Interaction_" + InteractionEventName + "_Revoked";
-                EventManager.TriggerEvent(EventName);
                 gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 gameObject.transform.GetChild(1).gameObject.SetActive(false);
+                if (WiringInput == false)
+                {
+                    string EventName = "Interaction_" + InteractionEventName + "_Revoked";
+                    EventManager.TriggerEvent(EventName);
+                }
             }
         }
     }
