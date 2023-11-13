@@ -76,8 +76,8 @@ public class Interactable : MonoBehaviour
     private void InvokeEvent()
     {
         string EventName = "Interaction_" + InteractionEventName + "_Invoked";
-        Debug.Log("Sent event:");
-        Debug.Log(EventName);
+        //Debug.Log("Sent event:");
+        //Debug.Log(EventName);
         EventManager.TriggerEvent(EventName);
     }
 

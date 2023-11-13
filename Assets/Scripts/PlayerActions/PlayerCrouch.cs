@@ -12,6 +12,8 @@ public class PlayerCrouch : MonoBehaviour
     public float PlayerWidth;
     public float ChargeTime = 2f;
 
+    private bool Grow = false;
+
     void OnEnable()
     {
         EventManager.StartListening("PC_Crouch", PlayerCrouching);
@@ -20,8 +22,9 @@ public class PlayerCrouch : MonoBehaviour
         EventManager.StartListening("PC_UncrouchCheck", PlayerUnCheck);
         PlayerRB = GetComponent<Rigidbody2D>();
         CrouchHeight = 0.5f;
-        PlayerScale = 1.5f;
-        PlayerWidth = 1.5f;
+        PlayerScale = 1f;
+        PlayerWidth = 1f;
+        Grow = false;
     }
     void OnDisable()
     {
@@ -66,7 +69,7 @@ public class PlayerCrouch : MonoBehaviour
 
         LogSystem.Log(gameObject, "UnCrouch Event received");
         PlayerRB.MovePosition(PlayerRB.position - (PlayerStateManager.Instance.PlayerGravity * (PlayerScale * CrouchHeight / 2)));
-        gameObject.transform.localScale = new Vector3(PlayerWidth, PlayerScale, 1f);
+        Grow = true;
         if (ChargingJump)
         {
             ChargingJump = false;
@@ -112,6 +115,11 @@ public class PlayerCrouch : MonoBehaviour
                 }
             }
             
+        }
+        if (Grow)
+        {
+            Grow = false;
+            gameObject.transform.localScale = new Vector3(PlayerWidth, PlayerScale, 1f);
         }
     }
 }

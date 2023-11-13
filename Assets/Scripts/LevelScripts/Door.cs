@@ -7,22 +7,25 @@ public class Door : MonoBehaviour
     static int MaxDoorIndex = 0;
     private int CurrentDoorIndex;
     private Interactable m_Interactable;
-    private string EventName;
+    public string EventName;
 
     public bool RequireKey;
     public string KeyName;
 
+    private BoxCollider2D m_BoxCollide;
+
     void OnEnable()
     {
-
+        m_BoxCollide = gameObject.transform.GetChild(0).gameObject.GetComponent<BoxCollider2D>();
         m_Interactable = gameObject.transform.GetChild(1).GetComponent<Interactable>();
-        if (m_Interactable.InteractionEventName == null)
+        if (m_Interactable.InteractionEventName == null || m_Interactable.InteractionEventName == "")
         {
             MaxDoorIndex += 1;
             CurrentDoorIndex = MaxDoorIndex;
             EventName = "Door" + CurrentDoorIndex.ToString();
             m_Interactable.InteractionEventName = EventName;
-        } else
+        }
+        else
         {
             EventName = m_Interactable.InteractionEventName;
         }
@@ -54,11 +57,11 @@ public class Door : MonoBehaviour
 
     void Open()
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        m_BoxCollide.enabled = false;
     }
     void Close()
     {
-        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        m_BoxCollide.enabled = true;
     }
 
     bool KeyCheck()

@@ -15,12 +15,13 @@ public class CreateSpawnpoint : MonoBehaviour
     private Interactable m_Interactable;
     private string EventName;
     private Animator m_Animator;
-    void OnEnable()
+    private GameObject Light;
+    void OnEnable() 
     {
         EventManager.StartListening("RespawnAnimation_Finished", ChangeSprite);
         m_Animator = GetComponent<Animator>();
         m_Interactable = gameObject.transform.GetChild(0).GetComponent<Interactable>();
-        Debug.Log(m_Interactable.InteractionEventName);
+        Light = gameObject.transform.GetChild(1).gameObject;
         EventName = "Respawn" + SpawnID.ToString();
         m_Interactable.InteractionEventName = EventName;
         EventName = "Interaction_" + EventName;
@@ -62,11 +63,12 @@ public class CreateSpawnpoint : MonoBehaviour
         //EventManager.StopListening(EventName + "_Primary", Primary);
         //EventManager.StopListening(EventName + "_Secondary", Secondary);
         //EventManager.StopListening(EventName + "_Revoked", Close);
+        SpawnManager.Instance.SetSpawn(SpawnID);
     }
 
     void PowerRespawn()
     {
-        Debug.Log("event Received");
+        //Debug.Log("event Received");
         if (Interactable)
         {
             // Add an interaction to the interactions script.
@@ -77,6 +79,8 @@ public class CreateSpawnpoint : MonoBehaviour
     void ChangeSprite()
     {
         // If the player is currently touching the hitbox, change this sprite to active mode.
-        spriteRenderer.sprite = PoweredRespawn;
+        Debug.Log("Animation Finished");
+        //spriteRenderer.sprite = PoweredRespawn;
+        Light.SetActive(true);
     }
 }

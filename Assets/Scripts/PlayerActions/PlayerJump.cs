@@ -131,6 +131,7 @@ public class PlayerJump : MonoBehaviour
                     LogSystem.Log(gameObject, "coyote time ENDING pranked");
                     TimerManager.RemoveTimer("PJ_CoyoteTime", CoyoteRelease);
                     Coyote = false;
+                    EventManager.TriggerEvent("PJ_CoyoteTimeEnd");
                     EventManager.TriggerEvent("PJ_JumpStopped");
                 }
                 else
