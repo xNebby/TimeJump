@@ -1534,7 +1534,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Danny
+  m_text: A Level Platformer Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0075c4959f055a345a2ad0510bd06435, type: 2}
   m_sharedMaterial: {fileID: -6583771111257883235, guid: 0075c4959f055a345a2ad0510bd06435, type: 2}
@@ -1561,8 +1561,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
-  m_fontSizeBase: 10
+  m_fontSize: 6
+  m_fontSizeBase: 6
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4569,7 +4569,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

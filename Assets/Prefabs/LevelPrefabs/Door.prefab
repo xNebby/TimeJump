@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d511c653e400454babb51a220f7aa24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  EventName: 
   RequireKey: 0
   KeyName: 
 --- !u!1 &2524465137239847205
@@ -124,12 +125,12 @@ SpriteRenderer:
   m_SortingLayerID: 1074178939
   m_SortingLayer: 2
   m_SortingOrder: -5
-  m_Sprite: {fileID: 21300000, guid: ceb7322144a10f0439986a9bd38ef7dd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7e40ac87bc37a1443aeca581ab110729, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -153,7 +154,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 2}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -192,6 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 503479907968166015}
   - component: {fileID: 1258862430805726910}
+  - component: {fileID: 7337945302272940528}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -255,7 +257,7 @@ SpriteRenderer:
   m_SortingLayerID: 1074178939
   m_SortingLayer: 2
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 2c6fdbb28dc07424b9eb854820b7cd04, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c7e6ca83c24343548a68b8069546ca56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -266,6 +268,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &7337945302272940528
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4036546889531846474}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.9}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 2}
+    newSize: {x: 1, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.2}
+  m_EdgeRadius: 0
 --- !u!1001 &2524465138044990896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -299,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929691, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: m_Size.x
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1935973318195929691, guid: cd3aaa7dd3060eb4b963546dfd64b655, type: 3}
       propertyPath: m_Size.y

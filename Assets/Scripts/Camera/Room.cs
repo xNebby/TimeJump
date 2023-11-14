@@ -17,6 +17,7 @@ public class Room : MonoBehaviour
         if (other.CompareTag("Player") && !other.isTrigger)
         {
             VirtualCamera.SetActive(true);
+            EventManager.TriggerEvent("CAM_UpdateFollow");
         }
     }
 
