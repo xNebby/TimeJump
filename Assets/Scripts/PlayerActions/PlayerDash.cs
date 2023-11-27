@@ -12,7 +12,7 @@ public class PlayerDash : MonoBehaviour
 
     private float DashTime = 0.2f;
     private bool DashInvuln = false;
-    private float DashLength = 600f;
+    private float DashLength = 700f;
 
     public bool IsDashing = false;
 

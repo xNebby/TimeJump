@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public Dictionary<int, Vector2> Locations;
+    private Dictionary<int, Vector2> Locations;
+    private int CurrentIDs;
+    private int MaxID;
+    public List<Vector2> LocationTemp;
     public int LocationIndex;
     public Vector2 CurrentVelocity;
     public float Speed;
@@ -13,6 +16,14 @@ public class MovingPlatform : MonoBehaviour
     void OnEnable()
     {
         Locations = new Dictionary<int, Vector2>();
+        LocationTemp = new List<Vector2>();
+        CurrentIDs = 0;
+        LocationIndex = 0;
+        foreach (Vector2 Entry in LocationTemp)
+        {
+            Locations.Add(CurrentIDs, Entry);
+            CurrentIDs += 1;
+        } 
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
@@ -29,10 +40,10 @@ public class MovingPlatform : MonoBehaviour
     {
         if ((Locations[LocationIndex] - new Vector2(transform.position.x, transform.position.y)).magnitude < 5)
         {
-
+            LocationIndex += 1;
         } else
         {
-
+            CurrentVelocity = Locations[LocationIndex] - new Vector2(transform.position.x, transform.position.y);
         }
     }
 
