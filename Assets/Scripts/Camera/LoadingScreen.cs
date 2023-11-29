@@ -19,10 +19,10 @@ public class LoadingScreen : MonoBehaviour
         
         EventManager.StartListening("LS_Load", Load);
         EventManager.StartListening("LS_EndLoad", EndLoad);
-        if (VisibleState)
+        /*if (VisibleState)
         {
             EndLoad();
-        }
+        }*/
     }
     public void OnDisable()
     {

@@ -23,8 +23,8 @@ public class LevelSelect : MonoBehaviour
         //Debug.Log("LevelSelect Loaded");
         EventManager.TriggerEvent("LS_EndLoad");
         EventManager.TriggerEvent("LevelSelectLoaded");
-        EventManager.StartListening("SaveLoader_Loaded", QuitLoad);
-        EventManager.StartListening("LevelBackground_Loaded", QuitLoad);
+        EventManager.StartListening("SaveLoader_Loaded", delegate { QuitLoad(false); });
+        EventManager.StartListening("LevelBackground_Loaded", delegate { QuitLoad(true); });
         EventManager.StartListening("LS_Hidden", HideConfirm);
 
         foreach (GameObject Entry in Levels)
@@ -36,7 +36,8 @@ public class LevelSelect : MonoBehaviour
 
     void OnDisable()
     {
-        EventManager.StopListening("SaveLoader_Loaded", QuitLoad);
+        EventManager.StopListening("SaveLoader_Loaded", delegate { QuitLoad(false); });
+        EventManager.StopListening("LevelBackground_Loaded", delegate { QuitLoad(true); });
         EventManager.StopListening("LS_Hidden", HideConfirm);
     }
 
@@ -73,13 +74,16 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    void QuitLoad()
+    void QuitLoad(bool value)
     {
         if (WaitingForDeload)
         {
             WaitingForDeload = false;
             SceneManager.UnloadSceneAsync("LevelSelect");
-            EventManager.TriggerEvent("LS_EndLoad");
+            if (value == false)
+            {
+                EventManager.TriggerEvent("LS_EndLoad");
+            }
         }
     }
 
