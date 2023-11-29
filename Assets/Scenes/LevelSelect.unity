@@ -852,7 +852,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 999616121}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25, y: 0, z: 0}
+  m_LocalPosition: {x: 26, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -882,8 +882,8 @@ MonoBehaviour:
   Counter: 2
   TimePeriod: 2
   Magnitude: 1
-  TransformVector: {x: 25, y: 0, z: 0}
-  PositionVector: {x: 25, y: 0, z: 0}
+  TransformVector: {x: 26, y: 0, z: 0}
+  PositionVector: {x: 26, y: 0, z: 0}
 --- !u!1 &1032502619
 GameObject:
   m_ObjectHideFlags: 0
