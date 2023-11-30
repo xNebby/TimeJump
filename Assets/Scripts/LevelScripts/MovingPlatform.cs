@@ -24,6 +24,11 @@ public class MovingPlatform : MonoBehaviour
             Locations.Add(CurrentIDs, Entry);
             CurrentIDs += 1;
         } 
+        if (Locations.Count == 0)
+        {
+            Locations.Add(CurrentIDs, gameObject.transform.position);
+            CurrentIDs += 1;
+        }
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
@@ -38,12 +43,17 @@ public class MovingPlatform : MonoBehaviour
 
     void FixedUpdate()
     {
-        if ((Locations[LocationIndex] - new Vector2(transform.position.x, transform.position.y)).magnitude < 5)
+        if ((Locations[LocationIndex] - new Vector2(transform.position.x, transform.position.y)).magnitude < 1)
         {
             LocationIndex += 1;
+            if (LocationIndex >= Locations.Count)
+            {
+                LocationIndex = 0;
+            }
         } else
         {
-            CurrentVelocity = Locations[LocationIndex] - new Vector2(transform.position.x, transform.position.y);
+            CurrentVelocity = (Locations[LocationIndex] - new Vector2(transform.position.x, transform.position.y)).normalized * Speed;
+            RB.velocity = CurrentVelocity;
         }
     }
 

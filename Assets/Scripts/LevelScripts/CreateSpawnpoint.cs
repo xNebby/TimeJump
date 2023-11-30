@@ -5,7 +5,7 @@ using UnityEngine;
 public class CreateSpawnpoint : MonoBehaviour
 {
     public int SpawnID = -1;
-    public string SpawnName; // Cosmetic used to tell where players are (UPDATE PER INDIVIDUAL SPAWN)
+    public string SpawnName;
     public bool WorldSpawn = false; // Use one per loaded scene!
     public bool Interactable = false;
     public bool Visible = true;
@@ -18,6 +18,10 @@ public class CreateSpawnpoint : MonoBehaviour
     private GameObject Light;
     void OnEnable() 
     {
+        if (SpawnName == "")
+        {
+            SpawnName = gameObject.name;
+        }
         EventManager.StartListening("RespawnAnimation_Finished", ChangeSprite);
         m_Animator = GetComponent<Animator>();
         m_Interactable = gameObject.transform.GetChild(0).GetComponent<Interactable>();
@@ -40,17 +44,13 @@ public class CreateSpawnpoint : MonoBehaviour
         //LogSystem.Log("SpawnPoint", "Assign Spawn");
         if (SpawnID == -1)
         {
-            SpawnID = SpawnManager.Instance.AddSpawn(gameObject.transform.position);
+            SpawnID = SpawnManager.Instance.AddSpawn(gameObject.transform.position, SpawnName);
         }
         if (WorldSpawn == true)
         {
             //string text = SpawnID.ToString() + " Is set as the world spawn";
             //LogSystem.Log("SpawnPoint", text);
-            SpawnManager.Instance.SetSpawn(SpawnID);
-        }
-        if (SpawnName == "")
-        {
-            SpawnName = gameObject.name;
+            SpawnManager.Instance.SetSpawn(SpawnName);
         }
         
     }
@@ -63,7 +63,7 @@ public class CreateSpawnpoint : MonoBehaviour
         //EventManager.StopListening(EventName + "_Primary", Primary);
         //EventManager.StopListening(EventName + "_Secondary", Secondary);
         //EventManager.StopListening(EventName + "_Revoked", Close);
-        SpawnManager.Instance.SetSpawn(SpawnID);
+        SpawnManager.Instance.SetSpawn(SpawnName);
     }
 
     void PowerRespawn()

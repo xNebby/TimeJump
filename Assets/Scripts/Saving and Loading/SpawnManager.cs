@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SpawnManager : SingletonClass<SpawnManager>
 {
-    public Dictionary<int, Vector2> Respawns;
+    public Dictionary<string, SpawnEntry> Respawns;
     public int CurrentSpawn;
-    public int PlayerSpawn;
+    public string PlayerSpawn;
 
     /*public void Start()
     {
@@ -21,30 +21,43 @@ public class SpawnManager : SingletonClass<SpawnManager>
     void ResetVars()
     {
         //LogSystem.Log("SpawnManager", "Reset Vars");
-        Respawns = new Dictionary<int, Vector2>();
-        Respawns.Add(0, Vector2.zero);
+        Respawns = new Dictionary<string, SpawnEntry>();
+        SpawnEntry TempEntry = new SpawnEntry();
+        TempEntry.m_SpawnVector = Vector2.zero;
+        TempEntry.m_SpawnID = 0;
+        Respawns.Add("0", TempEntry);
         CurrentSpawn = 0;
-        PlayerSpawn = 0;
+        PlayerSpawn = "0";
     }
 
-    public int AddSpawn(Vector2 Location)
+    public int AddSpawn(Vector2 Location, string Name)
     {
-        CurrentSpawn += 1;
-        Respawns.Add(CurrentSpawn, Location);
-        return (CurrentSpawn);
-    }
-    public void SetSpawn(int SpawnID)
-    {
-        if (Respawns.ContainsKey(SpawnID))
+        if (Respawns.ContainsKey(Name) == false)
         {
-            PlayerSpawn = SpawnID;
+            CurrentSpawn += 1;
+            SpawnEntry TempEntry = new SpawnEntry();
+            TempEntry.m_SpawnID = CurrentSpawn;
+            TempEntry.m_SpawnVector = Location;
+            Respawns.Add(Name, TempEntry);
+            return (CurrentSpawn);
+        } else
+        {
+            Debug.Log("Spawnpoint already exists: " + Name);
+            return (-1);
         }
     }
-    public Vector2 GetSpawn(int SpawnID)
+    public void SetSpawn(string SpawnName)
     {
-        if (Respawns.ContainsKey(SpawnID))
+        if (Respawns.ContainsKey(SpawnName))
         {
-            return (Respawns[SpawnID]);
+            PlayerSpawn = SpawnName;
+        }
+    }
+    public Vector2 GetSpawn(string SpawnName)
+    {
+        if (Respawns.ContainsKey(SpawnName))
+        {
+            return (Respawns[SpawnName].m_SpawnVector);
         }
         else
         {
@@ -53,6 +66,12 @@ public class SpawnManager : SingletonClass<SpawnManager>
     }
     public Vector2 RespawnPlayer()
     {
-        return (Respawns[PlayerSpawn]);
+        return (Respawns[PlayerSpawn].m_SpawnVector);
     }
+}
+
+public class SpawnEntry
+{
+    public int m_SpawnID;
+    public Vector2 m_SpawnVector;
 }
