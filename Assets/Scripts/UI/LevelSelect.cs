@@ -56,6 +56,7 @@ public class LevelSelect : MonoBehaviour
         WaitingForHide = true;
         LoadBackground = true;
         LoadingInto = LevelID;
+        CurrentSave.Instance.CurrentLevel(LevelID);
         // Save the current Save's information.
         EventManager.TriggerEvent("LS_Load");
 
