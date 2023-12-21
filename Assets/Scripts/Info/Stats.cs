@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stats : MonoBehaviour
+public class Stats : SingletonClass<Stats>
 {
     public int PlayerDeaths;
-    public int Playtime;
-    public int CurrentPlaytime;
+    public float Playtime;
+    public float CurrentPlaytime;
 
     void LoadStats()
     {
         CurrentPlaytime = 0;
         // Load the stats from file, if file does not exist load the default stats (Following stats:)
         PlayerDeaths = 0;
-        Playtime = 0;
+        Playtime = CurrentSave.Instance.RetrievePlaytime();
     }
     void SaveStats()
     {
@@ -37,6 +37,6 @@ public class Stats : MonoBehaviour
     void FixedUpdate()
     {
         Playtime++;
-        CurrentPlaytime++;
+        CurrentPlaytime += Time.fixedDeltaTime;
     }
 }

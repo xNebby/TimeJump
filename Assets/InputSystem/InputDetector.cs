@@ -14,12 +14,11 @@ public class InputDetector : MonoBehaviour
 
 
 
-    void Awake()
+    void OnEnable()
     {
         // Create new instance of input sheet.
         m_PlayerInputActions = new PlayerInputActions();
         PlayerActionsListeners();
-
 
     }
 
@@ -37,7 +36,6 @@ public class InputDetector : MonoBehaviour
 
         m_PlayerInputActions.Player.Dash.performed += DashPerformed;
 
-
         m_PlayerInputActions.Player.Pause.performed += Paused;
 
         m_PlayerInputActions.Player.SprintTap.started += SprintStarted;
@@ -52,7 +50,7 @@ public class InputDetector : MonoBehaviour
     void Paused(InputAction.CallbackContext context)
     {
         // Disable player actions, enable ui actions, enable ui, prevent physics updates etc. 
-
+        EventManager.TriggerEvent("ID_Paused");
     }
 
 

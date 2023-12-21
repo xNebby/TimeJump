@@ -13,6 +13,7 @@ public class SaveLoader : SingletonClass<SaveLoader>
     // Load game: Load into the level select. Enable the scene Async, passing along the save 
 
     public int CurrentLoadedSave = 0;
+    public string CurrentLoadedLevel;
     private bool WaitingForHide = false;
     private bool WaitingForDeload = false;
 
@@ -88,8 +89,15 @@ public class SaveLoader : SingletonClass<SaveLoader>
 
     public void UnloadSave(int SaveID)
     {
+        CurrentSave.Instance.UnloadSave();
         CurrentLoadedSave = 0;
         // Load the main menu, deload Level select
 
     }
+
+    public void CurrentLevel(string LevelName)
+    {
+        CurrentLoadedLevel = LevelName;
+    }
+
 }
