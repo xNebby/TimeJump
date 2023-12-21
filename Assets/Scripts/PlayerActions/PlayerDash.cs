@@ -11,7 +11,7 @@ public class PlayerDash : MonoBehaviour
     public Vector2 DashVector;
 
     private float DashTime = 0.2f;
-    private bool DashInvuln = false;
+    //private bool DashInvuln = false;
     private float DashLength = 700f;
 
     public bool IsDashing = false;

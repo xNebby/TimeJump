@@ -50,6 +50,12 @@ public class Interactable : MonoBehaviour
         EventManager.StopListening("ID_SecondaryInput", SecondaryInputGiven);
     }
 
+    public void ChangeEventName(string v_Name)
+    {
+        Debug.Log(v_Name);
+        InteractionEventName = v_Name;
+    }
+
     void PrimaryInputGiven()
     {
         if (AwaitingInput)
@@ -111,19 +117,24 @@ public class Interactable : MonoBehaviour
                         gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     }
                 }
+                // TESTING TO SEE IF INVOKEEVENT REMOVED FROM ELSE BREAKS SOMETHING
+                /*
                 else
                 {
                     InvokeEvent();
                 }
+                */
+                InvokeEvent();
             }
         }
         if (other.gameObject.tag == "PhysicsObj")
         {
             ObjCounter += 1;
-            if (RequireInput == false)
+            /*if (RequireInput == false)
             {
                 InvokeEvent();
-            }
+            }*/
+            InvokeEvent();
         }
     }
 

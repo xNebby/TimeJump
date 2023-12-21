@@ -6,7 +6,7 @@ public class FlipScript : MonoBehaviour
 {
 
     private SpriteRenderer m_SpriteRenderer;
-    private bool CurrentFlip = false;
+    //private bool CurrentFlip = false;
 
     void OnEnable()
     {
