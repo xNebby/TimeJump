@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelSelect : MonoBehaviour
+public class LevelSelect : SingletonClass<LevelSelect>
 {
     public string LoadingInto;
 
@@ -14,7 +14,6 @@ public class LevelSelect : MonoBehaviour
     public bool WaitingForHide = false;
     public bool LoadBackground = false;
 
-    public List<GameObject> Levels = new List<GameObject>();
 
     // Start is called before the first frame update
     void OnEnable()
@@ -26,12 +25,6 @@ public class LevelSelect : MonoBehaviour
         EventManager.StartListening("SaveLoader_Loaded", delegate { QuitLoad(false); });
         EventManager.StartListening("LevelBackground_Loaded", delegate { QuitLoad(true); });
         EventManager.StartListening("LS_Hidden", HideConfirm);
-
-        foreach (GameObject Entry in Levels)
-        {
-            Button Temp = Entry.GetComponent<Button>();
-            Temp.onClick.AddListener(delegate { LoadLevel(Entry.name); });
-        }
     }
 
     void OnDisable()
@@ -59,6 +52,10 @@ public class LevelSelect : MonoBehaviour
         CurrentSave.Instance.CurrentLevel(LevelID);
         // Save the current Save's information.
         EventManager.TriggerEvent("LS_Load");
+    }
+    public void DeloadLevelSelect(string LevelID, string SpawnID, int RoomID)
+    {
+        DeloadLevelSelect(LevelID);
 
     }
 
@@ -88,9 +85,14 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
-    void LoadLevel(string LevelID)
+    public void LoadLevel(string LevelID)
     {
         // To load a level: Load the level given, the background, and unload the LoadManager.
         DeloadLevelSelect(LevelID);
     }
+    public void LoadLevel(string LevelID, string SpawnID, int RoomID)
+    {
+
+    }
+
 }
