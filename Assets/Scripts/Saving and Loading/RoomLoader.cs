@@ -48,23 +48,19 @@ public class RoomLoader : SingletonClass<RoomLoader>
     public void LoadRoom(int RoomID)
     {
         Debug.Log("Loading room:" + RoomID.ToString());
-        List<int> TempActiveRooms = new List<int>();
-        foreach (int Entry in Rooms[RoomID].AdjacentRooms)
-        {
-            TempActiveRooms.Add(Entry);
-            Debug.Log(Entry);
-        }
+        List<int> TempActiveRooms = new List<int>(Rooms[RoomID].AdjacentRooms);
         if (!TempActiveRooms.Contains(RoomID))
         {
             TempActiveRooms.Add(RoomID);
         }
-        foreach (int TempRoomID in ActiveRooms)
+        List<int> ActiveRoomsClone = new List<int>(ActiveRooms);
+        foreach (int TempRoomID in ActiveRoomsClone)
         {
             Debug.Log("ActiveRooms:" + TempRoomID.ToString());
             if (!TempActiveRooms.Contains(TempRoomID))
             {
                 ActiveRooms.Remove(TempRoomID);
-                Destroy(GameObject.Find("Room" + TempRoomID.ToString()));
+                Destroy(GameObject.Find("Room" + TempRoomID.ToString() + " (clone)"));
             } else
             {
                 TempActiveRooms.Remove(TempRoomID);
