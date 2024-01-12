@@ -60,7 +60,7 @@ public class RoomLoader : SingletonClass<RoomLoader>
             if (!TempActiveRooms.Contains(TempRoomID))
             {
                 ActiveRooms.Remove(TempRoomID);
-                Destroy(GameObject.Find("Room" + TempRoomID.ToString() + " (clone)"));
+                Destroy(GameObject.Find("Room" + TempRoomID.ToString() + "(Clone)"));
             } else
             {
                 TempActiveRooms.Remove(TempRoomID);
