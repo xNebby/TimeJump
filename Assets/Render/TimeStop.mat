@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: TimeStop
-  m_Shader: {fileID: -6465566751694194690, guid: b7c9b63e6b2fda4479bf710cfb6f2c67, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 760bccdd8519a31439c7630f62e99289, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -39,6 +39,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_fcaddfd564a440bca8f933ec47b7b77a_Out_0_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -54,9 +58,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _RippleCount: 2
-    - _RippleSpeed: 1
+    - _RippleCount: 1
+    - _RippleSpeed: 2
     - _RippleStrength: 1
+    - _Yellow1: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
