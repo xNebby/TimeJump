@@ -76,6 +76,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PrimarySpecialAbility",
+                    "type": "Button",
+                    "id": "b29fb422-8dad-4c35-a63d-85da0ce978f5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SecondarySpecialAbility",
+                    "type": "Button",
+                    "id": "5bd15824-ecf2-4d8a-a2d0-e681a323d699",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "TertiarySpecialAbility",
+                    "type": "Button",
+                    "id": "e786a402-ad89-41cb-96e9-867d15fb55b6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -342,6 +369,39 @@
                     "action": "InteractSecondary",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a7ae87c-8498-4b62-94b2-57dff5571f36",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "PrimarySpecialAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fbdb8081-d566-4af7-82bf-64a874925499",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SecondarySpecialAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed2c46ca-f5c9-4dcb-bb49-495fdb4c912d",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "TertiarySpecialAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -410,6 +470,54 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Cutscenes",
+            "id": "40912030-1dbd-4222-9173-79d9c8b7e440",
+            "actions": [
+                {
+                    "name": "Skip",
+                    "type": "Button",
+                    "id": "ebb59784-3dda-4c01-92e9-0565b8aa9b16",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "72ea9dde-0d6b-4bbe-a7e1-0db3143052d4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "be0382c7-4252-4936-a1ad-e84ae666209b",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Skip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7151915-017d-49a2-8610-ddd2edffeffc",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

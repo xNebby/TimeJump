@@ -14,6 +14,7 @@ public class PlayerManager : SingletonClass<PlayerManager>
 
     public float RespawnTime = 5f;
 
+
     public override void Awake()
     {
         CheckVars();
@@ -90,6 +91,7 @@ public class PlayerManager : SingletonClass<PlayerManager>
         // Adds to death counter, Should start movement lock- change player sprite to dead player. 
         InputManager.Instance.UpdateVector(Vector2.zero, "Dead", 5);
         EventManager.TriggerEvent("PM_KillPlayer");
+        EventManager.TriggerEvent("YouDied"); // Shows the "YOU DIED" text on screen
 
     }
 

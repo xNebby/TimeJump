@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
   m_Name: FullScreen
   m_EditorClassIdentifier: 
-  m_Active: 1
-  passMaterial: {fileID: 2100000, guid: f9d5a72462aaf83418ceffea1d7e7650, type: 2}
-  injectionPoint: 600
+  m_Active: 0
+  passMaterial: {fileID: 2100000, guid: c1b251ab04bb37240ace6d10ec9adc66, type: 2}
+  injectionPoint: 550
   requirements: -1
   passIndex: 0
 --- !u!114 &11400000
@@ -42,7 +42,8 @@ MonoBehaviour:
     probeSamplingDebugTexture: {fileID: 2800000, guid: 24ec0e140fb444a44ab96ee80844e18e, type: 3}
   m_RendererFeatures:
   - {fileID: -2938398403158897153}
-  m_RendererFeatureMap: ff8d237b38b638d7
+  - {fileID: 9135501926960977805}
+  m_RendererFeatureMap: ff8d237b38b638d78dd767c199d2c77e
   m_UseNativeRenderPass: 0
   m_TransparencySortMode: 2
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
@@ -85,3 +86,18 @@ MonoBehaviour:
   m_DefaultLitMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_DefaultUnlitMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_DefaultMaskMaterial: {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+--- !u!114 &9135501926960977805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f55e22276bed0749a60a79f57baf859, type: 3}
+  m_Name: ColorBlitRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  m_Shader: {fileID: 4800000, guid: 18306415720ec4b468c855bb1d2e4b58, type: 3}
+  m_Intensity: 1.5

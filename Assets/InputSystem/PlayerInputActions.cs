@@ -98,6 +98,33 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PrimarySpecialAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""b29fb422-8dad-4c35-a63d-85da0ce978f5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SecondarySpecialAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""5bd15824-ecf2-4d8a-a2d0-e681a323d699"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TertiarySpecialAbility"",
+                    ""type"": ""Button"",
+                    ""id"": ""e786a402-ad89-41cb-96e9-867d15fb55b6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -364,6 +391,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""InteractSecondary"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a7ae87c-8498-4b62-94b2-57dff5571f36"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PrimarySpecialAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fbdb8081-d566-4af7-82bf-64a874925499"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""SecondarySpecialAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ed2c46ca-f5c9-4dcb-bb49-495fdb4c912d"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""TertiarySpecialAbility"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -436,6 +496,54 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Cutscenes"",
+            ""id"": ""40912030-1dbd-4222-9173-79d9c8b7e440"",
+            ""actions"": [
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""ebb59784-3dda-4c01-92e9-0565b8aa9b16"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""72ea9dde-0d6b-4bbe-a7e1-0db3143052d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""be0382c7-4252-4936-a1ad-e84ae666209b"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7151915-017d-49a2-8610-ddd2edffeffc"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -473,10 +581,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_InteractPrimary = m_Player.FindAction("InteractPrimary", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_InteractSecondary = m_Player.FindAction("InteractSecondary", throwIfNotFound: true);
+        m_Player_PrimarySpecialAbility = m_Player.FindAction("PrimarySpecialAbility", throwIfNotFound: true);
+        m_Player_SecondarySpecialAbility = m_Player.FindAction("SecondarySpecialAbility", throwIfNotFound: true);
+        m_Player_TertiarySpecialAbility = m_Player.FindAction("TertiarySpecialAbility", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
         m_UI_Back = m_UI.FindAction("Back", throwIfNotFound: true);
+        // Cutscenes
+        m_Cutscenes = asset.FindActionMap("Cutscenes", throwIfNotFound: true);
+        m_Cutscenes_Skip = m_Cutscenes.FindAction("Skip", throwIfNotFound: true);
+        m_Cutscenes_Pause = m_Cutscenes.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -546,6 +661,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_InteractPrimary;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_InteractSecondary;
+    private readonly InputAction m_Player_PrimarySpecialAbility;
+    private readonly InputAction m_Player_SecondarySpecialAbility;
+    private readonly InputAction m_Player_TertiarySpecialAbility;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -558,6 +676,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @InteractPrimary => m_Wrapper.m_Player_InteractPrimary;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @InteractSecondary => m_Wrapper.m_Player_InteractSecondary;
+        public InputAction @PrimarySpecialAbility => m_Wrapper.m_Player_PrimarySpecialAbility;
+        public InputAction @SecondarySpecialAbility => m_Wrapper.m_Player_SecondarySpecialAbility;
+        public InputAction @TertiarySpecialAbility => m_Wrapper.m_Player_TertiarySpecialAbility;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -591,6 +712,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InteractSecondary.started += instance.OnInteractSecondary;
             @InteractSecondary.performed += instance.OnInteractSecondary;
             @InteractSecondary.canceled += instance.OnInteractSecondary;
+            @PrimarySpecialAbility.started += instance.OnPrimarySpecialAbility;
+            @PrimarySpecialAbility.performed += instance.OnPrimarySpecialAbility;
+            @PrimarySpecialAbility.canceled += instance.OnPrimarySpecialAbility;
+            @SecondarySpecialAbility.started += instance.OnSecondarySpecialAbility;
+            @SecondarySpecialAbility.performed += instance.OnSecondarySpecialAbility;
+            @SecondarySpecialAbility.canceled += instance.OnSecondarySpecialAbility;
+            @TertiarySpecialAbility.started += instance.OnTertiarySpecialAbility;
+            @TertiarySpecialAbility.performed += instance.OnTertiarySpecialAbility;
+            @TertiarySpecialAbility.canceled += instance.OnTertiarySpecialAbility;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -619,6 +749,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @InteractSecondary.started -= instance.OnInteractSecondary;
             @InteractSecondary.performed -= instance.OnInteractSecondary;
             @InteractSecondary.canceled -= instance.OnInteractSecondary;
+            @PrimarySpecialAbility.started -= instance.OnPrimarySpecialAbility;
+            @PrimarySpecialAbility.performed -= instance.OnPrimarySpecialAbility;
+            @PrimarySpecialAbility.canceled -= instance.OnPrimarySpecialAbility;
+            @SecondarySpecialAbility.started -= instance.OnSecondarySpecialAbility;
+            @SecondarySpecialAbility.performed -= instance.OnSecondarySpecialAbility;
+            @SecondarySpecialAbility.canceled -= instance.OnSecondarySpecialAbility;
+            @TertiarySpecialAbility.started -= instance.OnTertiarySpecialAbility;
+            @TertiarySpecialAbility.performed -= instance.OnTertiarySpecialAbility;
+            @TertiarySpecialAbility.canceled -= instance.OnTertiarySpecialAbility;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -690,6 +829,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Cutscenes
+    private readonly InputActionMap m_Cutscenes;
+    private List<ICutscenesActions> m_CutscenesActionsCallbackInterfaces = new List<ICutscenesActions>();
+    private readonly InputAction m_Cutscenes_Skip;
+    private readonly InputAction m_Cutscenes_Pause;
+    public struct CutscenesActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public CutscenesActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Skip => m_Wrapper.m_Cutscenes_Skip;
+        public InputAction @Pause => m_Wrapper.m_Cutscenes_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_Cutscenes; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CutscenesActions set) { return set.Get(); }
+        public void AddCallbacks(ICutscenesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CutscenesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CutscenesActionsCallbackInterfaces.Add(instance);
+            @Skip.started += instance.OnSkip;
+            @Skip.performed += instance.OnSkip;
+            @Skip.canceled += instance.OnSkip;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(ICutscenesActions instance)
+        {
+            @Skip.started -= instance.OnSkip;
+            @Skip.performed -= instance.OnSkip;
+            @Skip.canceled -= instance.OnSkip;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(ICutscenesActions instance)
+        {
+            if (m_Wrapper.m_CutscenesActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICutscenesActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CutscenesActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CutscenesActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CutscenesActions @Cutscenes => new CutscenesActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -718,10 +911,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnInteractPrimary(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInteractSecondary(InputAction.CallbackContext context);
+        void OnPrimarySpecialAbility(InputAction.CallbackContext context);
+        void OnSecondarySpecialAbility(InputAction.CallbackContext context);
+        void OnTertiarySpecialAbility(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnClose(InputAction.CallbackContext context);
         void OnBack(InputAction.CallbackContext context);
+    }
+    public interface ICutscenesActions
+    {
+        void OnSkip(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

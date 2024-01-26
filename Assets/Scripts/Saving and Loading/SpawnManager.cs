@@ -30,7 +30,7 @@ public class SpawnManager : SingletonClass<SpawnManager>
         PlayerSpawn = "0";
     }
 
-    public int AddSpawn(Vector2 Location, string Name)
+    public int AddSpawn(Vector2 Location, string Name, int RoomID)
     {
         if (Respawns.ContainsKey(Name) == false)
         {
@@ -38,6 +38,7 @@ public class SpawnManager : SingletonClass<SpawnManager>
             SpawnEntry TempEntry = new SpawnEntry();
             TempEntry.m_SpawnID = CurrentSpawn;
             TempEntry.m_SpawnVector = Location;
+            TempEntry.m_RoomID = RoomID;
             Respawns.Add(Name, TempEntry);
             return (CurrentSpawn);
         } else
@@ -57,6 +58,7 @@ public class SpawnManager : SingletonClass<SpawnManager>
     {
         if (Respawns.ContainsKey(SpawnName))
         {
+            
             return (Respawns[SpawnName].m_SpawnVector);
         }
         else
@@ -66,6 +68,7 @@ public class SpawnManager : SingletonClass<SpawnManager>
     }
     public Vector2 RespawnPlayer()
     {
+        RoomLoader.Instance.LoadRoom(Respawns[PlayerSpawn].m_RoomID);
         return (Respawns[PlayerSpawn].m_SpawnVector);
     }
 }
@@ -74,4 +77,5 @@ public class SpawnEntry
 {
     public int m_SpawnID;
     public Vector2 m_SpawnVector;
+    public int m_RoomID;
 }

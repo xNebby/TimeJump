@@ -6,6 +6,7 @@ public class CreateSpawnpoint : MonoBehaviour
 {
     public int SpawnID = -1;
     public string SpawnName;
+    public int RoomID;
     public bool WorldSpawn = false; // Use one per loaded scene!
     public bool Interactable = false;
     public bool Visible = true;
@@ -44,7 +45,7 @@ public class CreateSpawnpoint : MonoBehaviour
         //LogSystem.Log("SpawnPoint", "Assign Spawn");
         if (SpawnID == -1)
         {
-            SpawnID = SpawnManager.Instance.AddSpawn(gameObject.transform.position, SpawnName);
+            SpawnID = SpawnManager.Instance.AddSpawn(gameObject.transform.position, SpawnName, RoomID);
         }
         if (WorldSpawn == true)
         {

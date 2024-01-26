@@ -18,6 +18,7 @@ public class PlayerMovementManager : MonoBehaviour
     [Space(10)]
     [Header("Gravity Values")]
     public bool EnableGravity = true;
+    private bool OldGravityValue = true;
     [Space(5)]
     public float WorldGravityScale = 10f;
     public float PlayerGravityScale = 10f;
@@ -42,12 +43,16 @@ public class PlayerMovementManager : MonoBehaviour
         EventManager.StartListening("PM_RespawnPlayer", RespawnActions);
         EventManager.StartListening("PJ_CoyoteTimeStart", delegate { CoyoteTime(true); });
         EventManager.StartListening("PJ_CoyoteTimeEnd", delegate { CoyoteTime(false); });
+        EventManager.StartListening("PD_DashStarted", PlayerDashStarted);
+        EventManager.StartListening("PD_DashStopped", PlayerDashStopped);
     }
     void OnDisable()
     {
         EventManager.StopListening("PM_RespawnPlayer", RespawnActions);
         EventManager.StopListening("PJ_CoyoteTimeStart", delegate { CoyoteTime(true); });
         EventManager.StopListening("PJ_CoyoteTimeEnd", delegate { CoyoteTime(false); });
+        EventManager.StopListening("PD_DashStarted", PlayerDashStarted);
+        EventManager.StopListening("PD_DashStopped", PlayerDashStopped);
     }
 
 
@@ -67,8 +72,23 @@ public class PlayerMovementManager : MonoBehaviour
 
     private Vector2 GravityVector()
     {
-        CurrentGravityMult += PlayerGravityScale * Time.fixedDeltaTime;
-        return (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
+        if (CurrentGravityMult > TerminalMult)
+        {
+            return new Vector2(0, TerminalMult);
+        } else
+        {
+            CurrentGravityMult += PlayerGravityScale * Time.fixedDeltaTime;
+            return (PlayerStateManager.Instance.PlayerGravity * CurrentGravityMult);
+        }
+    }
+    private void PlayerDashStarted()
+    {
+        OldGravityValue = EnableGravity;
+        EnableGravity = false;
+    }
+    private void PlayerDashStopped()
+    {
+        EnableGravity = OldGravityValue;
     }
 
 
@@ -95,7 +115,6 @@ public class PlayerMovementManager : MonoBehaviour
         
         //CollisionDetection.Instance.CheckMovement(gameObject, PlayerManager.Instance.PlayerRB, FinalVector, CollisionDetection.Instance.PlayerGravity, ParallelVector);
         CollisionDetection.Instance.CheckCollision(ParallelVector);
-        //FireflyFollow.Instance.PlayerMove(ParallelVector * PlayerStateManager.Instance.TimeScale);
 
         if (Coyote == true & PlayerStateManager.Instance.PlayerIsOnGround == false)
         {
@@ -103,7 +122,13 @@ public class PlayerMovementManager : MonoBehaviour
         }
         if (PlayerStateManager.Instance.PlayerIsOnGround == false)
         {
-            ResultantVector = (ParallelVector + JumpVector + GravityVector()) * PlayerStateManager.Instance.TimeScale; 
+            if (EnableGravity)
+            {
+                ResultantVector = (ParallelVector + JumpVector + GravityVector()) * PlayerStateManager.Instance.TimeScale;
+            } else
+            {
+                CurrentGravityMult = 0;
+            }
         } else {
             ResultantVector = (ParallelVector + JumpVector) * PlayerStateManager.Instance.TimeScale;
             CurrentGravityMult = 0;

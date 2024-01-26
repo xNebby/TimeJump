@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class MovementStatusManager : SingletonClass<MovementStatusManager>
 {
+
+    public Dictionary<string, EffectTicket> EffectTickets = new Dictionary<string, EffectTicket>();
+
+    /*
     public Dictionary<string, Vector3> EffectIDs = new Dictionary<string, Vector3>();
     public Dictionary<string, Vector3> EffectIDsClone = new Dictionary<string, Vector3>();
     // X - Vector List location Y - Multiplier list location Z - Timer list location
@@ -11,8 +15,8 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     public List<float> MultiplierList = new List<float>();
     public List<int> TimerList = new List<int>();
     public List<Vector3> FreeLocations = new List<Vector3>();
+    */
     public bool TimerListChanged = true;
-
     public float MultiplierSum = 1f;
     public Vector2 MSM_StatusVector = Vector2.zero;
 
@@ -27,13 +31,15 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     }
     void ClearLists()
     {
+        EffectTickets = new Dictionary<string, EffectTicket>();
+        /*
         EffectIDs = new Dictionary<string, Vector3>();
         EffectIDsClone = new Dictionary<string, Vector3>();
         VectorList = new List<Vector2>();
         TimerList = new List<int>();
         MultiplierList = new List<float>();
         FreeLocations = new List<Vector3>();
-
+        */
         MSM_StatusVector = Vector2.zero;
         MultiplierSum = 1f;
         TimerListChanged = true;
@@ -43,38 +49,42 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     public void RemoveEffect(string Name)
     {
         TimerListChanged = true;
+        MultiplierSum /= EffectTickets[Name].m_Multiplier;
+        MSM_StatusVector -= EffectTickets[Name].m_Vector;
+        EffectTickets.Remove(Name);
+        /*
         FreeLocations.Add(EffectIDs[Name]);
         VectorList[Mathf.RoundToInt(EffectIDs[Name].x)] = Vector2.zero;
         MultiplierList[Mathf.RoundToInt(EffectIDs[Name].y)] = 1f;
         TimerList[Mathf.RoundToInt(EffectIDs[Name].z)] = 0;
         EffectIDs.Remove(Name);
-        SumLists();
+        SumLists();*/
     }
 
-    public void AddMovementEffect(string Name, Vector2 Velocity, float Multiplier, int Timer)
+    public void AddTimedMovementEffect(string Name, Vector2 Velocity, float Multiplier, float Timer)
     {
         AddNamedEffect(Name);
         AddVelocityEffect(Name, Velocity);
         AddMultiplierEffect(Name, Multiplier);
         AddTimer(Name, Timer);
+    }
+    public void AddTimedMovementEffect(string Name, Vector2 Velocity, float Timer)
+    {
+        AddNamedEffect(Name);
+        AddVelocityEffect(Name, Velocity);
+        AddTimer(Name, Timer);
+    }
+    public void AddTimedMovementEffect(string Name, float Multiplier, float timer)
+    {
+        AddNamedEffect(Name);
+        AddMultiplierEffect(Name, Multiplier);
+        AddTimer(Name, timer);
     }
     public void AddMovementEffect(string Name, Vector2 Velocity, float Multiplier)
     {
         AddNamedEffect(Name);
         AddVelocityEffect(Name, Velocity);
         AddMultiplierEffect(Name, Multiplier);
-    } 
-    public void AddMovementEffect(string Name, Vector2 Velocity, int Timer)
-    {
-        AddNamedEffect(Name);
-        AddVelocityEffect(Name, Velocity);
-        AddTimer(Name, Timer);
-    }
-    public void AddMovementEffect(string Name, float Multiplier, int timer)
-    {
-        AddNamedEffect(Name);
-        AddMultiplierEffect(Name, Multiplier);
-        AddTimer(Name, timer);
     }
     public void AddMovementEffect(string Name, float Multiplier)
     {
@@ -84,10 +94,13 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
 
     public void AddNamedEffect(string Name)
     {
-        if (EffectIDs.ContainsKey(Name))
+        if (EffectTickets.ContainsKey(Name))
         {
             RemoveEffect(Name);
         }
+        EffectTicket tempTicket = new EffectTicket();
+        EffectTickets.Add(Name, tempTicket);
+        /*
         if (FreeLocations.Count > 0)
         {
             EffectIDs.Add(Name, FreeLocations[0]);
@@ -100,35 +113,39 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
             VectorList.Add(Vector2.zero);
             TimerList.Add(-1);
         }
+        */
     }
     public void AddMultiplierEffect(string Name, float Multiplier)
     {
-        if (EffectIDs.ContainsKey(Name))
+        if (EffectTickets.ContainsKey(Name))
         {
-            MultiplierList[Mathf.RoundToInt(EffectIDs[Name].y)] = Multiplier;
+            EffectTickets[Name].m_Multiplier = Multiplier;
+            //MultiplierList[Mathf.RoundToInt(EffectIDs[Name].y)] = Multiplier;
             MultiplierSum *= Multiplier;
             updateVars();
         }
     }
     public void AddVelocityEffect(string Name, Vector2 Velocity)
     {
-        if (EffectIDs.ContainsKey(Name))
+        if (EffectTickets.ContainsKey(Name))
         {
-            VectorList[Mathf.RoundToInt(EffectIDs[Name].x)] = Velocity;
+            EffectTickets[Name].m_Vector = Velocity;
+            //VectorList[Mathf.RoundToInt(EffectIDs[Name].x)] = Velocity;
             MSM_StatusVector += Velocity;
             updateVars();
         }
     }
-    public void AddTimer(string Name, int Time)
+    public void AddTimer(string Name, float Time)
     {
-        if (EffectIDs.ContainsKey(Name))
+        if (EffectTickets.ContainsKey(Name))
         {
-            TimerList[Mathf.RoundToInt(EffectIDs[Name].z)] = Time;
+            EffectTickets[Name].m_Timer = Time;
+            //TimerList[Mathf.RoundToInt(EffectIDs[Name].z)] = Time;
             TimerListChanged = true;
         }
 
     }
-
+    /*
     void SumLists()
     {
         MultiplierSum = 1f;
@@ -143,20 +160,16 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
         }
         updateVars();
     }
-
+    */
     void updateVars()
     {
         PlayerManager.Instance.UpdatePMM_MSM_Vector(MSM_StatusVector);
         PlayerManager.Instance.UpdatePMM_MSM_Multiplier(MultiplierSum);
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
-        TimerTick();
-    }
-
-    public void TimerTick()
-    {
+        /*
         if (EffectIDs.Count > 0)
         {
             if (TimerListChanged == true)
@@ -175,6 +188,29 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
                     }
                 }
             }
-        }    
+        } */
+        if (EffectTickets.Count > 0)
+        {
+            Dictionary<string, EffectTicket> EffectTicketsClone = new Dictionary<string, EffectTicket>(EffectTickets);
+            foreach (string Key in EffectTicketsClone.Keys)
+            {
+                if (EffectTicketsClone[Key].m_Timer > -1)
+                {
+                    EffectTicketsClone[Key].m_Timer -= Time.fixedDeltaTime; 
+                    if (EffectTicketsClone[Key].m_Timer <= 0)
+                    {
+                        RemoveEffect(Key);
+                    }
+                } 
+            }
+        }
     }
+}
+
+
+public class EffectTicket
+{
+    public Vector2 m_Vector = Vector2.zero;
+    public float m_Multiplier = 1f;
+    public float m_Timer = -1;
 }

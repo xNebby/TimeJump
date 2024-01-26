@@ -47,7 +47,7 @@ public class PlayerDash : MonoBehaviour
 
     void DashEnded()
     {
-        LogSystem.Log(gameObject, "NOT Dashing!");
+        //LogSystem.Log(gameObject, "NOT Dashing!");
         // add Disable invuln
         IsDashing = false;
         EventManager.TriggerEvent("PD_DashStopped");

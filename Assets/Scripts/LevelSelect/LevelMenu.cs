@@ -6,6 +6,7 @@ public class LevelMenu : MonoBehaviour
 {
     public string EventName;
     public bool Visible;
+    public string LevelName;
     public GameObject m_LevelMenu, m_Indicator, m_PrimaryIndicator, m_SecondaryIndicator;
 
     void OnEnable() 
@@ -23,7 +24,7 @@ public class LevelMenu : MonoBehaviour
         EventManager.StartListening("Interaction_" + EventName + "_Secondary", Secondary);
         EventManager.StartListening("Interaction_" + EventName + "_Invoked", Invoked);
         EventManager.StartListening("Interaction_" + EventName + "_Revoked", Revoked);
-        EventManager.StartListening("UI_CloseMenu", CloseMenu);
+        EventManager.StartListening("CloseUI", CloseMenu);
     }
     void OnDisable()
     {
@@ -31,7 +32,7 @@ public class LevelMenu : MonoBehaviour
         EventManager.StopListening("Interaction_" + EventName + "_Secondary", Secondary);
         EventManager.StopListening("Interaction_" + EventName + "_Invoked", Invoked);
         EventManager.StopListening("Interaction_" + EventName + "_Revoked", Revoked);
-        EventManager.StopListening("UI_CloseMenu", CloseMenu);
+        EventManager.StopListening("CloseUI", CloseMenu);
     }
 
     void CloseMenu()
@@ -45,12 +46,20 @@ public class LevelMenu : MonoBehaviour
     }
     void Primary()
     {
-        // Brings up the menu. Closes the temp thing.
-        Debug.Log("Primary");
-        m_Indicator.SetActive(false);
-        m_LevelMenu.SetActive(true);
-        m_PrimaryIndicator.SetActive(false);
-        m_SecondaryIndicator.SetActive(false);
+        if (Visible == false)
+        {
+            // Brings up the menu. Closes the temp thing.
+            Debug.Log("Primary");
+            EventManager.TriggerEvent("OpenUI");
+            m_Indicator.SetActive(false);
+            m_LevelMenu.SetActive(true);
+            Visible = true;
+            m_PrimaryIndicator.transform.localPosition = new Vector3(2, 1.75f, 0);
+            m_SecondaryIndicator.SetActive(false);
+        } else
+        {
+            LevelSelect.Instance.LoadLevel(LevelName);
+        }
     }
     void Secondary()
     {
@@ -61,6 +70,7 @@ public class LevelMenu : MonoBehaviour
         Debug.Log("invoked!");
         // Sets the temporary thing to visible
         m_Indicator.SetActive(true);
+        m_PrimaryIndicator.transform.localPosition = new Vector3(0, 2, 0);
     }
     void Revoked()
     {

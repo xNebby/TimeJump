@@ -16,7 +16,7 @@ public class TimerManager : MonoBehaviour
         {
             if (!timerManager)
             {
-                timerManager = FindObjectOfType(typeof(TimerManager)) as TimerManager;
+                timerManager = FindAnyObjectByType(typeof(TimerManager)) as TimerManager;
                 if (!timerManager)
                 {
                     Debug.LogError("There needs to be one active TimerManager object in the scene.");

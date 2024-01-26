@@ -12,22 +12,33 @@ public class InputDetector : MonoBehaviour
 
     private bool TappedSprint = false;
 
+    public int GameState = 0; // 0 = Playing game, 1 = Paused game, 2 = Cutscene, 3 = UI
+    public int PrevGameState = 0;
+
 
 
     void OnEnable()
     {
+        EventManager.StartListening("PauseMenu_Resume", Paused);
+        EventManager.StartListening("OpenUI", OpenedUI);
         // Create new instance of input sheet.
         m_PlayerInputActions = new PlayerInputActions();
         PlayerActionsListeners();
+        UIActionsListeners();
+
+        // Enable inputs from the Player class of the input sheet.
+        m_PlayerInputActions.Player.Enable();
+    }
+
+    void OnDisable()
+    {
+        EventManager.StopListening("PauseMenu_Resume", Paused);
+        EventManager.StopListening("OpenUI", OpenedUI);
 
     }
 
     void PlayerActionsListeners()
     {
-
-        // Enable inputs from the Player class of the input sheet.
-        m_PlayerInputActions.Player.Enable();
-
         m_PlayerInputActions.Player.Movement.performed += MovementPerformed;
         m_PlayerInputActions.Player.Movement.canceled += MovementCanceled;
 
@@ -44,15 +55,110 @@ public class InputDetector : MonoBehaviour
 
         m_PlayerInputActions.Player.Jump.started += JumpStarted;
         m_PlayerInputActions.Player.Jump.canceled += JumpCanceled;
+
+        m_PlayerInputActions.Player.PrimarySpecialAbility.started += PrimarySpecial;
+        m_PlayerInputActions.Player.SecondarySpecialAbility.started += SecondarySpecial;
+        m_PlayerInputActions.Player.TertiarySpecialAbility.started += TertiarySpecial;
+    }
+
+    void UIActionsListeners()
+    {
+        m_PlayerInputActions.UI.Back.started += UIBack;
+        m_PlayerInputActions.UI.Close.started += UIClose;
+
+    }
+
+    void CutsceneActionsListeners()
+    {
+        m_PlayerInputActions.Cutscenes.Pause.started += Paused;
+        m_PlayerInputActions.Cutscenes.Skip.started += CutsceneSkip;
+    }
+
+    //
+    void CutsceneSkip(InputAction.CallbackContext context)
+    {
+
+    }
+
+    //
+    void UIBack(InputAction.CallbackContext context)
+    {
+
+    }
+    void UIClose(InputAction.CallbackContext context)
+    {
+        if (GameState == 1)
+        {
+            Paused(context);
+        } else
+        {
+            EventManager.TriggerEvent("CloseUI");
+        }
+    }
+    void OpenedUI()
+    {
+        PrevGameState = GameState;
+        GameState = 3;
+    }
+
+
+    //
+
+    //
+    void PrimarySpecial(InputAction.CallbackContext context)
+    {
+
+    }
+    void SecondarySpecial(InputAction.CallbackContext context)
+    {
+
+    }
+    void TertiarySpecial(InputAction.CallbackContext context)
+    {
+
     }
 
     // 
     void Paused(InputAction.CallbackContext context)
     {
-        // Disable player actions, enable ui actions, enable ui, prevent physics updates etc. 
-        EventManager.TriggerEvent("ID_Paused");
+        Paused();
     }
-
+    void Paused()
+    {
+        // Disable player actions, enable ui actions, enable ui, prevent physics updates etc. 
+        if (!(GameState == 1))
+        {
+            EventManager.TriggerEvent("ID_Paused"); // Shows ui 
+            if (GameState == 0)
+            {
+                m_PlayerInputActions.Player.Disable();
+            }
+            else if (GameState == 2)
+            {
+                m_PlayerInputActions.Cutscenes.Disable();
+            }
+            m_PlayerInputActions.UI.Enable();
+            Time.timeScale = 0;
+            PrevGameState = GameState;
+            GameState = 1;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            GameState = PrevGameState; 
+            EventManager.TriggerEvent("ID_UnPaused");
+            if (GameState == 0)
+            {
+                m_PlayerInputActions.Player.Enable();
+                m_PlayerInputActions.UI.Disable();
+            }
+            else if (GameState == 2)
+            {
+                m_PlayerInputActions.Cutscenes.Enable();
+                m_PlayerInputActions.UI.Disable();
+            }
+        }
+    }
 
     //
     void DashPerformed(InputAction.CallbackContext context)
