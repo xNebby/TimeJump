@@ -8,10 +8,11 @@ public class Room : MonoBehaviour
     public int RoomID;
     public Vector2 RoomPosition;
     public List<int> AdjacentRooms;
-    public static float PlayerPauseDuration = 2f;
+    private float PlayerPauseDuration;
 
     private void OnEnable()
     {
+        PlayerPauseDuration = 1f;
         VirtualCamera = gameObject.transform.GetChild(0).gameObject;
     }
 
