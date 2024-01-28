@@ -215,9 +215,29 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2213387303382789657, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+      propertyPath: m_Follow
+      value: 
+      objectReference: {fileID: 2108197627}
+    - target: {fileID: 3716803638727550775, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+      propertyPath: m_XDamping
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3716803638727550775, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+      propertyPath: m_YDamping
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4675524165604212996, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -38
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191821268011820385, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+      propertyPath: FollowTarget
+      value: 
+      objectReference: {fileID: 2108197627}
+    - target: {fileID: 6191821268011820385, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+      propertyPath: FollowVector.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6623176875454803102, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
       propertyPath: PositionVector.x
@@ -226,6 +246,10 @@ PrefabInstance:
     - target: {fileID: 6957757331811093423, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -38
+      objectReference: {fileID: 0}
+    - target: {fileID: 9135440145819611769, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

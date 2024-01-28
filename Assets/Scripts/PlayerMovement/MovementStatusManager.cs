@@ -135,7 +135,6 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     }
 }
 
-
 public class EffectTicket
 {
     public Vector2 m_Vector = Vector2.zero;

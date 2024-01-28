@@ -74,6 +74,7 @@ public class CreateSpawnpoint : MonoBehaviour
         {
             // Add an interaction to the interactions script.
             m_Animator.SetTrigger("Activate");
+            SpawnManager.Instance.SetSpawn(SpawnName);
         }
     }
 

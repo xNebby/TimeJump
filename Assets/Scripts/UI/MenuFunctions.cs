@@ -19,7 +19,7 @@ public class MenuFunctions : MonoBehaviour
         // Runs through the list, and adds a listener to each entry's button.
         for (int i = 0; i < Buttons.Count; i++)
         {
-            Debug.Log(i);
+            //Debug.Log(i);
             ButtonContainer tempContainer = Buttons[i].gameObject.GetComponent<ButtonContainer>();
             tempContainer.IndexOfButton = i;
             // Calls the TaskOnClick/TaskWithParameters/ButtonClicked method when you click the Button. The delegate allows for parameters to be passed.

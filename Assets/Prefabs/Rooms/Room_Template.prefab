@@ -356,7 +356,7 @@ MonoBehaviour:
   CineLockOn: 1
   VCam: {fileID: 7604143623081503434}
   FollowTarget: {fileID: 0}
-  FollowVector: {x: 0, y: 3, z: 0}
+  FollowVector: {x: 0, y: 1.75, z: 0}
 --- !u!114 &444712828822421635
 MonoBehaviour:
   m_ObjectHideFlags: 0

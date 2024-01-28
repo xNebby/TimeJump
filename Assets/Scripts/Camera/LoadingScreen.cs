@@ -36,10 +36,7 @@ public class LoadingScreen : MonoBehaviour
         {
             if (Loading || VisibleState)
             {
-                if (!LoadWaiting)
-                {
-                    EndLoad();
-                }
+                EndLoad();
             } else
             {
                 Load();
@@ -83,16 +80,23 @@ public class LoadingScreen : MonoBehaviour
 
     void Load()
     {
-        Loading = true;
-        VisibleState = false;
-        PositionVector = Vector3.zero;
-        Counter = 0;
+        if (Loading == true)
+        {
+            LoadWaiting = true;
+        }
+        else
+        {
+            Loading = true;
+            VisibleState = false;
+            PositionVector = Vector3.zero;
+            Counter = 0;
+        }
     }
     void EndLoad()
     {
         if (Loading == true)
         {
-            LoadWaiting = true;
+
         } else
         {
             Loading = true;

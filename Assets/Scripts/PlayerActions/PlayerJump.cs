@@ -17,6 +17,7 @@ public class PlayerJump : MonoBehaviour
     public float CrouchJumpTime = 0.5f;
     public float NormalJumpTime = 0.2f;
     public float CoyoteTime = 0.15f;
+    public float PeakMult = 1.1f;
     public Rigidbody2D RB;
     public PlayerMovementManager m_PMM;
     public bool TimerActive = false;
@@ -91,8 +92,9 @@ public class PlayerJump : MonoBehaviour
             {
                 EventManager.TriggerEvent("PJ_CoyoteTimeStart");
                 TimerManager.AddTimer("PJ_CoyoteTime", CoyoteTime, CoyoteRelease);
+                MovementStatusManager.Instance.AddTimedMovementEffect("Coyote", PeakMult, CoyoteTime);
                 Coyote = true;
-                LogSystem.Log(gameObject, "Coyote timer added.");//
+                //LogSystem.Log(gameObject, "Coyote timer added.");//
             }
             Jumping = false;
             m_PMM.AddJumpVector(Vector2.zero);
