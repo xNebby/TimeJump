@@ -32,6 +32,7 @@ public class PlayerDash : MonoBehaviour
     {
         if (PlayerStateManager.Instance.PlayerCanDash)
         {
+            FindFirstObjectByType<GhostTrail>().ShowGhost();
             LogSystem.Log(gameObject, "Dashing!");
             // Get directional input then go that way in 8 cardinal. 
             // add Enable invuln if thats at a certain point- decide what portion of dash that is soon!!!!!
