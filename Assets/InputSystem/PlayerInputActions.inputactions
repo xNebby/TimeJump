@@ -103,6 +103,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PanUp",
+                    "type": "Button",
+                    "id": "cea212bc-0b10-44e4-ba67-bc0c96777e83",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PanDown",
+                    "type": "Button",
+                    "id": "7688599d-c73f-4381-aa2f-095f8d929c69",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -400,6 +418,28 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "TertiarySpecialAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "74defde5-8f5c-4825-b4e9-fdf884e52b72",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "PanUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de4d9349-12fc-4118-ba56-3afe30c889ab",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "PanDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

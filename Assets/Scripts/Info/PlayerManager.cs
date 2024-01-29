@@ -83,6 +83,14 @@ public class PlayerManager : SingletonClass<PlayerManager>
     {
         PMM.MSM_UpdateMultiplier(MSM_Multiplier);
     }
+    public void UpdatePMM_MSM_JumpMultiplier(float MSM_Multiplier)
+    {
+        PMM.MSM_UpdateJumpMultiplier(MSM_Multiplier);
+    }
+    public void UpdatePMM_PD_DashVector(Vector2 PD_DashVector)
+    {
+        PMM.PD_UpdateDashVector(PD_DashVector);
+    }
 
     public void KillPlayer()
     {

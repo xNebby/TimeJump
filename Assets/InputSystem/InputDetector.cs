@@ -59,6 +59,11 @@ public class InputDetector : MonoBehaviour
         m_PlayerInputActions.Player.PrimarySpecialAbility.started += PrimarySpecial;
         m_PlayerInputActions.Player.SecondarySpecialAbility.started += SecondarySpecial;
         m_PlayerInputActions.Player.TertiarySpecialAbility.started += TertiarySpecial;
+
+        m_PlayerInputActions.Player.PanUp.performed += PanUp;
+        m_PlayerInputActions.Player.PanUp.canceled += PanCancel;
+        m_PlayerInputActions.Player.PanDown.performed += PanDown;
+        m_PlayerInputActions.Player.PanDown.canceled += PanCancel;
     }
 
     void UIActionsListeners()
@@ -215,6 +220,30 @@ public class InputDetector : MonoBehaviour
         EventManager.TriggerEvent("IM_StopMoving");
         InputManager.Instance.RemoveVector("Player");
     }
+
+    void PanUp(InputAction.CallbackContext context)
+    {
+        if (MovementVector.x == 0f)
+        {
+            Debug.Log("PanUp");
+            EventManager.TriggerEvent("CAM_PanUp");
+        }
+    }
+    void PanDown(InputAction.CallbackContext context)
+    {
+        if (MovementVector.x == 0f)
+        {
+            Debug.Log("PanDown");
+            EventManager.TriggerEvent("CAM_PanDown");
+        }
+
+    }
+    void PanCancel(InputAction.CallbackContext context)
+    {
+        Debug.Log("PanCancel");
+        EventManager.TriggerEvent("CAM_PanCancel");
+    }
+
     /*
     void CrouchStarted(InputAction.CallbackContext context)
     {

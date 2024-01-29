@@ -7,6 +7,7 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
 
     public Dictionary<string, EffectTicket> EffectTickets = new Dictionary<string, EffectTicket>();
     public float MultiplierSum = 1f;
+    public float JumpMultiplierSum = 1f;
     public Vector2 MSM_StatusVector = Vector2.zero;
 
     public override void Awake()
@@ -23,6 +24,7 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
         EffectTickets = new Dictionary<string, EffectTicket>();
         MSM_StatusVector = Vector2.zero;
         MultiplierSum = 1f;
+        JumpMultiplierSum = 1f;
 
     }
 
@@ -62,6 +64,18 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
         AddNamedEffect(Name);
         AddMultiplierEffect(Name, Multiplier);
     }
+    public void AddJumpEffect(string Name, float JumpMultiplier)
+    {
+        AddNamedEffect(Name);
+        AddJumpMultiplierEffect(Name, JumpMultiplier);
+    }
+    public void AddJumpMovementEffect(string Name, Vector2 Velocity, float Multiplier, float JumpMultiplier)
+    {
+        AddNamedEffect(Name);
+        AddVelocityEffect(Name, Velocity);
+        AddMultiplierEffect(Name, Multiplier);
+        AddJumpMultiplierEffect(Name, JumpMultiplier);
+    }
 
     public void AddNamedEffect(string Name)
     {
@@ -78,6 +92,15 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
         {
             EffectTickets[Name].m_Multiplier = Multiplier;
             MultiplierSum *= Multiplier;
+            updateVars();
+        }
+    }
+    public void AddJumpMultiplierEffect(string Name, float Multiplier)
+    {
+        if (EffectTickets.ContainsKey(Name))
+        {
+            EffectTickets[Name].m_JumpMultiplier = Multiplier;
+            JumpMultiplierSum *= Multiplier;
             updateVars();
         }
     }
@@ -101,10 +124,12 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     void SumLists()
     {
         MultiplierSum = 1f;
+        JumpMultiplierSum = 1f;
         MSM_StatusVector = Vector2.zero;
         foreach (string Key in EffectTickets.Keys)
         {
             MultiplierSum *= EffectTickets[Key].m_Multiplier;
+            JumpMultiplierSum *= EffectTickets[Key].m_JumpMultiplier;
             MSM_StatusVector += EffectTickets[Key].m_Vector;
         }
         updateVars();
@@ -113,6 +138,7 @@ public class MovementStatusManager : SingletonClass<MovementStatusManager>
     {
         PlayerManager.Instance.UpdatePMM_MSM_Vector(MSM_StatusVector);
         PlayerManager.Instance.UpdatePMM_MSM_Multiplier(MultiplierSum);
+        PlayerManager.Instance.UpdatePMM_MSM_JumpMultiplier(JumpMultiplierSum);
     }
 
     public void FixedUpdate()
@@ -139,5 +165,6 @@ public class EffectTicket
 {
     public Vector2 m_Vector = Vector2.zero;
     public float m_Multiplier = 1f;
+    public float m_JumpMultiplier = 1f;
     public float m_Timer = -1;
 }

@@ -8,6 +8,8 @@ TagManager:
   - KillBox
   - PhysicsObj
   - PlayerRenderer
+  - UpperCamera
+  - LowerCamera
   layers:
   - Default
   - TransparentFX

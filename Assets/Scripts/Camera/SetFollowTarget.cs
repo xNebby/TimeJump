@@ -10,16 +10,23 @@ public class SetFollowTarget : MonoBehaviour
     [Space(10)]
     [Header("Cam Properties")]
     public CinemachineVirtualCamera VCam;
-    public Transform FollowTarget;
+    public Transform FollowTarget, UpperCamera, LowerCamera;
     public Vector3 FollowVector;
     // Start is called before the first frame update
     void OnEnable()
     {
         EventManager.StartListening("CAM_UpdateFollow", UpdateFollow);
+        EventManager.StartListening("CAM_PanUp", PanUp);
+        EventManager.StartListening("CAM_PanDown", PanDown);
+        EventManager.StartListening("CAM_PanCancel", PanCancel);
+
     }
     void OnDisable()
     {
         EventManager.StopListening("CAM_UpdateFollow", UpdateFollow);
+        EventManager.StopListening("CAM_PanUp", PanUp);
+        EventManager.StopListening("CAM_PanDown", PanDown);
+        EventManager.StopListening("CAM_PanCancel", PanCancel);
     }
     void UpdateFollow()
     {
@@ -30,6 +37,47 @@ public class SetFollowTarget : MonoBehaviour
             //VCam.LookAt = FollowTarget;
             VCam.Follow = FollowTarget;
         } 
+    }
+    void PanUp()
+    {
+        if (CineLockOn) 
+        {
+            if (VCam == null)
+            {
+                UpdateFollow();
+            }
+            if (UpperCamera == null)
+            {
+                UpperCamera = GameObject.FindWithTag("UpperCamera").transform;
+            }
+            VCam.Follow = UpperCamera;
+        }
+    }
+    void PanDown()
+    {
+        if (CineLockOn)
+        {
+            if (VCam == null)
+            {
+                UpdateFollow();
+            }
+            if (LowerCamera == null)
+            {
+                LowerCamera = GameObject.FindWithTag("LowerCamera").transform;
+            }
+            VCam.Follow = LowerCamera;
+        }
+    }
+    void PanCancel()
+    {
+        if (CineLockOn)
+        {
+            if (VCam == null)
+            {
+                UpdateFollow();
+            }
+            VCam.Follow = FollowTarget;
+        }
     }
 
     void Update()

@@ -125,6 +125,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PanUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""cea212bc-0b10-44e4-ba67-bc0c96777e83"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PanDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""7688599d-c73f-4381-aa2f-095f8d929c69"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -424,6 +442,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""TertiarySpecialAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74defde5-8f5c-4825-b4e9-fdf884e52b72"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PanUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de4d9349-12fc-4118-ba56-3afe30c889ab"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PanDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -584,6 +624,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_PrimarySpecialAbility = m_Player.FindAction("PrimarySpecialAbility", throwIfNotFound: true);
         m_Player_SecondarySpecialAbility = m_Player.FindAction("SecondarySpecialAbility", throwIfNotFound: true);
         m_Player_TertiarySpecialAbility = m_Player.FindAction("TertiarySpecialAbility", throwIfNotFound: true);
+        m_Player_PanUp = m_Player.FindAction("PanUp", throwIfNotFound: true);
+        m_Player_PanDown = m_Player.FindAction("PanDown", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Close = m_UI.FindAction("Close", throwIfNotFound: true);
@@ -664,6 +706,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PrimarySpecialAbility;
     private readonly InputAction m_Player_SecondarySpecialAbility;
     private readonly InputAction m_Player_TertiarySpecialAbility;
+    private readonly InputAction m_Player_PanUp;
+    private readonly InputAction m_Player_PanDown;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -679,6 +723,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PrimarySpecialAbility => m_Wrapper.m_Player_PrimarySpecialAbility;
         public InputAction @SecondarySpecialAbility => m_Wrapper.m_Player_SecondarySpecialAbility;
         public InputAction @TertiarySpecialAbility => m_Wrapper.m_Player_TertiarySpecialAbility;
+        public InputAction @PanUp => m_Wrapper.m_Player_PanUp;
+        public InputAction @PanDown => m_Wrapper.m_Player_PanDown;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -721,6 +767,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TertiarySpecialAbility.started += instance.OnTertiarySpecialAbility;
             @TertiarySpecialAbility.performed += instance.OnTertiarySpecialAbility;
             @TertiarySpecialAbility.canceled += instance.OnTertiarySpecialAbility;
+            @PanUp.started += instance.OnPanUp;
+            @PanUp.performed += instance.OnPanUp;
+            @PanUp.canceled += instance.OnPanUp;
+            @PanDown.started += instance.OnPanDown;
+            @PanDown.performed += instance.OnPanDown;
+            @PanDown.canceled += instance.OnPanDown;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -758,6 +810,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @TertiarySpecialAbility.started -= instance.OnTertiarySpecialAbility;
             @TertiarySpecialAbility.performed -= instance.OnTertiarySpecialAbility;
             @TertiarySpecialAbility.canceled -= instance.OnTertiarySpecialAbility;
+            @PanUp.started -= instance.OnPanUp;
+            @PanUp.performed -= instance.OnPanUp;
+            @PanUp.canceled -= instance.OnPanUp;
+            @PanDown.started -= instance.OnPanDown;
+            @PanDown.performed -= instance.OnPanDown;
+            @PanDown.canceled -= instance.OnPanDown;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -914,6 +972,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPrimarySpecialAbility(InputAction.CallbackContext context);
         void OnSecondarySpecialAbility(InputAction.CallbackContext context);
         void OnTertiarySpecialAbility(InputAction.CallbackContext context);
+        void OnPanUp(InputAction.CallbackContext context);
+        void OnPanDown(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
