@@ -112,15 +112,15 @@ public class InputDetector : MonoBehaviour
     //
     void PrimarySpecial(InputAction.CallbackContext context)
     {
-
+        EventManager.TriggerEvent("ID_StopTime");
     }
     void SecondarySpecial(InputAction.CallbackContext context)
     {
-
+        EventManager.TriggerEvent("ID_RewindTime");
     }
     void TertiarySpecial(InputAction.CallbackContext context)
     {
-
+        EventManager.TriggerEvent("ID_JumpTime");
     }
 
     // 
