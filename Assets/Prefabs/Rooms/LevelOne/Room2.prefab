@@ -800,10 +800,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -6.25, y: 6}
-      - {x: -19.75, y: 6}
-      - {x: -19.75, y: -1}
-      - {x: -6.25, y: -1}
+    - - {x: -6.5, y: 6}
+      - {x: -19.5, y: 6}
+      - {x: -19.5, y: -1}
+      - {x: -6.5, y: -1}
   m_UseDelaunayMesh: 0
 --- !u!114 &6671249252780344329
 MonoBehaviour:
@@ -3931,6 +3931,8 @@ MonoBehaviour:
   CineLockOn: 1
   VCam: {fileID: 2526628307785485307}
   FollowTarget: {fileID: 0}
+  UpperCamera: {fileID: 0}
+  LowerCamera: {fileID: 0}
   FollowVector: {x: 0, y: 1, z: 0}
 --- !u!114 &4368319640442370090
 MonoBehaviour:

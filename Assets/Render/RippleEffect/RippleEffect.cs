@@ -31,7 +31,10 @@ public class RippleEffect : MonoBehaviour
     [Range(0.0f, 2.0f)]
     public float dropInterval = 0.5f;
 
-    [SerializeField, HideInInspector]
+    public float ScreenWidth;
+    public float ScreenHeight;
+
+    [SerializeField]
     Shader shader;
 
     class Droplet
@@ -90,6 +93,7 @@ public class RippleEffect : MonoBehaviour
         material.SetVector("_Params2", new Vector4(1, 1 / c.aspect, refractionStrength, reflectionStrength));
     }
 
+
     void Awake()
     {
         droplets = new Droplet[3];
@@ -143,12 +147,15 @@ public class RippleEffect : MonoBehaviour
         {
             Player = PlayerManager.Instance.PlayerGO;
         }
-        Emit(Player.transform.position);
+        Vector2 DifferentialVector = (Player.transform.position - transform.position);
+        Emit(new Vector2((DifferentialVector.x / ScreenWidth * 2), (DifferentialVector.y / ScreenHeight * 2)));
     }
 
     public void Emit(Vector2 pos)
     {
         droplets[dropCount++ % droplets.Length].Reset(pos);
+        Debug.Log(pos);
+
     }
 
     IEnumerator Stop()
