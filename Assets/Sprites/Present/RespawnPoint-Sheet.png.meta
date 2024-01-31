@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 703baebf7e009cf4097348c0580fccff
+guid: 802f12c22e71467489ef65ee22071106
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 12
+  serializedVersion: 13
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -20,11 +20,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMasterTextureLimit: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -63,6 +64,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -75,6 +77,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -87,6 +90,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
@@ -99,6 +103,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -451,25 +456,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      RespawnPoint-Sheet_6: 1490625924
-      RespawnPoint-Sheet_4: 1314109925
-      RespawnPoint-Sheet_12: 2031579155
-      RespawnPoint-Sheet_2: -1062854821
-      RespawnPoint-Sheet_7: -948524730
-      RespawnPoint-Sheet_13: -309677287
-      RespawnPoint-Sheet_9: -1313058885
-      RespawnPoint-Sheet_3: 1717927220
-      RespawnPoint-Sheet_15: -761797627
-      RespawnPoint-Sheet_11: -1574643518
-      RespawnPoint-Sheet_5: 1295484990
       RespawnPoint-Sheet_0: 1076575952
-      RespawnPoint-Sheet_10: -1074447888
-      RespawnPoint-Sheet_14: -1298774976
       RespawnPoint-Sheet_1: -1288499493
+      RespawnPoint-Sheet_10: -1074447888
+      RespawnPoint-Sheet_11: -1574643518
+      RespawnPoint-Sheet_12: 2031579155
+      RespawnPoint-Sheet_13: -309677287
+      RespawnPoint-Sheet_14: -1298774976
+      RespawnPoint-Sheet_15: -761797627
+      RespawnPoint-Sheet_2: -1062854821
+      RespawnPoint-Sheet_3: 1717927220
+      RespawnPoint-Sheet_4: 1314109925
+      RespawnPoint-Sheet_5: 1295484990
+      RespawnPoint-Sheet_6: 1490625924
+      RespawnPoint-Sheet_7: -948524730
       RespawnPoint-Sheet_8: -963982708
-  spritePackingTag: 
+      RespawnPoint-Sheet_9: -1313058885
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
