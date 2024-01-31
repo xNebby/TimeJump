@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimeStop : SingletonClass<TimeStop> 
 {
     public bool CanStopTime;
+    public bool TimeStopped;
     public float ObjectSpeed = 0.5f;
 
     private void OnEnable()
@@ -29,7 +30,13 @@ public class TimeStop : SingletonClass<TimeStop>
         // Objects that are touching the player should move at a different speed to normal to show theyre still paused.
         if (CanStopTime)
         {
-            EventManager.TriggerEvent("TS_StopTime");
+            if (TimeStopped)
+            {
+                EventManager.TriggerEvent("TS_ResumeTime");
+            } else
+            {
+                EventManager.TriggerEvent("TS_StopTime");
+            }
         }
 
     }
