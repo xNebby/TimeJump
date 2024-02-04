@@ -24,6 +24,7 @@ public class RoomLoader : SingletonClass<RoomLoader>
         if (ActiveRooms.Count == 0)
         {
             LoadRoom(1);
+            EventManager.TriggerEvent("LS_EndLoad");
         }
     }
     void IterateRooms()
