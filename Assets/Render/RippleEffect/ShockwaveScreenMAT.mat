@@ -72,15 +72,23 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
+    - _GrayscaleDistanceFromCenter: -0.001
+    - _InnerStopDistanceFromCenter: -1
+    - _InnerStrength: 2
+    - _OuterStopDistanceFromCenter: -1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ShockwaveStrength: 0.075
     - _Size: 0.05
+    - _TimeStopSize: 0.5
     - _WaveDistanceFromCenter: -0.1
     - _XSizeRatio: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _GrayscaleColour: {r: 0, g: 0, b: 0, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _RingSpawnPosition: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _TimeStopPrimaryColour: {r: 0, g: 0.02554274, b: 1, a: 0.3921569}
+    - _TimeStopSecondaryColour: {r: 1, g: 0.9684142, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
