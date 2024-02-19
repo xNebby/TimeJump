@@ -72,10 +72,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _GrayscaleDistanceFromCenter: -0.001
+    - _GrayscaleDistanceFromCenter: -0.45
     - _InnerStopDistanceFromCenter: -1
     - _InnerStrength: 2
     - _OuterStopDistanceFromCenter: -1
+    - _PlayerNormalDistance: -0.45
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ShockwaveStrength: 0.075

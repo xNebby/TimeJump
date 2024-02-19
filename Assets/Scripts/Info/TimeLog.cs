@@ -4,56 +4,17 @@ using UnityEngine;
 
 public class TimeLog : MonoBehaviour
 {
-    static int TimerArraySize = 50;
-    private float Timer;
-    private Dictionary<int, TimePos> LogArray;
-    private int CurrentInt;
-    private int LowestInt;
-    
-    void OnEnable()
-    {
-        Timer = 0;
-        CurrentInt = 0;
-        LowestInt = 0;
-        LogArray = new Dictionary<int, TimePos>();
-    }
+    static int TimerArraySize = 15;
+    public int CurrentIndex = 0;
+    public List<TimePos> Timeline;
+    private float TimerTick = 0f;
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
-        Timer += Time.fixedDeltaTime;
-        if (Timer >= (1 / PlayerStateManager.Instance.TimeScale))
-        {
-            if ((gameObject.transform.position == LogArray[CurrentInt].LogPos) & (gameObject.transform.rotation == LogArray[CurrentInt].LogRot))
-            {
-                LogSystem.Log(gameObject, "Rejecting Timelog: hasnt moved.");
-            } else
-            {
-                LogSystem.Log(gameObject, "New time log added.");
-                TimePos TempLog = new TimePos();
-                TempLog.Constructor(gameObject.transform.position, gameObject.transform.rotation);
-                Timer = 0;
-                CurrentInt++;
-                LogArray.Add(CurrentInt, TempLog);
-                if (CurrentInt - LowestInt >= TimerArraySize)
-                {
-                    LogArray.Remove(LowestInt);
-                    LowestInt++;
-                }
-            }
+        TimerTick += Time.fixedDeltaTime;
+        if (TimerTick >= 1f;) {
+            // Add another timeslice to the timeline.
         }
-    }
-
-    TimePos GrabPos()
-    {
-        TimePos CurrentLog = LogArray[CurrentInt];
-        LogArray.Remove(CurrentInt);
-        CurrentInt--;
-        if (CurrentInt == LowestInt)
-        {
-            CurrentInt = 0;
-            LowestInt = 0;
-        }
-        return CurrentLog;
     }
 
 }
