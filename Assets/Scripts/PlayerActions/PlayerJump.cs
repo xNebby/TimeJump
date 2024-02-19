@@ -24,6 +24,7 @@ public class PlayerJump : MonoBehaviour
     public bool Coyote = false;
     public bool BounceBack = false;
     public bool Jumping = false;
+    public bool CanJumpDied = true;
 
     // Start is called before the first frame update
     void OnEnable()
@@ -35,6 +36,9 @@ public class PlayerJump : MonoBehaviour
 
         EventManager.StartListening("PC_CrouchJumpCharged", CrouchJumpCharged);
         EventManager.StartListening("PC_CrouchJumpCancelled", CrouchJumpCancelled);
+
+        EventManager.StartListening("PM_KillPlayer", DiedForceStop);
+        EventManager.StartListening("PM_RespawnPlayer", RemoveDiedForceStop);
     }
     void OnDisable()
     {
@@ -43,23 +47,40 @@ public class PlayerJump : MonoBehaviour
 
         EventManager.StopListening("PC_CrouchJumpCharged", CrouchJumpCharged);
         EventManager.StopListening("PC_CrouchJumpCancelled", CrouchJumpCancelled);
+
+        EventManager.StopListening("PM_KillPlayer", DiedForceStop);
+        EventManager.StopListening("PM_RespawnPlayer", RemoveDiedForceStop);
     }
 
     void HoldingJump()
     {
-        // if is able to jump, jump
-        // if player is on the ground, there can be either a crouch jump upwards, or a normal jump (up or diagonally)
-        LogSystem.Log(gameObject, "Jump command received by PJ module.");
-        if (PlayerStateManager.Instance.PlayerIsOnGround)
+        if (CanJumpDied)
         {
-            TimerManager.AddTimer("PJ_JumpStarted", JumpTime, ReleaseJumpTimer);
-            TimerActive = true;
-            Jumping = true;
-            EventManager.TriggerEvent("PJ_JumpStarted");
-        } else
-        {
-            LogSystem.Log(gameObject, "Jump cannot start- not on ground.");
+            // if is able to jump, jump
+            // if player is on the ground, there can be either a crouch jump upwards, or a normal jump (up or diagonally)
+            LogSystem.Log(gameObject, "Jump command received by PJ module.");
+            if (PlayerStateManager.Instance.PlayerIsOnGround)
+            {
+                TimerManager.AddTimer("PJ_JumpStarted", JumpTime, ReleaseJumpTimer);
+                TimerActive = true;
+                Jumping = true;
+                EventManager.TriggerEvent("PJ_JumpStarted");
+            }
+            else
+            {
+                LogSystem.Log(gameObject, "Jump cannot start- not on ground.");
+            }
         }
+    }
+
+    void DiedForceStop()
+    {
+        ReleaseJumpButton();
+        CanJumpDied = false;
+    }
+    void RemoveDiedForceStop()
+    {
+        CanJumpDied = true;
     }
 
     void ReleaseJumpButton()

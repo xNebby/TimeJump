@@ -42,30 +42,36 @@ public class SetFollowTarget : MonoBehaviour
     {
         if (CineLockOn) 
         {
-            if (VCam == null)
+            if (PlayerStateManager.Instance.PlayerIsAlive & PlayerStateManager.Instance.PlayerIsOnGround)
             {
-                UpdateFollow();
+                if (VCam == null)
+                {
+                    UpdateFollow();
+                }
+                if (UpperCamera == null)
+                {
+                    UpperCamera = GameObject.FindWithTag("UpperCamera").transform;
+                }
+                VCam.Follow = UpperCamera;
             }
-            if (UpperCamera == null)
-            {
-                UpperCamera = GameObject.FindWithTag("UpperCamera").transform;
-            }
-            VCam.Follow = UpperCamera;
         }
     }
     void PanDown()
     {
         if (CineLockOn)
         {
-            if (VCam == null)
+            if (PlayerStateManager.Instance.PlayerIsAlive & PlayerStateManager.Instance.PlayerIsOnGround)
             {
-                UpdateFollow();
+                if (VCam == null)
+                {
+                    UpdateFollow();
+                }
+                if (LowerCamera == null)
+                {
+                    LowerCamera = GameObject.FindWithTag("LowerCamera").transform;
+                }
+                VCam.Follow = LowerCamera;
             }
-            if (LowerCamera == null)
-            {
-                LowerCamera = GameObject.FindWithTag("LowerCamera").transform;
-            }
-            VCam.Follow = LowerCamera;
         }
     }
     void PanCancel()
@@ -82,6 +88,10 @@ public class SetFollowTarget : MonoBehaviour
 
     void Update()
     {
+        if (PlayerStateManager.Instance.PlayerIsAlive == false || PlayerStateManager.Instance.PlayerIsOnGround == false)
+        {
+            PanCancel();
+        }
         if (CineLockOn == false)
         {
             // TO ADD: a thing that makes it so the camera is set a certain distance away, which means that it doesnt instantly follow. 

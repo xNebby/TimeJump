@@ -5,6 +5,7 @@ using UnityEngine;
 public class Room : MonoBehaviour
 {
     public GameObject VirtualCamera;
+    public static float CameraBlendTime = 1f;
     public int RoomID;
     public Vector2 RoomPosition;
     public List<int> AdjacentRooms;
@@ -24,6 +25,7 @@ public class Room : MonoBehaviour
             RoomLoader.Instance.LoadRoom(RoomID);
             VirtualCamera.SetActive(true);
             EventManager.TriggerEvent("CAM_UpdateFollow");
+            TimerManager.AddTimer("CAM_FinishedTransition", CameraBlendTime, delegate { EventManager.TriggerEvent("CAM_RoomBlended"); });
         }
     }
 

@@ -11,29 +11,40 @@ public class PlayerDash : MonoBehaviour
     public Vector2 DashVector;
 
     private float DashTime = 0.2f;
-    //private bool DashInvuln = false;
     private float DashLength = 700f;
     public float DashScale = 3f;
 
     public bool IsDashing = false;
+    public bool CanDashRoomChange = true;
+    public bool CanDashDied = true;
+    private GhostTrail m_GhostTrail;
 
 
     void OnEnable()
     {
         RB = GetComponent<Rigidbody2D>();
+        m_GhostTrail = FindFirstObjectByType<GhostTrail>();
 
         EventManager.StartListening("ID_Dash", Dash);
+        EventManager.StartListening("CAM_UpdateFollow", RoomForceStop);
+        EventManager.StartListening("CAM_RoomBlended", RemoveRoomForceStop);
+        EventManager.StartListening("PM_KillPlayer", DiedForceStop);
+        EventManager.StartListening("PM_RespawnPlayer", RemoveDiedForceStop);
     }
     void OnDisable()
     {
         EventManager.StopListening("ID_Dash", Dash);
+        EventManager.StopListening("CAM_RoomBlended", RoomForceStop);
+        EventManager.StopListening("CAM_RoomBlended", RemoveRoomForceStop);
+        EventManager.StopListening("PM_KillPlayer", DiedForceStop);
+        EventManager.StopListening("PM_RespawnPlayer", RemoveDiedForceStop);
     }
 
     void Dash()
     {
-        if (PlayerStateManager.Instance.PlayerCanDash)
+        if (PlayerStateManager.Instance.PlayerCanDash & CanDashRoomChange & CanDashDied)
         {
-            FindFirstObjectByType<GhostTrail>().ShowGhost();
+            m_GhostTrail.ShowGhost();
             LogSystem.Log(gameObject, "Dashing!");
             // Get directional input then go that way in 8 cardinal. 
             // add Enable invuln if thats at a certain point- decide what portion of dash that is soon!!!!!
@@ -49,6 +60,25 @@ public class PlayerDash : MonoBehaviour
             EventManager.TriggerEvent("PD_DashStarted");
             EventManager.TriggerEvent("IM_StopJump");
         }
+    }
+    
+    void RoomForceStop()
+    {
+        CanDashRoomChange = false;
+        DashEnded();
+    }
+    void RemoveRoomForceStop()
+    {
+        CanDashRoomChange = true;
+    }
+    void DiedForceStop()
+    {
+        CanDashDied = false;
+        DashEnded();
+    }
+    void RemoveDiedForceStop()
+    {
+        CanDashDied = true;
     }
 
     void DashEnded()

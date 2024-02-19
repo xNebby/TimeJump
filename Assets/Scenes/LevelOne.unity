@@ -186,7 +186,7 @@ MonoBehaviour:
   - {fileID: 431885761001107752, guid: ac1e9508177b5734dab0a6275ebff08f, type: 3}
   - {fileID: 1644399658440294096, guid: ec87c9fdbaed21847abcbabe4aff90dd, type: 3}
   ActiveRooms: 
---- !u!43 &914169195
+--- !u!43 &1742107632
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -419,7 +419,7 @@ MonoBehaviour:
     rid: -2
   m_ShadowCastingSource: 1
   m_ShadowMesh:
-    m_Mesh: {fileID: 914169195}
+    m_Mesh: {fileID: 1742107632}
     m_LocalBounds:
       m_Center: {x: 0, y: 0, z: 0}
       m_Extent: {x: 0.5, y: 0.5, z: 0}

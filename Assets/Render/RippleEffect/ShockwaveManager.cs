@@ -30,12 +30,20 @@ public class ShockwaveManager : MonoBehaviour
     {
         _material.SetFloat(_size, 0.05f);
         _material.SetFloat(_shockwaveStrength, 0.075f);
+        if (_ShockwaveCoroutine != null)
+        {
+            StopCoroutine( _ShockwaveCoroutine );
+        }
         _ShockwaveCoroutine = StartCoroutine(ShockwaveAction(-0.1f, 1f));
     }
     public void CallShockwaveTS()
     {
         _material.SetFloat(_size, 0.1f);
         _material.SetFloat(_shockwaveStrength, 2f);
+        if (_ShockwaveCoroutine != null)
+        {
+            StopCoroutine(_ShockwaveCoroutine);
+        }
         _ShockwaveCoroutine = StartCoroutine(ShockwaveAction(-0.1f, 1f));
     }
 
