@@ -5,6 +5,7 @@ using UnityEngine;
 public class Box : MonoBehaviour
 {
     private float ObjectSpeed;
+    public float RotateAngleMax;
     private bool Attached;
     private Transform playerTrans;
     public float PlayerToBox;
@@ -21,6 +22,7 @@ public class Box : MonoBehaviour
         BoxRB = GetComponent<Rigidbody2D>();
         ObjectSpeed = 1f;
         ObjectMass = 10f;
+        RotateAngleMax = 30f;
         playerTrans = GameObject.FindWithTag("Player").transform;
         EventManager.StartListening("TS_StopTime", ChangeSpeed);
         EventManager.StartListening("TS_ResumeTime", ChangeSpeed);
@@ -57,6 +59,18 @@ public class Box : MonoBehaviour
             Debug.Log("Box collide");
             Attached = true;
             //transform.SetParent(playerTrans);
+        }
+    }
+
+    private void Update()
+    {
+        if (transform.rotation.z < (RotateAngleMax * -1))
+        {
+            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, RotateAngleMax * -1, transform.rotation.w);
+        }
+        if (transform.rotation.z > RotateAngleMax)
+        {
+            transform.rotation = new Quaternion(transform.rotation.x, transform.rotation.y, RotateAngleMax, transform.rotation.w);
         }
     }
 

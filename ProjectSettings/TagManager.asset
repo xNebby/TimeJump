@@ -10,6 +10,7 @@ TagManager:
   - PlayerRenderer
   - UpperCamera
   - LowerCamera
+  - TimeObject
   layers:
   - Default
   - TransparentFX
