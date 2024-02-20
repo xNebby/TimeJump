@@ -285,7 +285,7 @@ SpriteRenderer:
   m_SortingLayerID: 1074178939
   m_SortingLayer: 2
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 7c81043cb4f457f40b6dd501fc42f0b5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5b3f982925b9a894b8ab135030ad8bb8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -448,6 +448,7 @@ MonoBehaviour:
   Coyote: 0
   BounceBack: 0
   Jumping: 0
+  CanJumpDied: 1
 --- !u!114 &7609720372775857969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +484,7 @@ MonoBehaviour:
   DashScale: 12
   IsDashing: 0
   CanDashRoomChange: 1
+  CanDashDied: 1
 --- !u!114 &2634606033794382279
 MonoBehaviour:
   m_ObjectHideFlags: 0

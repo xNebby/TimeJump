@@ -82,7 +82,7 @@ Material:
     - _ShockwaveStrength: 0.05
     - _Size: 0.05
     - _TimeStopSize: 0.5
-    - _WaveDistanceFromCenter: 0.5
+    - _WaveDistanceFromCenter: -0.1
     - _XSizeRatio: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
