@@ -196,11 +196,12 @@ public class InputManager : SingletonClass<InputManager>
         PlayerManager.Instance.UpdatePMM_IM_Vector(ID_MovementVector);
 
         IM_PlayerVector = ID_MovementVector;
-
+        
+        /*
         if (IM_PlayerVector == Vector2.zero)
         {
             EventManager.TriggerEvent("PAH_Idle");
-        }
+        }*/
 
         if (IM_PlayerVector.x < 0)
         {
