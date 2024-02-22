@@ -75,6 +75,7 @@ public class LevelStats
     public int m_Deaths;
     public float m_TimeTaken;
     public float m_QuickestTime;
+    public List<string> UnlockedCheckpoints;
 }
 
 public class TotalStats

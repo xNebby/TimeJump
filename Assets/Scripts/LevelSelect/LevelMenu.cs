@@ -53,11 +53,13 @@ public class LevelMenu : MonoBehaviour
             EventManager.TriggerEvent("OpenUI");
             m_Indicator.SetActive(false);
             m_LevelMenu.SetActive(true);
+            EventManager.TriggerEvent("CAM_UpdateFollow");
             Visible = true;
             m_PrimaryIndicator.transform.localPosition = new Vector3(2, 1.75f, 0);
             m_SecondaryIndicator.SetActive(false);
         } else
         {
+            Debug.Log("LoadLevel:" + LevelName);
             LevelSelect.Instance.LoadLevel(LevelName);
         }
     }
@@ -77,5 +79,6 @@ public class LevelMenu : MonoBehaviour
         // Sets both the temporary thing and the level popup to invisible.
         m_Indicator.SetActive(false);
         m_LevelMenu.SetActive(false);
+        EventManager.TriggerEvent("CAM_UpdateFollow");
     }
 }

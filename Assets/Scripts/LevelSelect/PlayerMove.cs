@@ -14,6 +14,7 @@ public class PlayerMove : MonoBehaviour
     void OnEnable()
     {
         RB = GetComponent<Rigidbody2D>();
+        EventManager.TriggerEvent("CAM_UpdateFollow");
         m_PlayerInputActions = new PlayerInputActions();
         PlayerActionsListeners();
     }

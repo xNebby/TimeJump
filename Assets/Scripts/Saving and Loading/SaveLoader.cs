@@ -98,6 +98,7 @@ public class SaveLoader : SingletonClass<SaveLoader>
     public void CurrentLevel(string LevelName)
     {
         CurrentLoadedLevel = LevelName;
+        CurrentSave.Instance.CurrentLevel(LevelName);
     }
 
 }
