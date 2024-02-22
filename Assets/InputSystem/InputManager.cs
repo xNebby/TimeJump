@@ -197,6 +197,11 @@ public class InputManager : SingletonClass<InputManager>
 
         IM_PlayerVector = ID_MovementVector;
 
+        if (IM_PlayerVector == Vector2.zero)
+        {
+            EventManager.TriggerEvent("PAH_Idle");
+        }
+
         if (IM_PlayerVector.x < 0)
         {
             EventManager.TriggerEvent("FlipScript_Flip");
