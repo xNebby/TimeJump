@@ -91,6 +91,7 @@ public class Interactable : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            PlayerInHitbox = true;
             ObjCounter += 1;
             //LogSystem.Log(gameObject, "Trigger entered");
             // Add a check that it isnt in a cutscene.
@@ -149,6 +150,7 @@ public class Interactable : MonoBehaviour
             }
             if (ObjCounter == 0)
             {
+                PlayerInHitbox = false;
                 //LogSystem.Log(gameObject, "Exited trigger");
                 AwaitingInput = false;
                 gameObject.transform.GetChild(0).gameObject.SetActive(false);

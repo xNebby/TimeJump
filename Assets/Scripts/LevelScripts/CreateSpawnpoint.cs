@@ -51,7 +51,10 @@ public class CreateSpawnpoint : MonoBehaviour
         {
             //string text = SpawnID.ToString() + " Is set as the world spawn";
             //LogSystem.Log("SpawnPoint", text);
-            SpawnManager.Instance.SetSpawn(SpawnName);
+            if (SpawnManager.Instance.PlayerSpawn == "0")
+            {
+                SpawnManager.Instance.SetSpawn(SpawnName);
+            }
         }
         
     }
@@ -72,9 +75,12 @@ public class CreateSpawnpoint : MonoBehaviour
         //Debug.Log("event Received");
         if (Interactable)
         {
-            // Add an interaction to the interactions script.
-            m_Animator.SetTrigger("Activate");
-            SpawnManager.Instance.SetSpawn(SpawnName);
+            if (m_Interactable.PlayerInHitbox)
+            {
+                // Add an interaction to the interactions script.
+                m_Animator.SetTrigger("Activate");
+                SpawnManager.Instance.SetSpawn(SpawnName);
+            }
         }
     }
 
