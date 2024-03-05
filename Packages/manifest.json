@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.simonoliver.inputsystemactionprompts": "https://github.com/simonoliver/InputSystemActionPrompts.git",
     "com.unity.ai.navigation": "2.0.0",
     "com.unity.cinemachine": "2.9.5",
     "com.unity.collab-proxy": "2.2.0",
