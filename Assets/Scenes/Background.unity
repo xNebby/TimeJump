@@ -699,7 +699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 7712989441278657248, guid: af828be26ef821f44ac503d018b4202d, type: 3}
-  CameraPrefab: {fileID: 3398086365302675506, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
+  CameraPrefab: {fileID: 1307892585966980917, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
   LightPrefab: {fileID: 2455065034006696839, guid: e62047b8369799048bc33599c5a65a52, type: 3}
 --- !u!4 &1795579125
 Transform:

@@ -14,6 +14,7 @@ public class SaveLoader : SingletonClass<SaveLoader>
 
     public int CurrentLoadedSave = 0;
     public string CurrentLoadedLevel;
+    public string CurrentPlayerCheckpoint;
     private bool WaitingForHide = false;
     private bool WaitingForDeload = false;
 
@@ -49,6 +50,7 @@ public class SaveLoader : SingletonClass<SaveLoader>
             WaitingForDeload = false;
             //Debug.Log("Unload Menu");
             SceneManager.UnloadSceneAsync("Menu");
+            
             EventManager.TriggerEvent("LS_EndLoad");
         }
     }
@@ -59,6 +61,11 @@ public class SaveLoader : SingletonClass<SaveLoader>
         CurrentLoadedSave = SaveID;
         // Load the level select, deload main menu
         WaitingForHide = true;
+        if (CurrentPlayerCheckpoint != null)
+        {
+            Debug.Log(CurrentPlayerCheckpoint);
+            SpawnManager.Instance.SetSpawn(CurrentPlayerCheckpoint);
+        }
         EventManager.TriggerEvent("LS_Load");
 
     }
