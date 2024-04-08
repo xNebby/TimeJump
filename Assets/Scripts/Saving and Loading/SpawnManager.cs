@@ -49,10 +49,9 @@ public class SpawnManager : SingletonClass<SpawnManager>
     }
     public void SetSpawn(string SpawnName)
     {
-        if (Respawns.ContainsKey(SpawnName))
-        {
-            PlayerSpawn = SpawnName;
-        }
+        Debug.Log(SpawnName);
+        PlayerSpawn = SpawnName;
+        
     }
     public Vector2 GetSpawn(string SpawnName)
     {

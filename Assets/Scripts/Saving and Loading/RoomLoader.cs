@@ -23,7 +23,6 @@ public class RoomLoader : SingletonClass<RoomLoader>
         IterateRooms();
         if (ActiveRooms.Count == 0)
         {
-            LoadRoom(1);
             EventManager.TriggerEvent("LS_EndLoad");
         }
     }
@@ -37,6 +36,7 @@ public class RoomLoader : SingletonClass<RoomLoader>
             TempEntry.RoomPosition = EntryComponent.RoomPosition;
             TempEntry.AdjacentRooms = EntryComponent.AdjacentRooms;
             Rooms.Add(EntryComponent.RoomID, TempEntry);
+            Destroy(GameObject.Find(Entry.name.ToString()));
         }
     }
     void AddRoom(GameObject v_RoomPrefab, Vector2 v_RoomPosition, List<int> v_AdjacentRooms)
@@ -48,7 +48,7 @@ public class RoomLoader : SingletonClass<RoomLoader>
     }
     public void LoadRoom(int RoomID)
     {
-        Debug.Log("Loading room:" + RoomID.ToString());
+        //Debug.Log("Loading room:" + RoomID.ToString());
         List<int> TempActiveRooms = new List<int>(Rooms[RoomID].AdjacentRooms);
         if (!TempActiveRooms.Contains(RoomID))
         {
@@ -57,7 +57,7 @@ public class RoomLoader : SingletonClass<RoomLoader>
         List<int> ActiveRoomsClone = new List<int>(ActiveRooms);
         foreach (int TempRoomID in ActiveRoomsClone)
         {
-            Debug.Log("ActiveRooms:" + TempRoomID.ToString());
+            //Debug.Log("ActiveRooms:" + TempRoomID.ToString());
             if (!TempActiveRooms.Contains(TempRoomID))
             {
                 ActiveRooms.Remove(TempRoomID);
@@ -69,13 +69,13 @@ public class RoomLoader : SingletonClass<RoomLoader>
         }
         if (TempActiveRooms.Count > 0)
         {
-            Debug.Log(TempActiveRooms.Count);
+            //Debug.Log(TempActiveRooms.Count);
             foreach (int TempRoomID in TempActiveRooms)
             {
-                Debug.Log(TempRoomID);
+                //Debug.Log(TempRoomID);
                 ActiveRooms.Add(TempRoomID);
-                GameObject RoomChild = Instantiate(Rooms[TempRoomID].RoomPrefab, Rooms[TempRoomID].RoomPosition, Quaternion.identity);
-                RoomChild.transform.parent = transform;
+                GameObject TempRoomChild = Instantiate(Rooms[TempRoomID].RoomPrefab, Rooms[TempRoomID].RoomPosition, Quaternion.identity);
+                TempRoomChild.transform.parent = transform;
             }
         }
     }

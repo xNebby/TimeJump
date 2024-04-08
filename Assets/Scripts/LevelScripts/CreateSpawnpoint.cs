@@ -49,11 +49,21 @@ public class CreateSpawnpoint : MonoBehaviour
         }
         if (WorldSpawn == true)
         {
-            //string text = SpawnID.ToString() + " Is set as the world spawn";
-            //LogSystem.Log("SpawnPoint", text);
-            if (SpawnManager.Instance.PlayerSpawn == "0")
+            if (SaveLoader.Instance.CurrentPlayerCheckpoint == null)
             {
-                SpawnManager.Instance.SetSpawn(SpawnName);
+                //string text = SpawnID.ToString() + " Is set as the world spawn";
+                //LogSystem.Log("SpawnPoint", text);
+                if (SpawnManager.Instance.PlayerSpawn == "0")
+                {
+                    SpawnManager.Instance.SetSpawn(SpawnName);
+                }
+            } else
+            {
+                if (SpawnManager.Instance.PlayerSpawn == "0")
+                {
+                    SpawnManager.Instance.SetSpawn(SaveLoader.Instance.CurrentPlayerCheckpoint);
+                }
+
             }
         }
         
@@ -87,7 +97,7 @@ public class CreateSpawnpoint : MonoBehaviour
     void ChangeSprite()
     {
         // If the player is currently touching the hitbox, change this sprite to active mode.
-        Debug.Log("Animation Finished");
+        //Debug.Log("Animation Finished");
         //spriteRenderer.sprite = PoweredRespawn;
         Light.SetActive(true);
     }

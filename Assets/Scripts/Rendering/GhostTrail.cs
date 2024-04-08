@@ -26,7 +26,7 @@ public class GhostTrail : MonoBehaviour
     }
     public void BindPlayer()
     {
-        Debug.Log("Bound");
+        //Debug.Log("Bound");
         Player = GameObject.FindWithTag("PlayerRenderer");
         playerSR = Player.GetComponent<SpriteRenderer>();
     }

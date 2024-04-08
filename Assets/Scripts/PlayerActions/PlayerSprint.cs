@@ -23,7 +23,7 @@ public class PlayerSprint : MonoBehaviour
     void SprintStart()
     {
         //Debug.Log("added!");
-        Debug.Log("Triggered Event");
+        //Debug.Log("Triggered Event");
         EventManager.TriggerEvent("PAH_Run");
         MovementStatusManager.Instance.AddMovementEffect("Sprint", SprintMoveMult);
 

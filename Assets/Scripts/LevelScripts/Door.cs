@@ -77,6 +77,7 @@ public class Door : MonoBehaviour
 
     void Open()
     {
+        Debug.Log("open Door");
         m_BoxCollide.enabled = false;
         if (m_Animator.GetBool("IsOpen") == false & PlayerInDoor)
         {

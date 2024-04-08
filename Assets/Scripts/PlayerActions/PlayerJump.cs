@@ -58,7 +58,7 @@ public class PlayerJump : MonoBehaviour
         {
             // if is able to jump, jump
             // if player is on the ground, there can be either a crouch jump upwards, or a normal jump (up or diagonally)
-            LogSystem.Log(gameObject, "Jump command received by PJ module.");
+            ////LogSystem.Log(gameObject, "Jump command received by PJ module.");
             if (PlayerStateManager.Instance.PlayerIsOnGround)
             {
                 TimerManager.AddTimer("PJ_JumpStarted", JumpTime, ReleaseJumpTimer);
@@ -68,7 +68,7 @@ public class PlayerJump : MonoBehaviour
             }
             else
             {
-                LogSystem.Log(gameObject, "Jump cannot start- not on ground.");
+                ////LogSystem.Log(gameObject, "Jump cannot start- not on ground.");
             }
         }
     }
@@ -87,7 +87,7 @@ public class PlayerJump : MonoBehaviour
     {
         if (Coyote == false & Jumping == true)
         {
-            LogSystem.Log(gameObject, "Jump stopped via button.");//
+            ////LogSystem.Log(gameObject, "Jump stopped via button.");//
             ReleaseJump();
         }
     }
@@ -96,7 +96,7 @@ public class PlayerJump : MonoBehaviour
         TimerActive = false;
         if (Coyote == false & Jumping == true)
         {
-            LogSystem.Log(gameObject, "Jump stopped via time.");
+            ////LogSystem.Log(gameObject, "Jump stopped via time.");
             ReleaseJump();
         }
     }
@@ -115,7 +115,7 @@ public class PlayerJump : MonoBehaviour
                 TimerManager.AddTimer("PJ_CoyoteTime", CoyoteTime, CoyoteRelease);
                 MovementStatusManager.Instance.AddTimedMovementEffect("Coyote", PeakMult, CoyoteTime);
                 Coyote = true;
-                //LogSystem.Log(gameObject, "Coyote timer added.");//
+                ////LogSystem.Log(gameObject, "Coyote timer added.");//
             }
             Jumping = false;
             m_PMM.AddJumpVector(Vector2.zero);
@@ -125,7 +125,7 @@ public class PlayerJump : MonoBehaviour
     void CoyoteRelease()
     {
         EventManager.TriggerEvent("PJ_CoyoteTimeEnd");
-        LogSystem.Log(gameObject, "Coyote time is finished."); 
+        ////LogSystem.Log(gameObject, "Coyote time is finished."); 
         Coyote = false;
         EventManager.TriggerEvent("PJ_JumpStopped");
     }
@@ -151,7 +151,7 @@ public class PlayerJump : MonoBehaviour
 
                 if (Coyote)
                 {
-                    LogSystem.Log(gameObject, "coyote time ENDING pranked");
+                    //LogSystem.Log(gameObject, "coyote time ENDING pranked");
                     TimerManager.RemoveTimer("PJ_CoyoteTime", CoyoteRelease);
                     Coyote = false;
                     EventManager.TriggerEvent("PJ_CoyoteTimeEnd");
@@ -168,7 +168,7 @@ public class PlayerJump : MonoBehaviour
                         } else
                         {
                             BounceBack = false;
-                            LogSystem.Log(gameObject, "JUMP touched ground from jumping");
+                            //LogSystem.Log(gameObject, "JUMP touched ground from jumping");
 
                             TimerManager.RemoveTimer("PJ_JumpStarted", ReleaseJumpTimer);
                             TimerActive = false;

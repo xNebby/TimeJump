@@ -31,7 +31,7 @@ public class InputManager : SingletonClass<InputManager>
     public void ChangedJump()
     {
         string TempText = "The jumpbool is " + IM_JumpBool.ToString(); 
-        LogSystem.Log(gameObject, TempText);
+        //LogSystem.Log(gameObject, TempText);
         if (IM_JumpBool == true)
         {
             EventManager.TriggerEvent("IM_StartJump");
@@ -63,14 +63,14 @@ public class InputManager : SingletonClass<InputManager>
     {
         if (JumpList.ContainsKey(v_Source))
         {
-            LogSystem.Log(gameObject, v_Source + " is found in the jumplist dictionary");
+            //LogSystem.Log(gameObject, v_Source + " is found in the jumplist dictionary");
             JumpList.Remove(v_Source);
             JumpPriorityCheck();
             ChangedJump();
             return true;
         } else
         {
-            LogSystem.Log(gameObject, v_Source + " is not found in the jumplist dictionary");
+            //LogSystem.Log(gameObject, v_Source + " is not found in the jumplist dictionary");
             return false;
         }
     }

@@ -225,7 +225,7 @@ public class InputDetector : MonoBehaviour
     {
         if (MovementVector.x == 0f)
         {
-            Debug.Log("PanUp");
+            //Debug.Log("PanUp");
             EventManager.TriggerEvent("CAM_PanUp");
         }
     }
@@ -233,14 +233,14 @@ public class InputDetector : MonoBehaviour
     {
         if (MovementVector.x == 0f)
         {
-            Debug.Log("PanDown");
+            //Debug.Log("PanDown");
             EventManager.TriggerEvent("CAM_PanDown");
         }
 
     }
     void PanCancel(InputAction.CallbackContext context)
     {
-        Debug.Log("PanCancel");
+        //Debug.Log("PanCancel");
         EventManager.TriggerEvent("CAM_PanCancel");
     }
 
@@ -265,7 +265,7 @@ public class InputDetector : MonoBehaviour
 
     void JumpCanceled(InputAction.CallbackContext context)
     {
-        LogSystem.Log(gameObject, "Jump cancelled in ID");
+        //LogSystem.Log(gameObject, "Jump cancelled in ID");
         InputManager.Instance.RemoveJumpTicket("ID");
     }
 

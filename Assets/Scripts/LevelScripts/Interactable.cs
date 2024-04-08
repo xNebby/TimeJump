@@ -28,7 +28,7 @@ public class Interactable : MonoBehaviour
     {
         if (gameObject.name != "Hitbox")
         {
-            LogSystem.LogError(gameObject, "No Hitbox detected. Please put the Interactable in the hitbox.");
+            //LogSystem.LogError(gameObject, "No Hitbox detected. Please put the Interactable in the hitbox.");
         }
         else
         {
@@ -93,7 +93,7 @@ public class Interactable : MonoBehaviour
         {
             PlayerInHitbox = true;
             ObjCounter += 1;
-            //LogSystem.Log(gameObject, "Trigger entered");
+            ////LogSystem.Log(gameObject, "Trigger entered");
             // Add a check that it isnt in a cutscene.
             if (InteractionEnabled)
             {
@@ -118,14 +118,10 @@ public class Interactable : MonoBehaviour
                         gameObject.transform.GetChild(1).gameObject.SetActive(false);
                     }
                 }
-                // TESTING TO SEE IF INVOKEEVENT REMOVED FROM ELSE BREAKS SOMETHING
-                /*
                 else
                 {
                     InvokeEvent();
                 }
-                */
-                InvokeEvent();
             }
         }
         if (other.gameObject.tag == "PhysicsObj")
@@ -151,7 +147,7 @@ public class Interactable : MonoBehaviour
             if (ObjCounter == 0)
             {
                 PlayerInHitbox = false;
-                //LogSystem.Log(gameObject, "Exited trigger");
+                ////LogSystem.Log(gameObject, "Exited trigger");
                 AwaitingInput = false;
                 gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 gameObject.transform.GetChild(1).gameObject.SetActive(false);

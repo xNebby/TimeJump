@@ -467,8 +467,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b369b7ab7adb9745a971bfc321cf26d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  JumpHeight: 1
-  NormalJumpHeight: 1
+  JumpHeight: 1.2
+  NormalJumpHeight: 1.2
   CrouchJumpHeight: 2
   JumpAirConstant: 8
   JumpInitialConstant: 8
@@ -517,7 +517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerVector: {x: 0, y: 0}
   DashVector: {x: 0, y: 0}
-  DashScale: 12
+  DashScale: 17.5
   IsDashing: 0
   CanDashRoomChange: 1
   CanDashDied: 1
