@@ -37,6 +37,7 @@ public class RoomLoader : SingletonClass<RoomLoader>
             TempEntry.RoomPosition = EntryComponent.RoomPosition;
             TempEntry.AdjacentRooms = EntryComponent.AdjacentRooms;
             Rooms.Add(EntryComponent.RoomID, TempEntry);
+            Destroy(GameObject.Find(Entry.name.ToString()));
         }
     }
     void AddRoom(GameObject v_RoomPrefab, Vector2 v_RoomPosition, List<int> v_AdjacentRooms)
