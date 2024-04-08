@@ -454,7 +454,7 @@ MonoBehaviour:
   PMM: {fileID: 0}
   PlayerHealth: 100
   PlayerMaxHealth: 100
-  RespawnTime: 5
+  RespawnTime: 2
 --- !u!114 &2485421349066449822
 MonoBehaviour:
   m_ObjectHideFlags: 0
