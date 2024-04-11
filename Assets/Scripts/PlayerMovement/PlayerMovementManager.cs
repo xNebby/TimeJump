@@ -95,13 +95,12 @@ public class PlayerMovementManager : MonoBehaviour
     }
     private void PlayerDashStarted()
     {
-        OldGravityValue = EnableGravity;
         Dashing = true;
         EnableGravity = false;
     }
     private void PlayerDashStopped()
     {
-        EnableGravity = OldGravityValue;
+        EnableGravity = true;
         Dashing = false;
     }
 

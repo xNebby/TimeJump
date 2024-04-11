@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using SimpleJSON;
 using UnityEngine;
 
 public class CurrentSave : SingletonClass<CurrentSave>
@@ -10,7 +12,7 @@ public class CurrentSave : SingletonClass<CurrentSave>
 
     void OnEnable()
     {
-        UnloadSave();
+        LoadSave();
     }
 
     public void CurrentLevel(string LevelName)
@@ -18,7 +20,7 @@ public class CurrentSave : SingletonClass<CurrentSave>
         CurrentLoadedLevel = LevelName;
     }
 
-    public void Store()
+    public void StoreLevel()
     {
         if (Levels.ContainsKey(CurrentLoadedLevel))
         {
@@ -34,26 +36,47 @@ public class CurrentSave : SingletonClass<CurrentSave>
             Temp.m_Deaths = Stats.Instance.PlayerDeaths;
             Temp.m_TimeTaken = Stats.Instance.CurrentPlaytime;
             Temp.m_QuickestTime = Stats.Instance.CurrentPlaytime;
-            Levels.Add(CurrentLoadedLevel, Temp);
+            if (Levels.ContainsKey (CurrentLoadedLevel))
+            {
+                Levels[CurrentLoadedLevel] = Temp;
+            } else
+            {
+                Levels.Add(CurrentLoadedLevel, Temp);
+            }
         }
         m_TotalStats.m_TotalTime += Stats.Instance.CurrentPlaytime;
         m_TotalStats.m_TotalDeaths += Stats.Instance.PlayerDeaths;
+        m_TotalStats.m_TotalLevelStats = new Dictionary<string, LevelStats>(Levels);
+        WriteSave();
+    }
 
-        // Write changes to file.
+    public void WriteSave()
+    {
+
     }
 
     public void LevelStatus(bool Status)
     {
-        Store();
+        StoreLevel();
         if (Levels.ContainsKey(CurrentLoadedLevel))
         {
             Levels[CurrentLoadedLevel].m_LevelCompleted = Status;
         }
     }
-
-    public void LoadSave(int SaveID)
+    public bool LevelStatus()
     {
-        // Load the save from file
+        if (Levels.ContainsKey(CurrentLoadedLevel))
+        {
+            return Levels[CurrentLoadedLevel].m_LevelCompleted;
+        } else
+        {
+            return false;
+        }
+    }
+
+    public void LoadSave()
+    {
+        
     }
 
     public void UnloadSave()
@@ -82,4 +105,5 @@ public class TotalStats
 {
     public int m_TotalDeaths;
     public float m_TotalTime;
+    public Dictionary<string, LevelStats> m_TotalLevelStats;
 }
