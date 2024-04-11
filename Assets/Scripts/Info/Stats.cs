@@ -7,13 +7,12 @@ public class Stats : SingletonClass<Stats>
     public int PlayerDeaths;
     public float Playtime;
     public float CurrentPlaytime;
+    public List<string> CurrentSpawnpoints;
+    public string MostRecentSpawnpoint;
 
     void LoadStats()
     {
-        CurrentPlaytime = 0;
-        // Load the stats from file, if file does not exist load the default stats (Following stats:)
-        PlayerDeaths = 0;
-        Playtime = CurrentSave.Instance.RetrievePlaytime();
+        
     }
     void SaveStats()
     {
@@ -28,6 +27,15 @@ public class Stats : SingletonClass<Stats>
     {
         LoadStats();
         EventManager.StopListening("PM_KillPlayer", PlayerDies);
+    }
+    void UpdateSpawnpoint(string v_spawnName)
+    {
+        if (!CurrentSpawnpoints.Contains(v_spawnName))
+        {
+            CurrentSpawnpoints.Add(v_spawnName);
+        }
+        MostRecentSpawnpoint = v_spawnName;
+        CurrentSave.Instance.StoreLevel();
     }
 
     void PlayerDies()

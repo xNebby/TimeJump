@@ -16,6 +16,9 @@ scopes = {
 	"last_search.8DF93126" = "snap "
 	"OpenInspectorPreview.8DF93126" = "0"
 	"currentGroup.8DF93126" = null
+	"last_search.5A656512" = "ref=\"Assets/Scripts/LevelScripts/EndLevel.cs\""
+	"OpenInspectorPreview.5A656512" = "0"
+	"currentGroup.5A656512" = null
 }
 providers = {
 	performance = {

@@ -1001,7 +1001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentLoadedSave: 0
   CurrentLoadedLevel: 
-  CurrentPlayerCheckpoint: Room9
+  CurrentPlayerCheckpoint: Room1
 --- !u!4 &1116935117
 Transform:
   m_ObjectHideFlags: 0

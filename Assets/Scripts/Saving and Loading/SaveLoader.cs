@@ -18,7 +18,6 @@ public class SaveLoader : SingletonClass<SaveLoader>
     public string CurrentPlayerCheckpoint;
     private bool WaitingForHide = false;
     private bool WaitingForDeload = false;
-    private string file = "Save.txt";
 
     void OnEnable()
     {
@@ -35,8 +34,8 @@ public class SaveLoader : SingletonClass<SaveLoader>
 
     public void NewGame(int SaveID)
     {
-        UnloadSave(SaveID);
-
+        UnloadSave();
+        CurrentSave.Instance.WriteSave();
         LoadSave(SaveID);
     }
 
@@ -61,12 +60,15 @@ public class SaveLoader : SingletonClass<SaveLoader>
     {
         WaitingForDeload = true;
         CurrentLoadedSave = SaveID;
-        Load(SaveID);
+        CurrentSave.Instance.LoadSave();
         WaitingForHide = true;
         if (CurrentPlayerCheckpoint != null)
         {
             Debug.Log(CurrentPlayerCheckpoint);
             SpawnManager.Instance.SetSpawn(CurrentPlayerCheckpoint);
+        } else
+        {
+            SpawnManager.Instance.SetSpawn(Stats.Instance.MostRecentSpawnpoint);
         }
         EventManager.TriggerEvent("LS_Load");
 
@@ -82,56 +84,7 @@ public class SaveLoader : SingletonClass<SaveLoader>
         }
     }
 
-    public void Load(int SaveID)
-    {
-
-        string json = ReadFromFIle(file + SaveID.ToString());
-        JsonUtility.FromJsonOverwrite(json, );
-    }
-
-    public void Save()
-    {
-        string json = JsonUtility.ToJson(data);
-        WriteToFile(file, json);
-    }
-
-    private void WriteToFile(string fileName, string json)
-    {
-        string path = GetFilePath(fileName);
-        FileStream fileStream = new FileStream(path, FileMode.Create);
-
-        using (StreamWriter writer = new StreamWriter(fileStream))
-        {
-            writer.Write(json);
-        }
-    }
-
-    private string ReadFromFIle(string fileName)
-    {
-        string path = GetFilePath(fileName);
-        if (File.Exists(path))
-        {
-            using (StreamReader reader = new StreamReader(path))
-            {
-                string json = reader.ReadToEnd();
-                return json;
-            }
-        }
-        else
-        {
-            Debug.LogWarning("File not found");
-        }
-
-        return "Success";
-    }
-
-    private string GetFilePath(string fileName)
-    {
-        return Application.persistentDataPath + "/" + fileName;
-    }
-
-
-    public void UnloadSave(int SaveID)
+    public void UnloadSave()
     {
         CurrentSave.Instance.UnloadSave();
         CurrentLoadedSave = 0;

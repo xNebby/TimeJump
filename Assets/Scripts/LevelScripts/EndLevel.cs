@@ -23,10 +23,17 @@ public class EndLevel : MonoBehaviour
     void FinishedLevel()
     {
         Completed = true;
+        ExitLevel();
     }
 
     void ExitLevel()
     {
-        CurrentSave.Instance.LevelStatus(Completed);
+        if (CurrentSave.Instance.LevelStatus())
+        {
+            CurrentSave.Instance.LevelStatus(true);
+        } else
+        {
+            CurrentSave.Instance.LevelStatus(Completed);
+        }
     }
 }

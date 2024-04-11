@@ -225,7 +225,7 @@ PrefabInstance:
       objectReference: {fileID: 2108197627}
     - target: {fileID: 2518146345286916831, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3716803638727550775, guid: bd703fc81dc328346bea117aa2fe8d3b, type: 3}
       propertyPath: m_XDamping

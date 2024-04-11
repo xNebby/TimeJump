@@ -12,7 +12,7 @@ public class CurrentSave : SingletonClass<CurrentSave>
 
     void OnEnable()
     {
-        LoadSave();
+        UnloadSave();
     }
 
     public void CurrentLevel(string LevelName)
@@ -36,6 +36,8 @@ public class CurrentSave : SingletonClass<CurrentSave>
             Temp.m_Deaths = Stats.Instance.PlayerDeaths;
             Temp.m_TimeTaken = Stats.Instance.CurrentPlaytime;
             Temp.m_QuickestTime = Stats.Instance.CurrentPlaytime;
+            Temp.m_CheckpointsUnlocked = Stats.Instance.CurrentSpawnpoints;
+            Temp.m_MostRecentCheckpoint = Stats.Instance.MostRecentSpawnpoint;
             if (Levels.ContainsKey (CurrentLoadedLevel))
             {
                 Levels[CurrentLoadedLevel] = Temp;
@@ -48,11 +50,6 @@ public class CurrentSave : SingletonClass<CurrentSave>
         m_TotalStats.m_TotalDeaths += Stats.Instance.PlayerDeaths;
         m_TotalStats.m_TotalLevelStats = new Dictionary<string, LevelStats>(Levels);
         WriteSave();
-    }
-
-    public void WriteSave()
-    {
-
     }
 
     public void LevelStatus(bool Status)
@@ -68,15 +65,53 @@ public class CurrentSave : SingletonClass<CurrentSave>
         if (Levels.ContainsKey(CurrentLoadedLevel))
         {
             return Levels[CurrentLoadedLevel].m_LevelCompleted;
-        } else
+        }
+        else
         {
             return false;
         }
     }
 
+    private string GetFilePath(string fileName)
+    {
+        Debug.Log(Application.persistentDataPath);
+        return Application.persistentDataPath + "/" + fileName;
+    }
+
+    public void WriteSave()
+    {
+        string path = GetFilePath("Save" + SaveLoader.Instance.CurrentLoadedSave.ToString() + ".txt");
+        FileStream fileStream = new FileStream(path, FileMode.Create);
+
+        using (StreamWriter writer = new StreamWriter(fileStream))
+        {
+            writer.Write(JsonUtility.ToJson(m_TotalStats));
+        }
+    }
+
+
     public void LoadSave()
     {
-        
+        string path = GetFilePath("Save" + SaveLoader.Instance.CurrentLoadedSave.ToString() + ".txt");
+        if (File.Exists(path))
+        {
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string json = reader.ReadToEnd();
+                JsonUtility.FromJsonOverwrite(json, m_TotalStats);
+                Levels = new Dictionary<string, LevelStats>(m_TotalStats.m_TotalLevelStats); 
+                Stats.Instance.PlayerDeaths = Levels[CurrentLoadedLevel].m_Deaths;
+                Stats.Instance.CurrentPlaytime = 0;
+                Stats.Instance.CurrentSpawnpoints = Levels[CurrentLoadedLevel].m_CheckpointsUnlocked;
+                Stats.Instance.MostRecentSpawnpoint = Levels[CurrentLoadedLevel].m_MostRecentCheckpoint;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("File not found, creating new save");
+            UnloadSave();
+            WriteSave();
+        }
     }
 
     public void UnloadSave()
@@ -98,7 +133,8 @@ public class LevelStats
     public int m_Deaths;
     public float m_TimeTaken;
     public float m_QuickestTime;
-    public List<string> UnlockedCheckpoints;
+    public string m_MostRecentCheckpoint;
+    public List<string> m_CheckpointsUnlocked;
 }
 
 public class TotalStats
