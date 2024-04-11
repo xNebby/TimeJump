@@ -9,6 +9,8 @@ public class Room : MonoBehaviour
     public int RoomID;
     public Vector2 RoomPosition;
     public List<int> AdjacentRooms;
+    public bool PlayerBounce;
+    public Vector2 PlayerBounceVector;
     private float PlayerPauseDuration;
 
     private void OnEnable()
@@ -21,7 +23,13 @@ public class Room : MonoBehaviour
     {
         if (other.CompareTag("Player") && !other.isTrigger)
         {
-            MovementStatusManager.Instance.AddTimedMovementEffect("RoomChange", 0f, PlayerPauseDuration);
+            if (PlayerBounce)
+            {
+                MovementStatusManager.Instance.AddTimedMovementEffect("RoomChange", PlayerBounceVector, PlayerPauseDuration);
+            } else
+            {
+                MovementStatusManager.Instance.AddTimedMovementEffect("RoomChange", 0f, PlayerPauseDuration);
+            }
             RoomLoader.Instance.LoadRoom(RoomID);
             VirtualCamera.SetActive(true);
             EventManager.TriggerEvent("CAM_UpdateFollow");
