@@ -5992,7 +5992,7 @@ MonoBehaviour:
   RoomPosition: {x: 35, y: 0}
   AdjacentRooms: 0a000000
   PlayerBounce: 1
-  PlayerBounceVector: {x: 0, y: 3}
+  PlayerBounceVector: {x: 0, y: 10}
 --- !u!156049354 &5043650879763633719
 Grid:
   m_ObjectHideFlags: 0

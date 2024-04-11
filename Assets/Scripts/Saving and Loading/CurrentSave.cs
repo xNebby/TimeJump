@@ -99,11 +99,15 @@ public class CurrentSave : SingletonClass<CurrentSave>
             {
                 string json = reader.ReadToEnd();
                 JsonUtility.FromJsonOverwrite(json, m_TotalStats);
-                Levels = new Dictionary<string, LevelStats>(m_TotalStats.m_TotalLevelStats); 
-                Stats.Instance.PlayerDeaths = Levels[CurrentLoadedLevel].m_Deaths;
-                Stats.Instance.CurrentPlaytime = 0;
-                Stats.Instance.CurrentSpawnpoints = Levels[CurrentLoadedLevel].m_CheckpointsUnlocked;
-                Stats.Instance.MostRecentSpawnpoint = Levels[CurrentLoadedLevel].m_MostRecentCheckpoint;
+                if (!(m_TotalStats.m_TotalLevelStats == null))
+                {
+                    Levels = new Dictionary<string, LevelStats>(m_TotalStats.m_TotalLevelStats);
+                    Stats.Instance.PlayerDeaths = Levels[CurrentLoadedLevel].m_Deaths;
+                    Stats.Instance.CurrentPlaytime = 0;
+                    Stats.Instance.CurrentSpawnpoints = Levels[CurrentLoadedLevel].m_CheckpointsUnlocked;
+                    Stats.Instance.MostRecentSpawnpoint = Levels[CurrentLoadedLevel].m_MostRecentCheckpoint;
+                }
+
             }
         }
         else

@@ -28,8 +28,8 @@ public class ConfirmScreen : MonoBehaviour
     void Confirm()
     {
         Debug.Log("Overwriting save " + SaveValue.ToString());
-        // Load a new save and give it the id, Delete any save if it already has that id. 
-        SaveLoader.Instance.NewGame(SaveValue);
+        // Load a new save and give it the id, Delete any save if it already has that id.
+        SaveLoader.Instance.Continue(SaveValue);
     }
     void Cancel()
     {
